@@ -19,6 +19,7 @@
 
 
 
-SAMPLE_FUNCTION=digital_pin_sample
-INIT_FUNCTION=digital_pin_init
-ENABLE_VARIABLE=ENABLE_DIGITAL_POLLER
+LOG_FUNCTION=log_serial_logger
+FLUSH_FUNCTION=flush_serial_logger
+INIT_FUNCTION=init_serial_logger
+ENABLE_VARIABLE=ENABLE_SERIAL_LOGGER

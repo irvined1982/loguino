@@ -17,11 +17,11 @@
  *
 */
 
-#define ENABLE_DEBUG
-#define DEBUG_LEVEL 2
 
-#ifdef ENABLE_DEBUG
-  #define DEBUG_SERIAL_DEV Serial
-  #define DEBUG_SERIAL_BAUD 115200
-#endif
+
+#define ENABLE_SERIAL_LOGGER
+#define DEBUG_SERIAL_LOGGER
+#define SERIAL_LOGGER_BAUD 115200
+#define SERIAL_LOGGER_DEVICE Serial1
+
 
