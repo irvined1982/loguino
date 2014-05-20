@@ -303,6 +303,13 @@
 #define DP_PIN_53_NAME "dp.pin53"
 
 
+
+
+#define ENABLE_TMP102_POLLER
+#define DEBUG_TMP102_POLLER
+#define TMP102_I2C_ADDRESS 72
+
+
 #define ENABLE_SERIAL_LOGGER
 #define DEBUG_SERIAL_LOGGER
 #define SERIAL_LOGGER_BAUD 115200
@@ -314,6 +321,10 @@
 #else
 	#include <WProgram.h>
 #endif
+
+
+#include <Wire.h>
+#include <stdlib.h>
 
 #ifdef ENABLE_DEBUG
   #ifndef DEBUG_LEVEL
@@ -3274,6 +3285,73 @@ void loop(){
 #endif
 
 
+
+#ifdef ENABLE_TMP102_POLLER
+    void tmp102_init(){
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_1("Starting");
+        #endif
+        Wire.begin();
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+    void tmp102_sample(){
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_1("Starting");
+        #endif
+        byte firstbyte, secondbyte;
+        int val;
+        float convertedtemp;
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_5("Calling beginTransmission");
+        #endif
+        Wire.beginTransmission(TMP102_I2C_ADDRESS);
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_2("Successfully Called beginTransmission");
+        #endif
+
+        byte i = 0x00;
+
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_5("Sending cmd to tmp102");
+        #endif
+        Wire.write(i);
+        Wire.endTransmission();
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_2("Successfully sent cmd to tmp102, attempting to read");
+        #endif
+        Wire.requestFrom(TMP102_I2C_ADDRESS, 2);
+        Wire.endTransmission();
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_2("Successfully read from tmp102");
+        #endif
+
+        firstbyte      = (Wire.read());
+        secondbyte     = (Wire.read());
+
+        val = ((firstbyte) << 4);
+        val |= (secondbyte >> 4);
+
+        convertedtemp = val*0.0625;
+        char value[32];
+        dtostrf(convertedtemp, 1, 2, value);
+
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_5("Logging Message");
+        #endif
+        logMessage("TMP102.Temp", value, "C");
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_2("Successfully logged message");
+        #endif
+
+        #ifdef DEBUG_TMP102_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+
+
 #ifdef ENABLE_SERIAL_LOGGER
     void init_serial_logger(){
         #ifdef DEBUG_SERIAL_LOGGER
@@ -3313,11 +3391,17 @@ void readSensors(){
 #ifdef ENABLE_DIGITAL_POLLER
     digital_pin_sample();
 #endif
+#ifdef ENABLE_TMP102_POLLER
+    tmp102_sample();
+#endif
 }
 
 void setupPollers(){
 #ifdef ENABLE_DIGITAL_POLLER
     digital_pin_init();
+#endif
+#ifdef ENABLE_TMP102_POLLER
+    tmp102_init();
 #endif
 }
 
@@ -3336,6 +3420,15 @@ void logMessage(const char * name, const char * value, const char * unit){
 void flushLoggers(){
 #ifdef ENABLE_SERIAL_LOGGER
     init_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
 #endif
 #ifdef ENABLE_SERIAL_LOGGER
     flush_serial_logger();
