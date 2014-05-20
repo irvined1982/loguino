@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+
+
+
+init = ""
+for pin in range(54):
+    init += """
+        #ifdef DP_SAMPLE_PIN_%d
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_5("Setting pin %d to input");
+            #endif
+            pinMode(%d, INPUT);
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_3("Successfully set pin %f to input");
+            #endif
+            #ifdef DP_HOLD_PIN_%d_HIGH
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_5("Setting pin %d pullup HIGH");
+                #endif
+                digitalWrite(%d,HIGH);
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_3("Successfully set pin %d pullup HIGH");
+                #endif
+            #elif
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_5("Setting pin %d pullup LOW");
+                #endif
+                digitalWrite(%d,LOW);
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_3("Successfully set pin %d pullup LOW");
+                #endif
+            #endif
+        #endif""" % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+
+sample = ""
+for pin in range(54):
+    sample += """
+        #ifdef DP_SAMPLE_PIN_%d
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_5("Reading value for pin %d");
+            #endif
+            dstate = digitalRead(%d);
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_3("Sucessfully read value for pin %d");
+            #endif
+            #ifdef DP_INVERT_PIN_%d
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_5("Inverting value for pin %d");
+                #endif
+                dstate = !dstate;
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_3("Successfully inverted value for pin %d");
+                #endif
+            #endif
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_5("Logging value for pin %d");
+            #endif
+            logMessage(DP_PIN_%d_NAME, dstate ? "On" : "Off", "N/A");
+            #ifdef DEBUG_DIGITAL_POLLER
+                DEBUG_2("Successfully logged value for pin %d");
+            #endif
+        #endif
+        """ % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+
+
+code = """
+#ifdef ENABLE_DIGITAL_POLLER
+    void digital_pin_init(){
+        DEBUG_1("Starting");
+%s
+        DEBUG_1("Finished");
+    }
+
+    void digital_pin_sample(){
+        DEBUG_1("Starting");
+        int dstate;
+%s
+        DEBUG_1("Finished");
+    }
+#endif
+""" % (init, sample)
+
+f = open("code.c", "w")
+f.write(code)
+f.close()
+
+config="""
+#define ENABLE_DIGITAL_POLLER
+#define DEBUG_DIGITAL_POLLER
+"""
+for pin in range(54):
+    config += """
+#define DP_SAMPLE_PIN_%d
+#define DP_HOLD_PIN_%d_HIGH
+#define DP_INVERT_PIN_%d
+#define DP_PIN_%d_NAME "dp.pin%d"
+""" % (pin, pin, pin, pin, pin)
+
+f=open("config.c","w")
+f.write(config)
+f.close()

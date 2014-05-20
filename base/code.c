@@ -55,7 +55,7 @@ void debug(const char * fname, const char * func, const char * lnum, const  char
 }
 
 void setup(){
-	DEBUG("Begin");
+	DEBUG_1("Begin");
 	#ifdef ENABLE_DEBUG
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
@@ -63,21 +63,21 @@ void setup(){
 			#endif
 		#endif
 	#endif
-	DEBUG("Setting up Pollers");
+	DEBUG_5("Setting up Pollers");
 	setupPollers();
-	DEBUG("Succesfully setup Pollers");
-	DEBUG("Setting up Outputs");
+	DEBUG_2("Succesfully setup Pollers");
+	DEBUG_5("Setting up Outputs");
 	setupOutputs();
-	DEBUG("Succesfully setup Outputs");
-	DEBUG("Finished");
+	DEBUG_2("Succesfully setup Outputs");
+	DEBUG_1("Finished");
 }
 
 void loop(){
-	DEBUG("Begin");
-	DEBUG("Reading Sensors");
+	DEBUG_1("Begin");
+	DEBUG_5("Reading Sensors");
 	readSensors();
-	DEBUG("Successfully read sensors");
-	DEBUG("Finished");
+	DEBUG_2("Successfully read sensors");
+	DEBUG_1("Finished");
 }
 
 

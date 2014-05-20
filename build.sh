@@ -8,16 +8,25 @@ cat base/code.c > build/code.c
 > build/setupPollers.c
 > build/setupOutputs.c
 
-for i in modules/pollers/* modules/outputs/*
+for i in modules/pollers/*
 do
+    [ -e $i/build ] && ( cd $i; ./build ) # Run the build if there is anything to be built
+
 	[ -e $i/config.c ] && cat $i/config.c >> build/config.c
 	[ -e $i/include.c ] && cat $i/include.c >> build/include.c
 	[ -e $i/code.c ] && cat $i/code.c >> build/code.c
-	[ -e $i/readSensors.c ] && cat $i/readSensors.c >> build/readSensors.c
-	[ -e $i/logMessage.c ] && cat $i/poll.c >> build/logMessage.c
-	[ -e $i/setupPollers.c ] && cat $i/setupPollers.c >> build/setupPollers.c
-	[ -e $i/setupOutputs.c ] && cat $i/setupOutputs.c >> build/setupOutputs.c
-	
+
+	. $i/build_env.sh
+
+	echo "#ifdef $ENABLE_VARIABLE" >> build/readSensors.c
+	echo "    $SAMPLE_FUNCTION();" >> build/readSensors.c
+	echo "#endif" >> build/readSensors.c
+
+	echo "#ifdef $ENABLE_VARIABLE" >> build/setupPollers.c
+	echo "    $INIT_FUNCTION();" >> build/setupPollers.c
+	echo "#endif" >> build/setupPollers.c
+
+
 
 done
 cat build/config.c build/include.c build/code.c > loguino.ino
