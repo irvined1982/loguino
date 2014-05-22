@@ -148,4 +148,19 @@ void loop(){
 	DEBUG_1("Finished");
 }
 
+void logMessage(const char * name, String value, const char * unit){
+    DEBUG_1("Begin");
+    char *buf;
+    buf = NULL;
 
+    int size;
+    size = value.length() + 1;
+    DEBUG_3("Allocating");
+    buf = (char *) malloc(size * sizeof(char));
+    DEBUG_5("Logging");
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    free (buf);
+    DEBUG_5("Freed");
+    DEBUG_1("Finished");
+}

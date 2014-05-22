@@ -305,6 +305,16 @@
 
 
 
+#define ENABLE_GPS_POLLER
+#define DEBUG_GPS_POLLER
+#define GPS_LED_PIN 10
+#define GPS_SERIAL_DEV Serial1
+#define GPS_SERIAL_DEV_SPEED 4800
+
+
+
+
+
 #define ENABLE_TMP102_POLLER
 #define DEBUG_TMP102_POLLER
 #define TMP102_I2C_ADDRESS 72
@@ -321,6 +331,7 @@
 #else
 	#include <WProgram.h>
 #endif
+#include <NMEA.h>
 
 
 #include <Wire.h>
@@ -456,8 +467,20 @@ void loop(){
 	DEBUG_1("Finished");
 }
 
+void logMessage(const char * name, String &value, const char * unit){
+    char *buf;
+    buf = NULL;
 
+    int size;
+    size = value.length() + 1;
 
+    buf = (char *) malloc(size * sizeof(char));
+
+    logMessage(name, buf, unit);
+
+    free (buf);
+
+}
 
 
 
@@ -3283,6 +3306,106 @@ void loop(){
         DEBUG_1("Finished");
     }
 #endif
+#ifdef ENABLE_GPS_POLLER
+
+/**
+ * Configures the serial port in order to connect to the GPS.  Attempts to
+ * turn off messages that are not used, this puts less pressure on the
+ * serial buffer which has been reduced to 64 bytes.
+ *
+ * If your GPS does not support disabling messages, there are two other
+ * options, the first is to increase the buffer used in arduino by
+ * editing HardwareSerial.h, the other is to poll this poller more
+ * frequently.
+ */
+    void gps_init(){
+        #ifdef DEBUG_GPS_POLLER
+            DEBUG_1("Starting");
+        #endif
+        #ifdef GPS_LED_PIN
+                DEBUG_5 ("Setting GPS_LED_PIN to OUTPUT, and LOW");
+                pinMode(GPS_LED_PIN, OUTPUT);
+                digitalWrite(GPS_LED_PIN,LOW);
+                DEBUG_2("Set LED Pin");
+        #endif
+
+        GPS_SERIAL_DEV.begin(GPS_SERIAL_DEV_SPEED);
+        DEBUG_5("Switching off unneeded GPS data");
+        GPS_SERIAL_DEV.println("$PSRF103,0,0,0,1*24");
+        GPS_SERIAL_DEV.println("$PSRF103,1,0,0,1*25");
+        GPS_SERIAL_DEV.println("$PSRF103,2,0,0,1*26");
+        GPS_SERIAL_DEV.println("$PSRF103,3,0,0,1*27");
+        GPS_SERIAL_DEV.println("$PSRF103,4,0,0,1*20");
+        GPS_SERIAL_DEV.println("PSRF103,5,0,0,1*21");
+        GPS_SERIAL_DEV.println("$PSRF103,8,0,0,1*2C");
+        DEBUG_5 ("Switching on RMC data");
+        GPS_SERIAL_DEV.println("$PSRF103,4,0,1,1*21");
+        DEBUG_2 ("Switched off unneeded data and enabled RMC data. ");
+
+
+        #ifdef DEBUG_GPS_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+
+ /**
+ * NMEA GPS devices continually output data over the serial line, data forms
+ * NMEA sentances.  The GPS may send multiple types of NMEA sentances depending
+ * on the GPS, type of fix etc.  The GPS may send data only when it has a fix, or
+ * at a specified interval.
+ *
+ * As such rather than block until a valid sentance is received, each time the
+ * poller is called, it appends any data in the serial buffer to the NMEA object.
+ *
+ * When the appended data completes the sentance, the poller queries the NMEA object
+ * to see if the fix is valid, if so it logs each metric.
+ *
+ */
+    NMEA gps;
+    void gps_sample(){
+        #ifdef DEBUG_GPS_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        while(GPS_SERIAL_DEV.available()){
+            if (gps.addChar(GPS_SERIAL_DEV.read())){
+                #ifdef DEBUG_GPS_POLLER
+                    DEBUG_2("Completed Sentence");
+                #endif
+                if (gps.validFix()){
+                    #ifdef DEBUG_GPS_POLLER
+                        DEBUG_2("Valid Fix");
+                    #endif
+                    #ifdef DEBUG_GPS_POLLER
+                        DEBUG_5("Logging Messages");
+                    #endif
+                    logMessage("GPS.Course", gps.getCourse(), "Degrees");
+                    logMessage("GPS.Speed", gps.getSpeed(), "Knots");
+                    logMessage("GPS.Latitude", gps.getLatitude(), "N/A");
+                    logMessage("GPS.Longitude", gps.getLongitude(), "N/A");
+                    logMessage("GPS.Date", gps.getDate(), "N/A");
+                    logMessage("GPS.Time", gps.getTime(), "UTC");
+                    #ifdef DEBUG_GPS_POLLER
+                        DEBUG_2("Successfully Logged Messages");
+                    #endif
+                }else{
+                    #ifdef DEBUG_GPS_POLLER
+                        DEBUG_2("No valid fix available");
+                    #endif
+                }
+            }else{
+                #ifdef DEBUG_GPS_POLLER
+                    DEBUG_3("Not a valid sentence");
+                #endif
+            }
+        }
+
+        #ifdef DEBUG_GPS_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
 
 
 
@@ -3391,6 +3514,9 @@ void readSensors(){
 #ifdef ENABLE_DIGITAL_POLLER
     digital_pin_sample();
 #endif
+#ifdef ENABLE_GPS_POLLER
+    gps_sample();
+#endif
 #ifdef ENABLE_TMP102_POLLER
     tmp102_sample();
 #endif
@@ -3399,6 +3525,9 @@ void readSensors(){
 void setupPollers(){
 #ifdef ENABLE_DIGITAL_POLLER
     digital_pin_init();
+#endif
+#ifdef ENABLE_GPS_POLLER
+    gps_init();
 #endif
 #ifdef ENABLE_TMP102_POLLER
     tmp102_init();
@@ -3420,6 +3549,30 @@ void logMessage(const char * name, const char * value, const char * unit){
 void flushLoggers(){
 #ifdef ENABLE_SERIAL_LOGGER
     init_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+    flush_serial_logger();
 #endif
 #ifdef ENABLE_SERIAL_LOGGER
     flush_serial_logger();
