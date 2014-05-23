@@ -1,0 +1,6 @@
+[submodule "3rdParty/NMEA"]
+	path = 3rdParty/NMEA
+	url = https://github.com/irvined1982/arduino-nmea.git
+[submodule "3rdParty/ELM327"]
+	path = 3rdParty/ELM327
+	url = https://github.com/irvined1982/arduino-ELM327.git

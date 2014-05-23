@@ -22,46 +22,50 @@
 init = ""
 for pin in range(16):
     init += """
-        #ifdef AP_SAMPLE_PIN_%d
-            #ifdef DEBUG_ANALOG_POLLER
-                DEBUG_5("Setting pin %d to input");
+        #ifdef A%d
+            #ifdef AP_SAMPLE_PIN_%d
+                #ifdef DEBUG_ANALOG_POLLER
+                    DEBUG_5("Setting pin %d to input");
+                #endif
+                pinMode(%d, INPUT);
+                #ifdef DEBUG_ANALOG_POLLER
+                    DEBUG_3("Successfully set pin A%d to input");
+                #endif
+                #ifdef AP_HOLD_PIN_%d_HIGH
+                    #ifdef DEBUG_ANALOG_POLLER
+                        DEBUG_5("Setting pin %d pullup HIGH");
+                    #endif
+                    digitalWrite(A%d,HIGH);
+                    #ifdef DEBUG_ANALOG_POLLER
+                        DEBUG_3("Successfully set pin A%d pullup HIGH");
+                    #endif
+                #elif
+                    #ifdef DEBUG_ANALOG_POLLER
+                        DEBUG_5("Setting pin A%d pullup LOW");
+                    #endif
+                    digitalWrite(A%d,LOW);
+                    #ifdef DEBUG_ANALOG_POLLER
+                        DEBUG_3("Successfully set pin A%d pullup LOW");
+                    #endif
+                #endif
             #endif
-            pinMode(%d, INPUT);
-            #ifdef DEBUG_ANALOG_POLLER
-                DEBUG_3("Successfully set pin A%d to input");
-            #endif
-            #ifdef AP_HOLD_PIN_%d_HIGH
-                #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_5("Setting pin %d pullup HIGH");
-                #endif
-                digitalWrite(A%d,HIGH);
-                #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_3("Successfully set pin A%d pullup HIGH");
-                #endif
-            #elif
-                #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_5("Setting pin A%d pullup LOW");
-                #endif
-                digitalWrite(A%d,LOW);
-                #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_3("Successfully set pin A%d pullup LOW");
-                #endif
-            #endif
-        #endif""" % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+        #endif""" % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
 
 sample = ""
 for pin in range(16):
     sample += """
-        #ifdef AP_SAMPLE_PIN_%d
-            #ifdef DEBUG_ANALOG_POLLER
-                DEBUG_5("Reading value for pin %d");
-            #endif
-            logMessage(AP_PIN_%d_NAME, analogRead(%d), "(volts * 5)/1024");
-            #ifdef DEBUG_DIGITAL_POLLER
-                DEBUG_2("Sucessfully read and logged value for pin %d");
+        #ifdef A%d
+            #ifdef AP_SAMPLE_PIN_%d
+                #ifdef DEBUG_ANALOG_POLLER
+                    DEBUG_5("Reading value for pin %d");
+                #endif
+                logMessage(AP_PIN_%d_NAME, analogRead(%d), "(volts * 5)/1024");
+                #ifdef DEBUG_DIGITAL_POLLER
+                    DEBUG_2("Sucessfully read and logged value for pin %d");
+                #endif
             #endif
         #endif
-        """ % (pin, pin, pin, pin, pin)
+        """ % (pin, pin, pin, pin, pin, pin)
 
 
 code = """
@@ -87,7 +91,7 @@ code = """
 
 
 
-#ifdef ENABLE_DIGITAL_POLLER
+#ifdef ENABLE_ANALOG_POLLER
     void analog_pin_init(){
         DEBUG_1("Starting");
         #ifdef ANALOG_USE_EXTERN_REF

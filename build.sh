@@ -26,7 +26,7 @@ tail -n +20 base/code.c > build/code.c
 > build/readSensors.c
 > build/setupLoggers.c
 > build/logMessage.c
-> build/flushMessage.c
+> build/flushLoggers.c
 
 for i in modules/pollers/*
 do
