@@ -148,6 +148,16 @@ void loop(){
 	DEBUG_1("Finished");
 }
 
+
+void logMessage(const char* name, int value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[8];
+    sprintf (buf, "%i", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
 void logMessage(const char * name, String value, const char * unit){
     DEBUG_1("Begin");
     char *buf;
