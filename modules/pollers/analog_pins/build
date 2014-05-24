@@ -21,40 +21,48 @@
 
 init = ""
 for pin in range(16):
+    if pin >= 6 and pin < 12 :
+        init += """#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)\n"""
+    elif pin >= 12:
+        init += """#if defined(__AVR_ATmega2560__)\n"""
     init += """
-        #ifdef A%d
-            #ifdef AP_SAMPLE_PIN_%d
+        #ifdef AP_SAMPLE_PIN_%d
+            #ifdef DEBUG_ANALOG_POLLER
+                DEBUG_5("Setting pin %d to input");
+            #endif
+            pinMode(%d, INPUT);
+            #ifdef DEBUG_ANALOG_POLLER
+                DEBUG_3("Successfully set pin A%d to input");
+            #endif
+            #ifdef AP_HOLD_PIN_%d_HIGH
                 #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_5("Setting pin %d to input");
+                    DEBUG_5("Setting pin %d pullup HIGH");
                 #endif
-                pinMode(%d, INPUT);
+                digitalWrite(A%d,HIGH);
                 #ifdef DEBUG_ANALOG_POLLER
-                    DEBUG_3("Successfully set pin A%d to input");
+                    DEBUG_3("Successfully set pin A%d pullup HIGH");
                 #endif
-                #ifdef AP_HOLD_PIN_%d_HIGH
-                    #ifdef DEBUG_ANALOG_POLLER
-                        DEBUG_5("Setting pin %d pullup HIGH");
-                    #endif
-                    digitalWrite(A%d,HIGH);
-                    #ifdef DEBUG_ANALOG_POLLER
-                        DEBUG_3("Successfully set pin A%d pullup HIGH");
-                    #endif
-                #elif
-                    #ifdef DEBUG_ANALOG_POLLER
-                        DEBUG_5("Setting pin A%d pullup LOW");
-                    #endif
-                    digitalWrite(A%d,LOW);
-                    #ifdef DEBUG_ANALOG_POLLER
-                        DEBUG_3("Successfully set pin A%d pullup LOW");
-                    #endif
+            #elif
+                #ifdef DEBUG_ANALOG_POLLER
+                    DEBUG_5("Setting pin A%d pullup LOW");
+                #endif
+                digitalWrite(A%d,LOW);
+                #ifdef DEBUG_ANALOG_POLLER
+                    DEBUG_3("Successfully set pin A%d pullup LOW");
                 #endif
             #endif
-        #endif""" % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+        #endif
+        """ % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+    if pin >= 6:
+        init += """#endif\n"""
 
 sample = ""
 for pin in range(16):
+    if pin >= 6 and pin < 12 :
+        sample += """#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)\n"""
+    elif pin >= 12:
+        sample += """#if defined(__AVR_ATmega2560__)\n"""
     sample += """
-        #ifdef A%d
             #ifdef AP_SAMPLE_PIN_%d
                 #ifdef DEBUG_ANALOG_POLLER
                     DEBUG_5("Reading value for pin %d");
@@ -64,9 +72,9 @@ for pin in range(16):
                     DEBUG_2("Sucessfully read and logged value for pin %d");
                 #endif
             #endif
-        #endif
-        """ % (pin, pin, pin, pin, pin, pin)
-
+        """ % (pin, pin, pin, pin, pin)
+    if pin >= 6:
+        sample += """#endif\n"""
 
 code = """
 /* Copyright 2014 David Irvine

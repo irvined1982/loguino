@@ -51,6 +51,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_1
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 1 to input");
@@ -77,6 +78,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_2
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 2 to input");
@@ -103,6 +105,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_3
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 3 to input");
@@ -129,6 +132,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_4
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 4 to input");
@@ -155,6 +159,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_5
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 5 to input");
@@ -181,6 +186,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_6
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 6 to input");
@@ -207,6 +213,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_7
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 7 to input");
@@ -233,6 +240,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_8
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 8 to input");
@@ -259,6 +267,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_9
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 9 to input");
@@ -285,6 +294,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_10
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 10 to input");
@@ -311,6 +321,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_11
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 11 to input");
@@ -337,6 +348,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_12
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 12 to input");
@@ -363,6 +375,7 @@
                 #endif
             #endif
         #endif
+        
         #ifdef DP_SAMPLE_PIN_13
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 13 to input");
@@ -389,6 +402,8 @@
                 #endif
             #endif
         #endif
+        #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_14
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 14 to input");
@@ -415,6 +430,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_15
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 15 to input");
@@ -441,6 +459,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_16
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 16 to input");
@@ -467,6 +488,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_17
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 17 to input");
@@ -493,6 +517,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_18
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 18 to input");
@@ -519,6 +546,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_19
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 19 to input");
@@ -545,6 +575,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_20
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 20 to input");
@@ -571,6 +604,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_21
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 21 to input");
@@ -597,6 +633,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_22
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 22 to input");
@@ -623,6 +662,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_23
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 23 to input");
@@ -649,6 +691,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_24
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 24 to input");
@@ -675,6 +720,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_25
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 25 to input");
@@ -701,6 +749,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_26
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 26 to input");
@@ -727,6 +778,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_27
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 27 to input");
@@ -753,6 +807,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_28
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 28 to input");
@@ -779,6 +836,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_29
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 29 to input");
@@ -805,6 +865,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_30
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 30 to input");
@@ -831,6 +894,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_31
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 31 to input");
@@ -857,6 +923,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_32
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 32 to input");
@@ -883,6 +952,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_33
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 33 to input");
@@ -909,6 +981,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_34
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 34 to input");
@@ -935,6 +1010,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_35
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 35 to input");
@@ -961,6 +1039,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_36
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 36 to input");
@@ -987,6 +1068,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_37
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 37 to input");
@@ -1013,6 +1097,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_38
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 38 to input");
@@ -1039,6 +1126,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_39
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 39 to input");
@@ -1065,6 +1155,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_40
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 40 to input");
@@ -1091,6 +1184,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_41
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 41 to input");
@@ -1117,6 +1213,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_42
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 42 to input");
@@ -1143,6 +1242,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_43
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 43 to input");
@@ -1169,6 +1271,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_44
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 44 to input");
@@ -1195,6 +1300,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_45
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 45 to input");
@@ -1221,6 +1329,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_46
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 46 to input");
@@ -1247,6 +1358,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_47
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 47 to input");
@@ -1273,6 +1387,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_48
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 48 to input");
@@ -1299,6 +1416,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_49
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 49 to input");
@@ -1325,6 +1445,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_50
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 50 to input");
@@ -1351,6 +1474,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_51
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 51 to input");
@@ -1377,6 +1503,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_52
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 52 to input");
@@ -1403,6 +1532,9 @@
                 #endif
             #endif
         #endif
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_53
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Setting pin 53 to input");
@@ -1429,6 +1561,8 @@
                 #endif
             #endif
         #endif
+        #endif
+
         DEBUG_1("Finished");
     }
 
@@ -1799,7 +1933,8 @@
                 DEBUG_2("Successfully logged value for pin 13");
             #endif
         #endif
-        
+        #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_14
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 14");
@@ -1825,7 +1960,9 @@
                 DEBUG_2("Successfully logged value for pin 14");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_15
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 15");
@@ -1851,7 +1988,9 @@
                 DEBUG_2("Successfully logged value for pin 15");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_16
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 16");
@@ -1877,7 +2016,9 @@
                 DEBUG_2("Successfully logged value for pin 16");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_17
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 17");
@@ -1903,7 +2044,9 @@
                 DEBUG_2("Successfully logged value for pin 17");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_18
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 18");
@@ -1929,7 +2072,9 @@
                 DEBUG_2("Successfully logged value for pin 18");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_19
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 19");
@@ -1955,7 +2100,9 @@
                 DEBUG_2("Successfully logged value for pin 19");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_20
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 20");
@@ -1981,7 +2128,9 @@
                 DEBUG_2("Successfully logged value for pin 20");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_21
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 21");
@@ -2007,7 +2156,9 @@
                 DEBUG_2("Successfully logged value for pin 21");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_22
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 22");
@@ -2033,7 +2184,9 @@
                 DEBUG_2("Successfully logged value for pin 22");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_23
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 23");
@@ -2059,7 +2212,9 @@
                 DEBUG_2("Successfully logged value for pin 23");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_24
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 24");
@@ -2085,7 +2240,9 @@
                 DEBUG_2("Successfully logged value for pin 24");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_25
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 25");
@@ -2111,7 +2268,9 @@
                 DEBUG_2("Successfully logged value for pin 25");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_26
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 26");
@@ -2137,7 +2296,9 @@
                 DEBUG_2("Successfully logged value for pin 26");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_27
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 27");
@@ -2163,7 +2324,9 @@
                 DEBUG_2("Successfully logged value for pin 27");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_28
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 28");
@@ -2189,7 +2352,9 @@
                 DEBUG_2("Successfully logged value for pin 28");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_29
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 29");
@@ -2215,7 +2380,9 @@
                 DEBUG_2("Successfully logged value for pin 29");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_30
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 30");
@@ -2241,7 +2408,9 @@
                 DEBUG_2("Successfully logged value for pin 30");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_31
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 31");
@@ -2267,7 +2436,9 @@
                 DEBUG_2("Successfully logged value for pin 31");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_32
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 32");
@@ -2293,7 +2464,9 @@
                 DEBUG_2("Successfully logged value for pin 32");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_33
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 33");
@@ -2319,7 +2492,9 @@
                 DEBUG_2("Successfully logged value for pin 33");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_34
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 34");
@@ -2345,7 +2520,9 @@
                 DEBUG_2("Successfully logged value for pin 34");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_35
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 35");
@@ -2371,7 +2548,9 @@
                 DEBUG_2("Successfully logged value for pin 35");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_36
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 36");
@@ -2397,7 +2576,9 @@
                 DEBUG_2("Successfully logged value for pin 36");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_37
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 37");
@@ -2423,7 +2604,9 @@
                 DEBUG_2("Successfully logged value for pin 37");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_38
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 38");
@@ -2449,7 +2632,9 @@
                 DEBUG_2("Successfully logged value for pin 38");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_39
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 39");
@@ -2475,7 +2660,9 @@
                 DEBUG_2("Successfully logged value for pin 39");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_40
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 40");
@@ -2501,7 +2688,9 @@
                 DEBUG_2("Successfully logged value for pin 40");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_41
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 41");
@@ -2527,7 +2716,9 @@
                 DEBUG_2("Successfully logged value for pin 41");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_42
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 42");
@@ -2553,7 +2744,9 @@
                 DEBUG_2("Successfully logged value for pin 42");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_43
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 43");
@@ -2579,7 +2772,9 @@
                 DEBUG_2("Successfully logged value for pin 43");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_44
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 44");
@@ -2605,7 +2800,9 @@
                 DEBUG_2("Successfully logged value for pin 44");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_45
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 45");
@@ -2631,7 +2828,9 @@
                 DEBUG_2("Successfully logged value for pin 45");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_46
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 46");
@@ -2657,7 +2856,9 @@
                 DEBUG_2("Successfully logged value for pin 46");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_47
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 47");
@@ -2683,7 +2884,9 @@
                 DEBUG_2("Successfully logged value for pin 47");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_48
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 48");
@@ -2709,7 +2912,9 @@
                 DEBUG_2("Successfully logged value for pin 48");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_49
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 49");
@@ -2735,7 +2940,9 @@
                 DEBUG_2("Successfully logged value for pin 49");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_50
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 50");
@@ -2761,7 +2968,9 @@
                 DEBUG_2("Successfully logged value for pin 50");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_51
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 51");
@@ -2787,7 +2996,9 @@
                 DEBUG_2("Successfully logged value for pin 51");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_52
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 52");
@@ -2813,7 +3024,9 @@
                 DEBUG_2("Successfully logged value for pin 52");
             #endif
         #endif
-        
+        #endif
+#if defined(__AVR_ATmega2560__)
+
         #ifdef DP_SAMPLE_PIN_53
             #ifdef DEBUG_DIGITAL_POLLER
                 DEBUG_5("Reading value for pin 53");
@@ -2839,7 +3052,8 @@
                 DEBUG_2("Successfully logged value for pin 53");
             #endif
         #endif
-        
+        #endif
+
         DEBUG_1("Finished");
     }
 #endif

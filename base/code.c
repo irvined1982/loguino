@@ -106,17 +106,21 @@ int freeMemory() {
 
 
 void debug(const char * fname, const char * func, const int lnum, const  char * message){
+	String s;
 	char txt[20];
-	sprintf(txt, "%9d,%9d,", millis(), freeMemory() );
-	DEBUG_SERIAL_DEV.print(txt);
-	DEBUG_SERIAL_DEV.print(", ");
-	DEBUG_SERIAL_DEV.print(fname);
-	DEBUG_SERIAL_DEV.print(", ");
-	DEBUG_SERIAL_DEV.print(func);
-	DEBUG_SERIAL_DEV.print(", ");
-	DEBUG_SERIAL_DEV.print(lnum);
-	DEBUG_SERIAL_DEV.print(", ");
-	DEBUG_SERIAL_DEV.println(message);
+	sprintf(txt, "%9d,", millis() );
+	s="";
+
+	s+= txt;
+	s+= ", ";
+	s+= fname;
+	s+= ", ";
+	s+= func;
+	s+= ", ";
+	s+= lnum;
+	s+= ", ";
+	s+= message;
+	DEBUG_SERIAL_DEV.println(s);
 }
 
 void setup(){
@@ -124,7 +128,7 @@ void setup(){
 	#ifdef ENABLE_DEBUG
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
-		        DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
+		        //DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
 			#endif
 		#endif
 	#endif

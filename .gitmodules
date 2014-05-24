@@ -4,3 +4,6 @@
 [submodule "3rdParty/ELM327"]
 	path = 3rdParty/ELM327
 	url = https://github.com/irvined1982/arduino-ELM327.git
+[submodule "3rdParty/DallasTemperature"]
+	path = 3rdParty/DallasTemperature
+	url = https://github.com/milesburton/Arduino-Temperature-Control-Library.git

@@ -1,4 +1,3 @@
-
 /* Copyright 2014 David Irvine
  *
  * This file is part of Loguino
@@ -19,11 +18,7 @@
 */
 
 
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
-
-//#define ENABLE_GPS_POLLER
-#define DEBUG_GPS_POLLER
-#define GPS_LED_PIN 10
-#define GPS_SERIAL_DEV Serial1
-#define GPS_SERIAL_DEV_SPEED 4800
 

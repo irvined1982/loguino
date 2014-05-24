@@ -17,11 +17,9 @@
  *
 */
 
-#define ENABLE_DEBUG
+//#define ENABLE_DEBUG
 #define DEBUG_LEVEL 2
+#define DEBUG_SERIAL_DEV Serial
+#define DEBUG_SERIAL_BAUD 115200
 
-#ifdef ENABLE_DEBUG
-  #define DEBUG_SERIAL_DEV Serial
-  #define DEBUG_SERIAL_BAUD 115200
-#endif
 

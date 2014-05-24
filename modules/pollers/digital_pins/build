@@ -21,6 +21,10 @@
 
 init = ""
 for pin in range(54):
+    if pin >= 14 and pin < 20 :
+        init += """#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)\n"""
+    elif pin >= 20:
+        init += """#if defined(__AVR_ATmega2560__)\n"""
     init += """
         #ifdef DP_SAMPLE_PIN_%d
             #ifdef DEBUG_DIGITAL_POLLER
@@ -47,10 +51,16 @@ for pin in range(54):
                     DEBUG_3("Successfully set pin %d pullup LOW");
                 #endif
             #endif
-        #endif""" % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
-
+        #endif
+        """ % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
+    if pin >= 14:
+        init += """#endif\n"""
 sample = ""
 for pin in range(54):
+    if pin >= 14 and pin < 20 :
+        sample += """#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega2560__)\n"""
+    elif pin >= 20:
+        sample += """#if defined(__AVR_ATmega2560__)\n"""
     sample += """
         #ifdef DP_SAMPLE_PIN_%d
             #ifdef DEBUG_DIGITAL_POLLER
@@ -78,7 +88,8 @@ for pin in range(54):
             #endif
         #endif
         """ % (pin, pin, pin, pin, pin, pin, pin, pin, pin, pin)
-
+    if pin >= 14:
+        sample += """#endif\n"""
 
 code = """
 /* Copyright 2014 David Irvine
