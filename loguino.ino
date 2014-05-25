@@ -46,6 +46,13 @@
 
 
 
+//#define ENABLE_HS1101_POLLER
+#define DEBUG_HS1101_POLLER
+#define HS1101_PIN 4
+
+
+
+
 #define ENABLE_ANALOG_POLLER
 #define DEBUG_ANALOG_POLLER
 
@@ -427,6 +434,10 @@
 #include <DallasTemperature.h>
 
 
+
+
+
+#include <stdlib.h>
 #include <NMEA.h>
 
 
@@ -698,6 +709,59 @@ void logMessage(const char * name, String value, const char * unit){
 
 
         #ifdef DEBUG_DS18B20_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+#ifdef ENABLE_HS1101_POLLER
+    #define HS1101_RH_CONSTANT 12169
+
+    void HS1101_init(){
+        #ifdef DEBUG_HS1101_POLLER
+            DEBUG_1("Starting");
+        #endif
+        return;
+        #ifdef DEBUG_HS1101_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void HS1101_sample(){
+        #ifdef DEBUG_HS1101_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+       	//! The time the capacitor was fully discharged
+        unsigned long startTime;
+        //! The time in micros() to abort if there is no change from the sensor
+        unsigned long timeoutTime;
+        //! The time in micros() when the sensor changed
+        unsigned long endTime;
+        //! Boolean value indicating if the sensor has changed.
+        bool changed;
+        changed=false;
+        char buf[33];
+
+        startTime=micros();
+        timeoutTime=startTime+100000;
+        pinMode(HS1101_PIN, OUTPUT);
+        digitalWrite(HS1101_PIN, HIGH);
+        delay(1);
+        pinMode(HS1101_PIN, INPUT);
+        digitalWrite(HS1101_PIN, LOW);
+        while(!changed && micros()<timeoutTime){
+            changed=!digitalRead(HS1101_PIN);
+            if (changed){
+                endTime=micros()-startTime;
+                endTime=endTime/2;
+                endTime=endTime*10;
+                endTime=endTime-HS1101_RH_CONSTANT;
+                endTime=(endTime)/24;
+                atoi(endTime, buf, 10);
+                logMessage("HS1101.Humidity", buf, "%");
+            }
+    	}
+    #ifdef DEBUG_HS1101_POLLER
             DEBUG_1("Finished");
         #endif
     }
@@ -4605,6 +4669,9 @@ void readSensors(){
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_sample();
 #endif
+#ifdef ENABLE_HS1101_POLLER
+    HS1101_sample();
+#endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_sample();
 #endif
@@ -4625,6 +4692,9 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_init();
+#endif
+#ifdef ENABLE_HS1101_POLLER
+    HS1101_init();
 #endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_init();
