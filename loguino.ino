@@ -37,8 +37,8 @@
 
 
 
-#define ENABLE_DS18B20_POLLER
-#define DEBUG_DS18B20_POLLER
+//#define ENABLE_DS18B20_POLLER
+//#define DEBUG_DS18B20_POLLER
 #define DS18B20_PIN 1
 
 
@@ -47,8 +47,15 @@
 
 
 //#define ENABLE_HS1101_POLLER
-#define DEBUG_HS1101_POLLER
+//#define DEBUG_HS1101_POLLER
 #define HS1101_PIN 4
+
+
+
+
+#define ENABLE_LIS331_POLLER
+//#define DEBUG_LIS331_POLLER
+
 
 
 
@@ -400,9 +407,9 @@
 
 
 //#define ENABLE_GPS_POLLER
-#define DEBUG_GPS_POLLER
+//#define DEBUG_GPS_POLLER
 #define GPS_LED_PIN 10
-#define GPS_SERIAL_DEV Serial1
+#define GPS_SERIAL_DEV Serial
 #define GPS_SERIAL_DEV_SPEED 4800
 
 
@@ -410,7 +417,7 @@
 
 
 //#define ENABLE_TMP102_POLLER
-#define DEBUG_TMP102_POLLER
+//#define DEBUG_TMP102_POLLER
 #define TMP102_I2C_ADDRESS 72
 
 
@@ -438,6 +445,11 @@
 
 
 #include <stdlib.h>
+
+
+#include <Wire.h>
+#include <LIS331.h>
+
 #include <NMEA.h>
 
 
@@ -579,9 +591,10 @@ void loop(){
 }
 
 
+
 void logMessage(const char* name, int value, const char* unit){
     DEBUG_1("Begin");
-    char buf[8];
+    char buf[33];
     sprintf (buf, "%i", value);
     logMessage(name, buf, unit);
     DEBUG_4("Logged");
@@ -757,11 +770,46 @@ void logMessage(const char * name, String value, const char * unit){
                 endTime=endTime*10;
                 endTime=endTime-HS1101_RH_CONSTANT;
                 endTime=(endTime)/24;
-                atoi(endTime, buf, 10);
+                sprintf(buf, "%lu", endTime);
                 logMessage("HS1101.Humidity", buf, "%");
             }
     	}
     #ifdef DEBUG_HS1101_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+
+
+LIS331 lis;
+#ifdef ENABLE_LIS331_POLLER
+    void LIS331_init(){
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Starting");
+        #endif
+        lis.setPowerStatus(LR_POWER_NORM);
+        lis.setXEnable(true);
+        lis.setYEnable(true);
+        lis.setZEnable(true);
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void LIS331_sample(){
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Starting");
+        #endif
+        char buf[33];
+        int16_t val;
+        lis.getXValue(&val);
+        logMessage("LIS331.X", val, "mG");
+        lis.getYValue(&val);
+        logMessage("LIS331.Y", val, "mG");
+        lis.getZValue(&val);
+        logMessage("LIS331.Z", val, "mG");
+
+        #ifdef DEBUG_LIS331_POLLER
             DEBUG_1("Finished");
         #endif
     }
@@ -4672,6 +4720,9 @@ void readSensors(){
 #ifdef ENABLE_HS1101_POLLER
     HS1101_sample();
 #endif
+#ifdef ENABLE_LIS331_POLLER
+    LIS331_sample();
+#endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_sample();
 #endif
@@ -4695,6 +4746,9 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_HS1101_POLLER
     HS1101_init();
+#endif
+#ifdef ENABLE_LIS331_POLLER
+    LIS331_init();
 #endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_init();

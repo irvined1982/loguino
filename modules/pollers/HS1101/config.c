@@ -22,5 +22,5 @@
 
 
 //#define ENABLE_HS1101_POLLER
-#define DEBUG_HS1101_POLLER
+//#define DEBUG_HS1101_POLLER
 #define HS1101_PIN 4

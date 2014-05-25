@@ -1,4 +1,3 @@
-
 /* Copyright 2014 David Irvine
  *
  * This file is part of Loguino
@@ -20,10 +19,6 @@
 
 
 
-
-//#define ENABLE_GPS_POLLER
-//#define DEBUG_GPS_POLLER
-#define GPS_LED_PIN 10
-#define GPS_SERIAL_DEV Serial
-#define GPS_SERIAL_DEV_SPEED 4800
+#include <Wire.h>
+#include <LIS331.h>
 

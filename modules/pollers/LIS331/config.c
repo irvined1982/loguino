@@ -21,9 +21,6 @@
 
 
 
-//#define ENABLE_GPS_POLLER
-//#define DEBUG_GPS_POLLER
-#define GPS_LED_PIN 10
-#define GPS_SERIAL_DEV Serial
-#define GPS_SERIAL_DEV_SPEED 4800
+#define ENABLE_LIS331_POLLER
+//#define DEBUG_LIS331_POLLER
 

@@ -153,9 +153,10 @@ void loop(){
 }
 
 
+
 void logMessage(const char* name, int value, const char* unit){
     DEBUG_1("Begin");
-    char buf[8];
+    char buf[33];
     sprintf (buf, "%i", value);
     logMessage(name, buf, unit);
     DEBUG_4("Logged");
