@@ -6,7 +6,7 @@
 	url = https://github.com/irvined1982/arduino-ELM327.git
 [submodule "3rdParty/DallasTemperature"]
 	path = 3rdParty/DallasTemperature
-	url = https://github.com/milesburton/Arduino-Temperature-Control-Library.git
+	url = https://github.com/irvined1982/Arduino-Temperature-Control-Library.git
 [submodule "3rdParty/DHT"]
 	path = 3rdParty/DHT
 	url = https://github.com/irvined1982/DHT-sensor-library.git
