@@ -38,7 +38,7 @@
         #endif
         float h = dht.readHumidity();
         float t = dht.readTemperature();
-        buf=[32];
+        char buf[32];
 
         if (isnan(t) ){
             // temperature is NaN
@@ -50,7 +50,7 @@
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_3("Valid Temperature received, logging");
             #endif
-            dtostrf(t, 1, 2, ; buf);
+            dtostrf(t, 1, 2,  buf);
             logMessage("DHT.Temp", buf, "C");
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_2("Temperature Logged");

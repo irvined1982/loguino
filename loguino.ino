@@ -53,7 +53,15 @@
 
 
 
-#define ENABLE_LIS331_POLLER
+#define ENABLE_ITG3200_POLLER
+//#define DEBUG_ITG3200_POLLER
+
+
+
+
+
+
+//#define ENABLE_LIS331_POLLER
 //#define DEBUG_LIS331_POLLER
 
 
@@ -445,6 +453,8 @@
 
 
 #include <stdlib.h>
+#include <Wire.h>
+#include <ITG3200.h>
 
 
 #include <Wire.h>
@@ -637,7 +647,7 @@ void logMessage(const char * name, String value, const char * unit){
         #endif
         float h = dht.readHumidity();
         float t = dht.readTemperature();
-        buf=[32];
+        char buf[32];
 
         if (isnan(t) ){
             // temperature is NaN
@@ -649,7 +659,7 @@ void logMessage(const char * name, String value, const char * unit){
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_3("Valid Temperature received, logging");
             #endif
-            dtostrf(t, 1, 2, ; buf);
+            dtostrf(t, 1, 2,  buf);
             logMessage("DHT.Temp", buf, "C");
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_2("Temperature Logged");
@@ -775,6 +785,42 @@ void logMessage(const char * name, String value, const char * unit){
             }
     	}
     #ifdef DEBUG_HS1101_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+#ifdef ENABLE_ITG3200_POLLER
+    ITG3200 itg = ITG3200();
+    void ITG3200_init(){
+        #ifdef DEBUG_ITG3200_POLLER
+            DEBUG_1("Starting");
+        #endif
+        Wire.begin();
+        delay(1000);
+        itg.init(ITG3200_ADDR_AD0_HIGH);
+        #ifdef DEBUG_ITG3200_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+
+
+    void ITG3200_sample(){
+        #ifdef DEBUG_ITG3200_POLLER
+            DEBUG_1("Starting");
+        #endif
+        float x,y,z;
+
+        if (itg.isRawDataReady()){
+            itg.readGyro(&x,&y,&z);
+
+            logMessage("Gyro.ITG3200.X",x, "Degrees*1000/Second");
+            logMessage("Gyro.ITG3200.Y",y, "Degrees*1000/Second");
+            logMessage("Gyro.ITG3200.Z",z, "Degrees*1000/Second");
+
+        }
+
+        #ifdef DEBUG_ITG3200_POLLER
             DEBUG_1("Finished");
         #endif
     }
@@ -4720,6 +4766,9 @@ void readSensors(){
 #ifdef ENABLE_HS1101_POLLER
     HS1101_sample();
 #endif
+#ifdef ENABLE_ITG3200_POLLER
+    ITG3200_sample();
+#endif
 #ifdef ENABLE_LIS331_POLLER
     LIS331_sample();
 #endif
@@ -4746,6 +4795,9 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_HS1101_POLLER
     HS1101_init();
+#endif
+#ifdef ENABLE_ITG3200_POLLER
+    ITG3200_init();
 #endif
 #ifdef ENABLE_LIS331_POLLER
     LIS331_init();

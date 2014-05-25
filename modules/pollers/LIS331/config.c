@@ -21,6 +21,6 @@
 
 
 
-#define ENABLE_LIS331_POLLER
+//#define ENABLE_LIS331_POLLER
 //#define DEBUG_LIS331_POLLER
 
