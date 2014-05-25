@@ -27,6 +27,16 @@
 
 
 
+//#define ENABLE_DHT_POLLER
+//#define DEBUG_DHT_POLLER
+#define DHT_PIN 3
+#define DHT_TYPE DHT11
+//#define DHT_TYPE DHT22
+//#define DHT_TYPE DHT21
+
+
+
+
 #define ENABLE_DS18B20_POLLER
 #define DEBUG_DS18B20_POLLER
 #define DS18B20_PIN 1
@@ -409,6 +419,10 @@
 	#include <WProgram.h>
 #endif
 
+
+#include <DHT.h>
+#include <stdlib.h>
+
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
@@ -579,6 +593,68 @@ void logMessage(const char * name, String value, const char * unit){
     DEBUG_5("Freed");
     DEBUG_1("Finished");
 }
+
+#ifdef ENABLE_DHT_POLLER
+    DHT dht(DHT_PIN, DHT_TYPE);
+    void DHT_init(){
+        #ifdef DEBUG_DHT_POLLER
+            DEBUG_1("Starting");
+        #endif
+        dht.begin();
+        #ifdef DEBUG_DHT_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+
+    void DHT_sample(){
+        #ifdef DEBUG_DHT_POLLER
+            DEBUG_1("Starting");
+        #endif
+        float h = dht.readHumidity();
+        float t = dht.readTemperature();
+        buf=[32];
+
+        if (isnan(t) ){
+            // temperature is NaN
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_1("Invalid Temperature received, not logging value");
+            #endif
+        }else{
+            // Temperature isnt NaN
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_3("Valid Temperature received, logging");
+            #endif
+            dtostrf(t, 1, 2, ; buf);
+            logMessage("DHT.Temp", buf, "C");
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_2("Temperature Logged");
+            #endif
+        }
+
+        if (isnan(h)){
+            // Humidity is NaN
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_1("Invalid Humidity received, not logging value");
+            #endif
+        }else{
+            // Humidity isnt NaN
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_3("Valid Humidity received, logging");
+            #endif
+            dtostrf(h, 1, 2, buf);
+            logMessage("DHT.Humidity", buf, "%");
+            #ifdef DEBUG_DHT_POLLER
+                DEBUG_2("Humidity Logged");
+            #endif
+        }
+
+        #ifdef DEBUG_DHT_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+
 
 
 #ifdef ENABLE_DS18B20_POLLER
@@ -4523,6 +4599,9 @@ void logMessage(const char * name, String value, const char * unit){
 #endif
 
 void readSensors(){
+#ifdef ENABLE_DHT_POLLER
+    DHT_sample();
+#endif
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_sample();
 #endif
@@ -4541,6 +4620,9 @@ void readSensors(){
 }
 
 void setupPollers(){
+#ifdef ENABLE_DHT_POLLER
+    DHT_init();
+#endif
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_init();
 #endif
