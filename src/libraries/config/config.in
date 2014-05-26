@@ -1,0 +1,162 @@
+/* Copyright 2011 David Irvine
+ * 
+ * This file is part of Loguino
+ *
+ * Loguino is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Loguino is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with Loguino.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * $Rev: 159 $:   
+ * $Author: irvined $: 
+ * $Date: 2013-01-05 00:27:49 +0000 (Sat, 05 Jan 2013) $:  
+ 
+ */
+#ifndef CONFIG_H
+#define CONFIG_H
+#include <Arduino.h>
+
+
+
+//! Enable the ELM327 OBD Poller
+#cmakedefine ENABLE_ELM_POLLER
+#define ELM_PORT @ELM_PORT@
+
+//! Log simple or extended values
+#define ELMPOLLER_EXTENDED_VALS @ELMPOLLER_EXTENDED_VALS@
+
+#define DEBUG @DEBUG@
+#cmakedefine DEBUG_MODE
+
+
+//! Set the BAUD rate of the ELM device
+#define ELM_BAUD_RATE @ELM_BAUD_RATE@
+
+//! Set the timeout for the ELM device
+#define ELM_TIMEOUT @ELM_TIMEOUT@
+
+//! Enable the GPS Poller
+#cmakedefine ENABLE_GPS_POLLER
+//! Sets the serial device of the GPS
+#define GPS_SERIAL_DEV @GPS_SERIAL_DEV@
+
+//! Set the BAUD rate of the GPS device
+#define GPS_SERIAL_DEV_SPEED @GPS_SERIAL_DEV_SPEED@
+
+#cmakedefine GPS_LED
+#define GPS_LED_PIN @GPS_LED_PIN@
+#cmakedefine ELM_LED
+#define ELM_LED_PIN @ELM_LED_PIN@
+
+//! Enable the Dummy Poller
+#cmakedefine ENABLE_DUMMY_POLLER
+
+//! Enable the Pulse counter Poller
+#cmakedefine ENABLE_PULSE_POLLER
+#define PULSE_DIGITAL_PINS @PULSE_DIGITAL_PINS@
+#define INVERTED_PULSE_DIGITAL_PINS @INVERTED_PULSE_DIGITAL_PINS@
+#define PULSE_AVERAGE_COUNT @PULSE_AVERAGE_COUNT@
+#define PULSE_TIMEOUT @PULSE_TIMEOUT@
+
+
+//! Enable the TMP102 Poller
+#cmakedefine ENABLE_TMP102_POLLER
+#define TMP102_I2C_ADDRESS @TMP102_I2C_ADDRESS@
+
+//! Enable the BMP085 Poller
+#cmakedefine ENABLE_BMP085_POLLER
+
+//! Enable HS1101 Poller
+#cmakedefine ENABLE_HS1101_POLLER
+#define HS1101_PIN @HS1101_PIN@
+
+//! Enable the DS18B20 Poller
+#cmakedefine ENABLE_DS18B20_POLLER
+#define ONE_WIRE_PIN @ONE_WIRE_PIN@
+
+//! Enable the Digital Input Poller
+#cmakedefine ENABLE_DIGITAL_POLLER
+//! A list, comma seperated of digital pins that will be read for a value.
+#define DIGITAL_PINS @DIGITAL_PINS@
+//! A list, comma seperated of pins that will be held high.
+#define INVERT_DIGITAL_PINS @INVERT_DIGITAL_PINS@
+
+
+
+
+//! Enable the Analog Input Poller
+#cmakedefine ENABLE_ANALOG_POLLER
+//! A list, comma seperated of digital pins that will be read for a value.
+#define ANALOG_PINS @ANALOG_PINS@
+
+
+
+//! Enable the serial output module
+#cmakedefine ENABLE_SERIAL_OUTPUT
+//! Serial Port to use, select 1 of the following:
+#define SO_SERIAL_PORT @SO_SERIAL_PORT@
+
+//! The BAUD rate to log at, default is 115200	
+#define SO_SERIAL_PORT_SPEED @SO_SERIAL_PORT_SPEED@
+
+
+
+
+
+//! Enable the ITG 3200 Poller
+#cmakedefine ENABLE_ITG3200_POLLER
+//! The I2C Address of the itg3200
+#define ITG3200_ADDRESS @ITG3200_ADDRESS@
+
+
+
+
+//! Enable the LIS331 Poller
+#cmakedefine ENABLE_LIS331_POLLER
+/**
+ * The Slave ADdress (SAD) associated to the LIS331HH is 001100xb. SDO/SA0 pad 
+ * can be used to modify less significant bit of the device address. If SA0 pad 
+ * is connected to voltage supply, LSb is ‘1’ (address 0011001b) else if SA0 pad 
+ * is connected to ground, LSb value is ‘0’ (address 0011000b). This solution 
+ * permits to connect and address two different accelerometers to the same I2C 
+ * lines.
+ * 		
+ * Bus address is either 24 or 25 
+ */
+#define LIS_BUS_ADDRESS @LIS_BUS_ADDRESS@
+
+
+
+#cmakedefine ENABLE_ETHERNET_LOGGER
+#define ETHERNET_MAC_ADDRESS @ETHERNET_MAC_ADDRESS@
+#define ETHERNET_IP_ADDRESS @ETHERNET_IP_ADDRESS@
+#define ETHERNET_DNS_ADDRESS @ETHERNET_DNS_ADDRESS@
+#define ETHERNET_GW_ADDRESS @ETHERNET_GW_ADDRESS@
+#define ETHERNET_NETMASK @ETHERNET_NETMASK@
+
+
+//! Enable the SD Output Module
+#cmakedefine ENABLE_SD_OUTPUT
+//! The pin that the output LED is connected to, this lights up when 
+//! the SD card module has found a card, and is writing data to it.
+#define SD_ACTIVE_PIN @SD_ACTIVE_PIN@
+
+//! Enable the MegaSquirt Poller
+#cmakedefine ENABLE_MS_POLLER
+//! The number of polls to skip after a timeout
+#define MS_WAIT_TIME @MS_WAIT_TIME@
+#define MS_PORT @MS_PORT@
+
+//! When the megasquirt is online, this pin will be high.  Used to show a status LED.
+#define MS_STATUS_PIN @MS_STATUS_PIN@
+
+
+#endif
