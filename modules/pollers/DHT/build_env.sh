@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=DHT_sample
 INIT_FUNCTION=DHT_init
 ENABLE_VARIABLE=ENABLE_DHT_POLLER
+MODULE_NAME="DHT Sensors"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/dht11-humidity-and-temperature-sensor/"

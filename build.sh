@@ -27,16 +27,43 @@ tail -n +20 base/code.c > build/code.c
 > build/setupLoggers.c
 > build/logMessage.c
 > build/flushLoggers.c
+echo "
+/*
+
+###############################################################################
+###############################################################################
+#
+# Module Configuration
+#
+###############################################################################
+###############################################################################
+
+*/" >> build/config.c
 
 for i in modules/pollers/*
 do
     [ -e $i/build ] && ( cd $i; ./build ) # Run the build if there is anything to be built
+    . $i/build_env.sh
+    echo "/*
+###############################################################################
+###############################################################################" >> build/config.c
+    echo >> build/config.c
+    echo $MODULE_NAME >> build/config.c
+    echo >> build/config.c
+    echo "###############################################################################" >> build/config.c
+    echo >> build/config.c
+    [ -e $i/description.txt ] && cat $i/description.txt >> build/config.c
+    echo "###############################################################################" >> build/config.c
+    echo >> build/config.c
+    echo "For build and configuration information see the following url." >> build/config.c
+    echo >> build/config.c
+    echo $MODULE_URL >> build/config.c
+    echo >> build/config.c
+    echo "*/" >> build/config.c
 
 	[ -e $i/config.c ] && tail -n +20 $i/config.c >> build/config.c
 	[ -e $i/include.c ] && tail -n +20 $i/include.c >> build/include.c
 	[ -e $i/code.c ] && tail -n +20 $i/code.c >> build/code.c
-
-	. $i/build_env.sh
 
 	echo "#ifdef $ENABLE_VARIABLE" >> build/readSensors.c
 	echo "    $SAMPLE_FUNCTION();" >> build/readSensors.c
@@ -52,11 +79,28 @@ for i in modules/loggers/*
 do
     [ -e $i/build ] && ( cd $i; ./build ) # Run the build if there is anything to be built
 
+    . $i/build_env.sh
+    echo "/*
+###############################################################################
+###############################################################################" >> build/config.c
+    echo >> build/config.c
+    echo $MODULE_NAME >> build/config.c
+    echo >> build/config.c
+    echo "###############################################################################" >> build/config.c
+    echo >> build/config.c
+    [ -e $i/description.txt ] && cat $i/description.txt >> build/config.c
+    echo "###############################################################################" >> build/config.c
+    echo >> build/config.c
+    echo "For build and configuration information see the following url." >> build/config.c
+    echo >> build/config.c
+    echo $MODULE_URL >> build/config.c
+    echo >> build/config.c
+    echo "*/" >> build/config.c
+
 	[ -e $i/config.c ] && tail -n +20 $i/config.c >> build/config.c
 	[ -e $i/include.c ] && tail -n +20 $i/include.c >> build/include.c
 	[ -e $i/code.c ] && tail -n +20 $i/code.c >> build/code.c
 
-	. $i/build_env.sh
 
 	echo "#ifdef $ENABLE_VARIABLE" >> build/logMessage.c
 	echo "    $LOG_FUNCTION(name, value, unit);" >> build/logMessage.c
@@ -71,6 +115,19 @@ do
 	echo "#endif" >> build/flushLoggers.c
 
 done
+
+echo "
+/*
+
+###############################################################################
+###############################################################################
+#
+# End Module Configuration
+#
+###############################################################################
+###############################################################################
+
+*/" >> build/config.c
 
 
 # Sensors

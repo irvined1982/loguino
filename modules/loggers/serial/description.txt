@@ -1,0 +1,4 @@
+Loguino can send log output to any available serial interface.  When enabled,
+each time a message is logged, it is sent out the chosen serial interface.
+
+

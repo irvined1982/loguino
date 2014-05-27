@@ -142,17 +142,30 @@ config="""
 */
 
 
+// If enabled, Loguino will poll analog pins for their value each iteration.
+// #define ENABLE_ANALOG_POLLER
 
+// If defined, debug messages shall be enabled for this poller
+//#define DEBUG_ANALOG_POLLER
 
-#define ENABLE_ANALOG_POLLER
-#define DEBUG_ANALOG_POLLER
+// If enabled, will use the external reference voltage.
+// See: http://arduino.cc/en/Reference/AnalogReference
+// #define ANALOG_USE_EXTERN_REF
 """
 for pin in range(16):
     config += """
-#define AP_SAMPLE_PIN_%d
+// ----- PIN: %d -----
+
+// If enabled, Analog Pin %d will be polled.
+//#define AP_SAMPLE_PIN_%d
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_%d_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_%d_NAME "ap.pin%d"
-""" % (pin, pin, pin, pin)
+
+""" % (pin, pin, pin, pin, pin, pin)
 
 f=open("config.c","w")
 f.write(config)

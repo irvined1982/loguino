@@ -18,8 +18,9 @@
 #
 
 
-
 LOG_FUNCTION=log_serial_logger
 FLUSH_FUNCTION=flush_serial_logger
 INIT_FUNCTION=init_serial_logger
 ENABLE_VARIABLE=ENABLE_SERIAL_LOGGER
+MODULE_NAME="Serial Output"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a-serial-interface/"

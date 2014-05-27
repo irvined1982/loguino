@@ -1,0 +1,2 @@
+Loguino can log the value of any of the connected analog pins.  Each enabled
+pin is polled each cycle and the value of the pin logged.

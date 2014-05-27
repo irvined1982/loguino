@@ -1,0 +1,4 @@
+The DHT11 is a low cost temperature and humidity sensor that uses a single
+digital pin for communication.  It uses a capacitive humidity sensor and a
+thermistor to measure the surrounding air, and spits out a digital signal on
+the data pin (no analog input pins needed).

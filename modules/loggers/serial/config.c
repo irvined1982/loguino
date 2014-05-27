@@ -19,9 +19,22 @@
 
 
 
+// If enabled, Loguino will write log data to the configured
+// serial interface.
 #define ENABLE_SERIAL_LOGGER
-#define DEBUG_SERIAL_LOGGER
+// If defined, debug messages shall be enabled for the
+// serial logger.
+//#define DEBUG_SERIAL_LOGGER
+#ifdef ENABLE_DEBUG
+    // If enabled, the serial poller will not initialize the serial interface.
+    #define NO_SERIAL_INIT
+#endif
+// The speed to output data on the chosen serial interface.
+// Note: If NO_SERIAL_INIT is defined, this will be ignored.
 #define SERIAL_LOGGER_BAUD 115200
+// The physical interface to use, on the Arduino Mega, this can be Serial, Serial1, Serial2, or Serial3.
+// Note: If NO_SERIAL_INIT is defined, this will be ignored.
 #define SERIAL_LOGGER_DEVICE Serial
+
 
 

@@ -20,10 +20,17 @@
 
 
 
-
+// When defined, the poller is enabled.
 //#define ENABLE_DHT_POLLER
+
+// When enabled, debug output for the DHT poller will be displayed.
 //#define DEBUG_DHT_POLLER
+
+// The digital pin that the DHT sensor is connected to. Default: 3
+
 #define DHT_PIN 3
+
+// The type of sensor being used, default: DHT11 can be: DHT11, DHT22, DHT21
 #define DHT_TYPE DHT11
 //#define DHT_TYPE DHT22
 //#define DHT_TYPE DHT21

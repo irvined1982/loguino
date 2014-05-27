@@ -24,6 +24,33 @@
 
 
 
+/*
+
+###############################################################################
+###############################################################################
+#
+# Module Configuration
+#
+###############################################################################
+###############################################################################
+
+*/
+/*
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+
+
+*/
+
 
 
 
@@ -33,6 +60,21 @@
 #define DHT_TYPE DHT11
 //#define DHT_TYPE DHT22
 //#define DHT_TYPE DHT21
+/*
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+
+
+*/
 
 
 
@@ -42,6 +84,21 @@
 #define DS18B20_PIN 1
 
 
+/*
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+
+
+*/
 
 
 
@@ -49,6 +106,21 @@
 //#define ENABLE_HS1101_POLLER
 //#define DEBUG_HS1101_POLLER
 #define HS1101_PIN 4
+/*
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+
+
+*/
 
 
 
@@ -57,6 +129,21 @@
 //#define DEBUG_ITG3200_POLLER
 
 
+/*
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+
+
+*/
 
 
 
@@ -64,76 +151,241 @@
 //#define ENABLE_LIS331_POLLER
 //#define DEBUG_LIS331_POLLER
 
+/*
+###############################################################################
+###############################################################################
+
+Analog Input Pins
+
+###############################################################################
+
+Loguino can log the value of any of the connected analog pins.  Each enabled
+pin is polled each cycle and the value of the pin logged.
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+
+*/
 
 
+// If enabled, Loguino will poll analog pins for their value each iteration.
+// #define ENABLE_ANALOG_POLLER
 
+// If defined, debug messages shall be enabled for this poller
+//#define DEBUG_ANALOG_POLLER
 
-#define ENABLE_ANALOG_POLLER
-#define DEBUG_ANALOG_POLLER
+// If enabled, will use the external reference voltage.
+// See: http://arduino.cc/en/Reference/AnalogReference
+// #define ANALOG_USE_EXTERN_REF
 
-#define AP_SAMPLE_PIN_0
+// ----- PIN: 0 -----
+
+// If enabled, Analog Pin 0 will be polled.
+//#define AP_SAMPLE_PIN_0
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_0_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_0_NAME "ap.pin0"
 
-#define AP_SAMPLE_PIN_1
+
+// ----- PIN: 1 -----
+
+// If enabled, Analog Pin 1 will be polled.
+//#define AP_SAMPLE_PIN_1
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_1_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_1_NAME "ap.pin1"
 
-#define AP_SAMPLE_PIN_2
+
+// ----- PIN: 2 -----
+
+// If enabled, Analog Pin 2 will be polled.
+//#define AP_SAMPLE_PIN_2
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_2_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_2_NAME "ap.pin2"
 
-#define AP_SAMPLE_PIN_3
+
+// ----- PIN: 3 -----
+
+// If enabled, Analog Pin 3 will be polled.
+//#define AP_SAMPLE_PIN_3
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_3_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_3_NAME "ap.pin3"
 
-#define AP_SAMPLE_PIN_4
+
+// ----- PIN: 4 -----
+
+// If enabled, Analog Pin 4 will be polled.
+//#define AP_SAMPLE_PIN_4
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_4_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_4_NAME "ap.pin4"
 
-#define AP_SAMPLE_PIN_5
+
+// ----- PIN: 5 -----
+
+// If enabled, Analog Pin 5 will be polled.
+//#define AP_SAMPLE_PIN_5
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_5_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_5_NAME "ap.pin5"
 
-#define AP_SAMPLE_PIN_6
+
+// ----- PIN: 6 -----
+
+// If enabled, Analog Pin 6 will be polled.
+//#define AP_SAMPLE_PIN_6
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_6_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_6_NAME "ap.pin6"
 
-#define AP_SAMPLE_PIN_7
+
+// ----- PIN: 7 -----
+
+// If enabled, Analog Pin 7 will be polled.
+//#define AP_SAMPLE_PIN_7
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_7_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_7_NAME "ap.pin7"
 
-#define AP_SAMPLE_PIN_8
+
+// ----- PIN: 8 -----
+
+// If enabled, Analog Pin 8 will be polled.
+//#define AP_SAMPLE_PIN_8
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_8_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_8_NAME "ap.pin8"
 
-#define AP_SAMPLE_PIN_9
+
+// ----- PIN: 9 -----
+
+// If enabled, Analog Pin 9 will be polled.
+//#define AP_SAMPLE_PIN_9
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_9_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_9_NAME "ap.pin9"
 
-#define AP_SAMPLE_PIN_10
+
+// ----- PIN: 10 -----
+
+// If enabled, Analog Pin 10 will be polled.
+//#define AP_SAMPLE_PIN_10
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_10_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_10_NAME "ap.pin10"
 
-#define AP_SAMPLE_PIN_11
+
+// ----- PIN: 11 -----
+
+// If enabled, Analog Pin 11 will be polled.
+//#define AP_SAMPLE_PIN_11
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_11_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_11_NAME "ap.pin11"
 
-#define AP_SAMPLE_PIN_12
+
+// ----- PIN: 12 -----
+
+// If enabled, Analog Pin 12 will be polled.
+//#define AP_SAMPLE_PIN_12
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_12_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_12_NAME "ap.pin12"
 
-#define AP_SAMPLE_PIN_13
+
+// ----- PIN: 13 -----
+
+// If enabled, Analog Pin 13 will be polled.
+//#define AP_SAMPLE_PIN_13
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_13_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_13_NAME "ap.pin13"
 
-#define AP_SAMPLE_PIN_14
+
+// ----- PIN: 14 -----
+
+// If enabled, Analog Pin 14 will be polled.
+//#define AP_SAMPLE_PIN_14
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_14_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_14_NAME "ap.pin14"
 
-#define AP_SAMPLE_PIN_15
+
+// ----- PIN: 15 -----
+
+// If enabled, Analog Pin 15 will be polled.
+//#define AP_SAMPLE_PIN_15
+
+// If enabled, this pullup resistor will be enabled on this pin.
 #define AP_HOLD_PIN_15_HIGH
+
+// The name to use when logging this pin
 #define AP_PIN_15_NAME "ap.pin15"
+
+/*
+###############################################################################
+###############################################################################
+
+Analog Input Pins
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+
+*/
 
 
 
@@ -410,6 +662,21 @@
 #define DP_HOLD_PIN_53_HIGH
 #define DP_INVERT_PIN_53
 #define DP_PIN_53_NAME "dp.pin53"
+/*
+###############################################################################
+###############################################################################
+
+Analog Input Pins
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+
+*/
 
 
 
@@ -420,6 +687,21 @@
 #define GPS_SERIAL_DEV Serial
 #define GPS_SERIAL_DEV_SPEED 4800
 
+/*
+###############################################################################
+###############################################################################
+
+Analog Input Pins
+
+###############################################################################
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+
+*/
 
 
 
@@ -427,14 +709,58 @@
 //#define ENABLE_TMP102_POLLER
 //#define DEBUG_TMP102_POLLER
 #define TMP102_I2C_ADDRESS 72
+/*
+###############################################################################
+###############################################################################
+
+Serial Output
+
+###############################################################################
+
+Loguino can send log output to any available serial interface.  When enabled,
+each time a message is logged, it is sent out the chosen serial interface.
 
 
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a-serial-interface/
+
+*/
+
+
+// If enabled, Loguino will write log data to the configured
+// serial interface.
 #define ENABLE_SERIAL_LOGGER
-#define DEBUG_SERIAL_LOGGER
+// If defined, debug messages shall be enabled for the
+// serial logger.
+//#define DEBUG_SERIAL_LOGGER
+#ifdef ENABLE_DEBUG
+    // If enabled, the serial poller will not initialize the serial interface.
+    #define NO_SERIAL_INIT
+#endif
+// The speed to output data on the chosen serial interface.
+// Note: If NO_SERIAL_INIT is defined, this will be ignored.
 #define SERIAL_LOGGER_BAUD 115200
+// The physical interface to use, on the Arduino Mega, this can be Serial, Serial1, Serial2, or Serial3.
+// Note: If NO_SERIAL_INIT is defined, this will be ignored.
 #define SERIAL_LOGGER_DEVICE Serial
 
 
+
+
+/*
+
+###############################################################################
+###############################################################################
+#
+# End Module Configuration
+#
+###############################################################################
+###############################################################################
+
+*/
 #if (ARDUINO >= 100)
 	#include <Arduino.h>
 #else

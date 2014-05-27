@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=analog_pin_sample
 INIT_FUNCTION=analog_pin_init
 ENABLE_VARIABLE=ENABLE_ANALOG_POLLER
+MODULE_NAME="Analog Input Pins"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/"
