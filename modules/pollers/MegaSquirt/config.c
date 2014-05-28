@@ -21,7 +21,7 @@
 
 
 // If enabled, loguino will poll the Megasquirt Engine Management System
-#define ENABLE_MEGASQUIRT_POLLER
+//#define ENABLE_MEGASQUIRT_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_MEGASQUIRT_POLLER
 // The number of cycles to wait before retrying communication with the

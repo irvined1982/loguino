@@ -20,7 +20,7 @@
 
 
 // If enabled, Loguino will configure the ethernet shield for logging
-#define ENABLE_ETHERNET_LOGGER
+//#define ENABLE_ETHERNET_LOGGER
 
 // If defined, debug messages shall be enabled for this module
 //#define DEBUG_ETHERNET_LOGGER

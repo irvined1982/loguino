@@ -22,7 +22,7 @@
 
 // If enabled, loguino will query the BMP085 sensor for temperature
 // and pressure data
-#define ENABLE_BMP085_POLLER
+//#define ENABLE_BMP085_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_BMP085_POLLER
 

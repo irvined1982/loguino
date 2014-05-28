@@ -21,7 +21,7 @@
 
 
 // If enabled, loguino will attempt to query the ELM327 device
-#define ENABLE_ELM327_POLLER
+//#define ENABLE_ELM327_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_ELM327_POLLER
 // The number of times to skip before trying again.
