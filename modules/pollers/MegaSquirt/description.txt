@@ -1,0 +1,12 @@
+A MegaSquirt is a complete standalone fuel injection controller with software
+and hardware, developed by Bruce Bowling and Al Grippo. The software for the
+platform is open for modification and provides for fuel, ignition and idle air
+control in most cases, keeping the cost low. Whilst lacking in features
+compared to some controllers, for the cost it provides an excellent solution.
+Loguino can poll MegaSquirt ECU’s over the Serial line at about 5-10Hz,
+providing in depth metrics on the Engine Management System.
+
+This poller reads the data table from the Megasquirt over the Serial interface
+and extracts the data into metrics.  The amount of data retrieved from the
+Megasquirt is not insignificant, it is possible to configure which metrics
+are logged in order to save space or improve logging performance.
