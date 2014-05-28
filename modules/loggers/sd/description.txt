@@ -1,0 +1,4 @@
+Loguino can save each log message to an SD Card using the SPI bus providing
+an easy way to store logged data for later retrieval.  Each time Loguino
+starts, it will attempt to create a new file on the SD card.  If it is
+successful, it can be configured to illuminate an LED.

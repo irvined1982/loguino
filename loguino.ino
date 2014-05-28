@@ -62,7 +62,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/bmp085-b
 
 // If enabled, loguino will query the BMP085 sensor for temperature
 // and pressure data
-#define ENABLE_BMP085_POLLER
+//#define ENABLE_BMP085_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_BMP085_POLLER
 
@@ -159,7 +159,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/query-ob
 
 
 // If enabled, loguino will attempt to query the ELM327 device
-#define ENABLE_ELM327_POLLER
+//#define ENABLE_ELM327_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_ELM327_POLLER
 // The number of times to skip before trying again.
@@ -222,7 +222,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/itg3200-
 
 
 // If enabled, loguino will query the ITG3200 gyro over the 2wire interface
-#define ENABLE_ITG3200_POLLER
+//#define ENABLE_ITG3200_POLLER
 // If enabled, Loguino will write debug information for this module
 //#define DEBUG_ITG3200_POLLER
 
@@ -287,7 +287,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/megasqui
 
 
 // If enabled, loguino will poll the Megasquirt Engine Management System
-#define ENABLE_MEGASQUIRT_POLLER
+//#define ENABLE_MEGASQUIRT_POLLER
 // If enabled, loguino will write debug information for this poller
 //#define DEBUG_MEGASQUIRT_POLLER
 // The number of cycles to wait before retrying communication with the
@@ -1298,7 +1298,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-
 
 
 // If enabled, Loguino will configure the ethernet shield for logging
-#define ENABLE_ETHERNET_LOGGER
+//#define ENABLE_ETHERNET_LOGGER
 
 // If defined, debug messages shall be enabled for this module
 //#define DEBUG_ETHERNET_LOGGER
@@ -1343,6 +1343,38 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-
 
 // The name of the MQTT client
 #define ETHERNET_MQTT_CLIENT "LoguinoMQTT"
+/*
+###############################################################################
+###############################################################################
+
+Write to SD card
+
+###############################################################################
+
+Loguino can save each log message to an SD Card using the SPI bus providing
+an easy way to store logged data for later retrieval.  Each time Loguino
+starts, it will attempt to create a new file on the SD card.  If it is
+successful, it can be configured to illuminate an LED.
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-to-an-sd-card/
+
+*/
+
+
+// If enabled, Loguino will write log data to the SD card.
+#define ENABLE_SD_LOGGER
+// If defined, debug messages shall be enabled for this module
+//#define DEBUG_SD_LOGGER
+// Pin used for Chip Select
+#define SD_CS_PIN 10
+// Pin LED is connected to, will illuminate when SD card is online
+#define SD_ACTIVE_PIN 11
+
+
+
 /*
 ###############################################################################
 ###############################################################################
@@ -1433,6 +1465,9 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 #include "SPI.h"
 #include "Ethernet.h"
 #include "PubSubClient.h"
+#include "SPI.h"
+#include "SD.h"
+
 #ifdef ENABLE_DEBUG
   #ifndef DEBUG_LEVEL
     #define DEBUG_LEVEL 1
@@ -6233,6 +6268,128 @@ LIS331 lis;
 #endif
 
 
+#ifdef ENABLE_SD_LOGGER
+    bool sd_active;
+    File sd_file;
+
+
+    void init_sd_logger(){
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Starting");
+        #endif
+        sd_active=true;
+
+        #ifdef SD_ACTIVE_PIN
+            pinMode(SD_ACTIVE_PIN, OUTPUT);
+            digitalWrite(SD_ACTIVE_PIN, false);
+        #endif
+
+        // A buffer to store the filename into, the FAT library only supports
+        // 8.3 style filenames.
+        char sd_fname[13];
+
+        // Sets the default chip select pin to an output.  The Chipselect pin
+        // is held high when a device is being addressed over the SPI bus.
+        pinMode(SD_CS_PIN, OUTPUT);
+
+        /**
+         * Attempts to iniitalize the SD card using the library.  This begins use of the SPI
+         * bus (digital pins 11, 12, and 13 on most Arduino boards; 50, 51, and 52 on
+         * the Mega) and the chip select pin, which defaults to the hardware SS
+         * pin (pin 10 on most Arduino boards, 53 on the Mega).
+         *
+         * @warning Note that even if you use a different chip select pin, the hardware SS pin
+         * must be kept as an output or the SD library functions will not work.
+         *
+         * If the operation fails, the sd_active becomes false, and the SD card initialization
+         * fails.
+         */
+        sd_active=SD.begin(SD_CS_PIN);
+
+        /**
+         * If the SD card was successfully initialized, then attempt to find a filename to use.
+         * The filenames are in the format XXXXXXXX.log where XXXXXXXX is a zero padded number
+         * starting at 0 and incrementing until there are no numbers left.
+         *
+         * If all filenames are in use, then sd_active is set to false, and the SD logger
+         * initialization fails.
+         */
+        if (!sd_active){
+            return;
+        }
+
+        byte sd_i=0;
+        sprintf(sd_fname, "%08d.log", sd_i);
+        while (sd_i++ <= 99999999 && SD.exists(sd_fname)){
+            sprintf(sd_fname, "%08d.log",sd_i);
+        }
+        if (SD.exists(sd_fname)){
+            sd_active=false;
+        }
+
+        /**
+         * If there was a filename available, then SD_File is initialized as an open filehandle
+         * to the new file.  Once the file has been opened, SD_ACTIVE_PIN is pulled high to turn
+         * on the LED.
+         *
+         * If there were no filenames available, then sd_active is set to false, and the
+         * initialization fails.
+         *
+         */
+        if (!sd_active){
+            return;
+        }
+
+        sd_file=SD.open(sd_fname,O_WRITE|O_CREAT);
+        if (!sd_file){
+            sd_active=false;
+            return;
+        }
+
+        #ifdef SD_ACTIVE_PIN
+            digitalWrite(SD_ACTIVE_PIN, true);
+        #endif
+
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+        }
+
+
+
+    void log_sd_logger(const char * name, const char * value, const char * unit){
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Starting");
+        #endif
+        if (sd_active){
+            sd_file.write(name);
+            sd_file.write(",");
+            sd_file.write(value);
+            sd_file.write(",");
+            sd_file.write(unit);
+            sd_file.println(",");
+        }
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+
+    }
+    void flush_sd_logger(){
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Starting");
+        #endif
+
+        if (sd_active){
+           sd_file.flush();
+        }
+
+        #ifdef DEBUG_SD_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+    }
+#endif
+
+
 #ifdef ENABLE_SERIAL_LOGGER
     void init_serial_logger(){
         #ifdef DEBUG_SERIAL_LOGGER
@@ -6352,6 +6509,9 @@ void setupLoggers(){
 #ifdef ENABLE_ETHERNET_LOGGER
     init_ethernet_logger();
 #endif
+#ifdef ENABLE_SD_LOGGER
+    init_sd_logger();
+#endif
 #ifdef ENABLE_SERIAL_LOGGER
     init_serial_logger();
 #endif
@@ -6361,6 +6521,9 @@ void logMessage(const char * name, const char * value, const char * unit){
 #ifdef ENABLE_ETHERNET_LOGGER
     log_ethernet_logger(name, value, unit);
 #endif
+#ifdef ENABLE_SD_LOGGER
+    log_sd_logger(name, value, unit);
+#endif
 #ifdef ENABLE_SERIAL_LOGGER
     log_serial_logger(name, value, unit);
 #endif
@@ -6369,6 +6532,9 @@ void logMessage(const char * name, const char * value, const char * unit){
 void flushLoggers(){
 #ifdef ENABLE_ETHERNET_LOGGER
     flush_ethernet_logger();
+#endif
+#ifdef ENABLE_SD_LOGGER
+    flush_sd_logger();
 #endif
 #ifdef ENABLE_SERIAL_LOGGER
     flush_serial_logger();

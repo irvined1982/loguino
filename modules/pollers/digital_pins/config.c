@@ -23,7 +23,7 @@
 // If enabled, Loguino will log the state of configured digital pins
 //#define ENABLE_DIGITAL_POLLER
 // If enabled, Loguino will write debug information about this module
-//#define DEBUG_DIGITAL_POLLER
+#define DEBUG_DIGITAL_POLLER
 
 // ----- PIN: 0 -----
 
