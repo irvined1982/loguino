@@ -16,3 +16,6 @@
 [submodule "3rdParty/ITG3200"]
 	path = 3rdParty/ITG3200
 	url = https://github.com/irvined1982/itg3200.git
+[submodule "3rdParty/BMP085"]
+	path = 3rdParty/BMP085
+	url = https://github.com/irvined1982/Adafruit-BMP085-Library.git
