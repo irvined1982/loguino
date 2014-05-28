@@ -16,4 +16,7 @@
  * along with Loguino.  If not, see "http://www.gnu.org/licenses/".
  *
 */
+
+#include "SPI.h"
 #include "Ethernet.h"
+#include "PubSubClient.h"

@@ -1267,6 +1267,86 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/tmp102-i
 ###############################################################################
 ###############################################################################
 
+Network Output
+
+###############################################################################
+
+Loguino can function as a network server listening on a TCP port using the
+Loguino Ethernet, or the Ethernet shield.  The network logger supports the
+following modes of operation:
+
+Network Server
+
+When server mode is enabled, the logger listens for incoming connections on a
+configurable (Default is 23/Telnet) TCP port. Up to four clients can connect,
+each client receives the log messages each time they are sent from a poller.
+In this mode all data is sent in clear text and no authentication is possible.
+
+MQTT Client
+
+When the MQTT client is enabled, Loguino will publish to a preconfigured MQTT
+broker. The topic of each message is set to the Loguino logger name, and the
+value is logged as the data.
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-over-the-network/
+
+*/
+
+
+// If enabled, Loguino will configure the ethernet shield for logging
+#define ENABLE_ETHERNET_LOGGER
+
+// If defined, debug messages shall be enabled for this module
+//#define DEBUG_ETHERNET_LOGGER
+
+// the media access control (ethernet hardware) address for the shield:
+// Must be unique, and on newer shields is printed on the board.
+#define ETHERNET_MAC_ADDRESS 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
+
+// IP address to use for the shield, if it is undefined, the shield will
+// use DHCP to obtain an address.
+//#define ETHERNET_IP_ADDRESS 0, 1, 2, 3
+
+// DNS Server to use, ignored if DHCP is being used.
+//#define ETHERNET_DNS_ADDRESS 8, 8, 8, 8,
+
+// Gateway address to use, ignored if DHCP is being used.
+//#define ETHERNET_GW_ADDRESS 1, 1, 1, 1
+
+// Subnet Mask to use, ignored if DHCP is being used.
+//#define ETHERNET_NETMASK 255, 255, 255, 0
+
+// If enabled, will listen on specified port for incoming connections.else
+#define ETHERNET_ENABLE_SERVER
+
+// The port to listen on, 23 is default telnet port.
+#define ETHERNET_SERVER_PORT 23
+
+// If enabled, will send MQTT messages to the configured server
+#define ETHERNET_ENABLE_MQTT
+
+// The IP address of the server to connect to when sending MQTT data
+#define ETHERNET_MQTT_SERVER 1, 2, 3, 4
+
+// The port to connect to on the MQTT server
+#define ETHERNET_MQTT_PORT 1883
+
+// The user name to give to the MQTT server.  If undefined will use anonymous
+#define ETHERNET_MQTT_USER "J.Random.User"
+
+// The password to give to the MQTT server
+#define ETHERNET_MQTT_PASS "T0p$3cr37"
+
+// The name of the MQTT client
+#define ETHERNET_MQTT_CLIENT "LoguinoMQTT"
+/*
+###############################################################################
+###############################################################################
+
 Serial Output
 
 ###############################################################################
@@ -1350,7 +1430,9 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 
 #include <Wire.h>
 #include <stdlib.h>
-
+#include "SPI.h"
+#include "Ethernet.h"
+#include "PubSubClient.h"
 #ifdef ENABLE_DEBUG
   #ifndef DEBUG_LEVEL
     #define DEBUG_LEVEL 1
@@ -1507,7 +1589,7 @@ void logMessage(const char* name, float value, const char* unit){
 
 void logMessage(const char* name, long value, const char* unit){
     DEBUG_1("Begin");
-    char buf[33];
+    char buf[100];
     sprintf (buf, "%l", value);
     logMessage(name, buf, unit);
     DEBUG_4("Logged");
@@ -6053,6 +6135,104 @@ LIS331 lis;
 #endif
 
 
+#ifdef ENABLE_ETHERNET_LOGGER
+    #ifdef ETHERNET_ENABLE_SERVER
+        EthernetServer eth_server = EthernetServer(ETHERNET_SERVER_PORT);
+    #endif
+    #ifdef ETHERNET_ENABLE_MQTT
+        EthernetClient ethClient;
+        byte mqtt_server[] = { ETHERNET_MQTT_SERVER };
+        PubSubClient mqtt_client(mqtt_server, ETHERNET_MQTT_PORT, mqtt_callback, ethClient);
+    #endif
+
+    void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+        // handle message arrived, there wont be any however.
+        return;
+    }
+
+    void init_ethernet_logger(){
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Starting");
+        #endif
+        byte mac[]={ETHERNET_MAC_ADDRESS};
+        #ifdef ETHERNET_IP_ADDRESS
+            byte ip[]={ETHERNET_IP_ADDRESS};
+            byte dns[]={ETHERNET_DNS_ADDRESS};
+            byte gw[]={ETHERNET_GW_ADDRESS};
+            byte nm[]={ETHERNET_NETMASK};
+            Ethernet.begin(mac,ip,dns,gw,nm);
+        #else
+            // Use DHCP
+            Ethernet.begin(mac);
+        #endif
+        #ifdef ETHERNET_ENABLE_SERVER
+            eth_server.begin();
+        #endif
+
+
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+        }
+
+
+
+    void log_ethernet_logger(const char * name, const char * value, const char * unit){
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Starting");
+        #endif
+        #ifdef ETHERNET_ENABLE_SERVER
+            eth_server.write(name);
+            eth_server.write(",");
+            eth_server.write(value);
+            eth_server.write(",");
+            eth_server.write(unit);
+            eth_server.println(",");
+        #endif
+        #ifdef ETHERNET_ENABLE_MQTT
+            if (!mqtt_client.connected()){
+                #ifdef ETHERNET_MQTT_USER
+                    mqtt_client.connect(ETHERNET_MQTT_CLIENT, ETHERNET_MQTT_USER, "ETHERNET_MQTT_PASS");
+                #else
+                    mqtt_client.connect(ETHERNET_MQTT_CLIENT);
+                #endif
+                if (!mqtt_client.connected()){
+                    return;
+                }
+            }
+            char *nbuf;
+            char *vbuf;
+            int len;
+
+            nbuf=(char*)malloc(sizeof(char)*(strlen(name)+1));
+            vbuf=(char*)malloc(sizeof(char)*(strlen(name)+1));
+            strcpy(nbuf, name);
+            strcpy(vbuf,value);
+
+            mqtt_client.publish(nbuf, vbuf);
+
+            free(nbuf);
+            free(vbuf);
+        #endif
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+    }
+    void flush_ethernet_logger(){
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Starting");
+        #endif
+
+        // Nothing needs to be done.
+        return;
+
+        #ifdef DEBUG_ETHERNET_LOGGER
+            DEBUG_1("Finishing");
+        #endif
+    }
+#endif
+
+
 #ifdef ENABLE_SERIAL_LOGGER
     void init_serial_logger(){
         #ifdef DEBUG_SERIAL_LOGGER
@@ -6169,18 +6349,27 @@ void setupPollers(){
 }
 
 void setupLoggers(){
+#ifdef ENABLE_ETHERNET_LOGGER
+    init_ethernet_logger();
+#endif
 #ifdef ENABLE_SERIAL_LOGGER
     init_serial_logger();
 #endif
 }
 
 void logMessage(const char * name, const char * value, const char * unit){
+#ifdef ENABLE_ETHERNET_LOGGER
+    log_ethernet_logger(name, value, unit);
+#endif
 #ifdef ENABLE_SERIAL_LOGGER
     log_serial_logger(name, value, unit);
 #endif
 }
 
 void flushLoggers(){
+#ifdef ENABLE_ETHERNET_LOGGER
+    flush_ethernet_logger();
+#endif
 #ifdef ENABLE_SERIAL_LOGGER
     flush_serial_logger();
 #endif

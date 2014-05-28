@@ -50,13 +50,18 @@
 
 // If enabled, will send MQTT messages to the configured server
 #define ETHERNET_ENABLE_MQTT
+
 // The IP address of the server to connect to when sending MQTT data
 #define ETHERNET_MQTT_SERVER 1, 2, 3, 4
+
 // The port to connect to on the MQTT server
 #define ETHERNET_MQTT_PORT 1883
+
 // The user name to give to the MQTT server.  If undefined will use anonymous
 #define ETHERNET_MQTT_USER "J.Random.User"
+
 // The password to give to the MQTT server
 #define ETHERNET_MQTT_PASS "T0p$3cr37"
+
 // The name of the MQTT client
 #define ETHERNET_MQTT_CLIENT "LoguinoMQTT"

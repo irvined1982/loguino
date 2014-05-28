@@ -26,10 +26,10 @@
     #ifdef ETHERNET_ENABLE_MQTT
         EthernetClient ethClient;
         byte mqtt_server[] = { ETHERNET_MQTT_SERVER };
-        PubSubClient mqtt_client(mqtt_server, ETHERNET_MQTT_PORT, callback, ethClient);
+        PubSubClient mqtt_client(mqtt_server, ETHERNET_MQTT_PORT, mqtt_callback, ethClient);
     #endif
 
-    void mq_callback(char* topic, byte* payload, unsigned int length) {
+    void mqtt_callback(char* topic, byte* payload, unsigned int length) {
         // handle message arrived, there wont be any however.
         return;
     }
@@ -76,15 +76,27 @@
         #ifdef ETHERNET_ENABLE_MQTT
             if (!mqtt_client.connected()){
                 #ifdef ETHERNET_MQTT_USER
-                    mqtt_client.connect(ETHERNET_MQTT_ID, ETHERNET_MQTT_USER, "ETHERNET_MQTT_PASS");
+                    mqtt_client.connect(ETHERNET_MQTT_CLIENT, ETHERNET_MQTT_USER, "ETHERNET_MQTT_PASS");
                 #else
-                    mqtt_client.connect(ETHERNET_MQTT_ID);
+                    mqtt_client.connect(ETHERNET_MQTT_CLIENT);
                 #endif
                 if (!mqtt_client.connected()){
                     return;
                 }
             }
-            mqtt_client.publish(name, value);
+            char *nbuf;
+            char *vbuf;
+            int len;
+
+            nbuf=(char*)malloc(sizeof(char)*(strlen(name)+1));
+            vbuf=(char*)malloc(sizeof(char)*(strlen(name)+1));
+            strcpy(nbuf, name);
+            strcpy(vbuf,value);
+
+            mqtt_client.publish(nbuf, vbuf);
+
+            free(nbuf);
+            free(vbuf);
         #endif
         #ifdef DEBUG_ETHERNET_LOGGER
             DEBUG_1("Finishing");
