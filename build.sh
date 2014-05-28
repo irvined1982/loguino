@@ -53,6 +53,7 @@ do
     echo "###############################################################################" >> build/config.c
     echo >> build/config.c
     [ -e $i/description.txt ] && cat $i/description.txt >> build/config.c
+    echo >> build/config.c
     echo "###############################################################################" >> build/config.c
     echo >> build/config.c
     echo "For build and configuration information see the following url." >> build/config.c
@@ -89,6 +90,7 @@ do
     echo "###############################################################################" >> build/config.c
     echo >> build/config.c
     [ -e $i/description.txt ] && cat $i/description.txt >> build/config.c
+    echo >> build/config.c
     echo "###############################################################################" >> build/config.c
     echo >> build/config.c
     echo "For build and configuration information see the following url." >> build/config.c

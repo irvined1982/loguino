@@ -1,3 +1,4 @@
+#!/bin/sh
 # Copyright 2014 David Irvine
 #
 # This file is part of Loguino

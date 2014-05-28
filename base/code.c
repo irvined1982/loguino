@@ -109,8 +109,7 @@ void debug(const char * fname, const char * func, const int lnum, const  char * 
 	String s;
 	char txt[20];
 	sprintf(txt, "%9d,", millis() );
-	s="";
-
+	s="#";
 	s+= txt;
 	s+= ", ";
 	s+= fname;
@@ -128,7 +127,7 @@ void setup(){
 	#ifdef ENABLE_DEBUG
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
-		        //DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
+		        DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
 			#endif
 		#endif
 	#endif

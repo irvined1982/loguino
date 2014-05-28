@@ -156,17 +156,25 @@ config="""
 
 
 
-
-#define ENABLE_DIGITAL_POLLER
+// If enabled, Loguino will log the state of configured digital pins
+//#define ENABLE_DIGITAL_POLLER
+// If enabled, Loguino will write debug information about this module
 #define DEBUG_DIGITAL_POLLER
 """
 for pin in range(54):
     config += """
-#define DP_SAMPLE_PIN_%d
+// ----- PIN: %d -----
+
+// If enabled, Digital Pin %d will be polled.
+//#define DP_SAMPLE_PIN_%d
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_%d_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_%d
+// The name to use when logging this pin
 #define DP_PIN_%d_NAME "dp.pin%d"
-""" % (pin, pin, pin, pin, pin)
+
+""" % (pin, pin, pin, pin, pin, pin, pin)
 
 f=open("config.c","w")
 f.write(config)

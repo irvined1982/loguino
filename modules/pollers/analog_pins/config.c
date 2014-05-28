@@ -20,7 +20,7 @@
 
 
 // If enabled, Loguino will poll analog pins for their value each iteration.
-// #define ENABLE_ANALOG_POLLER
+//#define ENABLE_ANALOG_POLLER
 
 // If defined, debug messages shall be enabled for this poller
 //#define DEBUG_ANALOG_POLLER

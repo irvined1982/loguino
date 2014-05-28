@@ -1,0 +1,3 @@
+Loguino can log the state of any of the digital input pins.  Each log cycle
+Loguino writes the output as a boolean value, either HIGH or LOW.  Pins can
+be pulled high or low.

@@ -24,7 +24,9 @@
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Starting");
         #endif
-            SERIAL_LOGGER_DEVICE.begin(SERIAL_LOGGER_BAUD);
+            #ifndef NO_SERIAL_INIT
+                SERIAL_LOGGER_DEVICE.begin(SERIAL_LOGGER_BAUD);
+            #endif
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Finishing");
         #endif

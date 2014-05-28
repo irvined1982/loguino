@@ -39,24 +39,35 @@
 ###############################################################################
 ###############################################################################
 
-
+DHT Sensors
 
 ###############################################################################
 
+The DHT11 is a low cost temperature and humidity sensor that uses a single
+digital pin for communication.  It uses a capacitive humidity sensor and a
+thermistor to measure the surrounding air, and spits out a digital signal on
+the data pin (no analog input pins needed).
 ###############################################################################
 
 For build and configuration information see the following url.
 
-
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/dht11-humidity-and-temperature-sensor/
 
 */
 
 
 
-
+// When defined, the poller is enabled.
 //#define ENABLE_DHT_POLLER
+
+// When enabled, debug output for the DHT poller will be displayed.
 //#define DEBUG_DHT_POLLER
+
+// The digital pin that the DHT sensor is connected to. Default: 3
+
 #define DHT_PIN 3
+
+// The type of sensor being used, default: DHT11 can be: DHT11, DHT22, DHT21
 #define DHT_TYPE DHT11
 //#define DHT_TYPE DHT22
 //#define DHT_TYPE DHT21
@@ -64,23 +75,29 @@ For build and configuration information see the following url.
 ###############################################################################
 ###############################################################################
 
-
+DS18B20 1-Wire Temperature Sensor
 
 ###############################################################################
+
+The Maxim DS18B20 digital thermometer provides 9-bit to 12-bit Celsius
+temperature measurements over a 1-Wire interface providing accurate and
+inexpensive temperature readings.
 
 ###############################################################################
 
 For build and configuration information see the following url.
 
-
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/ds18b20-one-wire-temperature-sensors/
 
 */
 
 
 
-
+// If enabled, loguino will poll for DS18B20 sensors and log the temperature of each one connected.
 //#define ENABLE_DS18B20_POLLER
+// Enable debug information for this sensor
 //#define DEBUG_DS18B20_POLLER
+// The data pin used for the DS18B20 sensors.
 #define DS18B20_PIN 1
 
 
@@ -88,44 +105,57 @@ For build and configuration information see the following url.
 ###############################################################################
 ###############################################################################
 
-
+HS1101 Relative Humidity Sensor
 
 ###############################################################################
 
+The HS1101 humidity sensor is a cost-effective solution for measuring relative
+humidity within ±5% accuracy. The sensor’s design is based on a unique
+capacitive cell; therefore, by using simple RC circuit wiring it is easy to
+interface.
 ###############################################################################
 
 For build and configuration information see the following url.
 
-
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/hs1101-relative-humidity-sensor/
 
 */
 
 
 
-
+// If enabled, loguino will log humidity data from the HS1101
 //#define ENABLE_HS1101_POLLER
+// If enabled, loguino will write debug information for this poller
 //#define DEBUG_HS1101_POLLER
+// Digital pin that the HS1101 is connected to
 #define HS1101_PIN 4
 /*
 ###############################################################################
 ###############################################################################
 
-
+ITG3200 Triple Axis Gyroscope
 
 ###############################################################################
 
+InvenSense’s ITG-3200 is a groundbreaking triple-axis, digital output
+gyroscope. The ITG-3200 features three 16-bit analog-to-digital converters
+(ADCs) for digitizing the gyro  outputs, a user-selectable internal low-pass
+filter bandwidth, and a Fast-Mode I2C (400kHz) interface.
+
+Communication with the ITG-3200 is achieved over a two-wire (I2C) interface.
 ###############################################################################
 
 For build and configuration information see the following url.
 
-
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/itg3200-triple-axis-gyroscope/
 
 */
 
 
 
-
+// If enabled, loguino will query the ITG3200 gyro over the 2wire interface
 #define ENABLE_ITG3200_POLLER
+// If enabled, Loguino will write debug information for this module
 //#define DEBUG_ITG3200_POLLER
 
 
@@ -133,24 +163,31 @@ For build and configuration information see the following url.
 ###############################################################################
 ###############################################################################
 
-
+LIS331 Triple Axis Accelerometer
 
 ###############################################################################
 
+The LIS331 Triple Axis Linear Accelerometer is supported over the I2C
+interface. The device features ultra low-power operational modes that
+allow advanced power saving and smart sleep to wake-up functions.
 ###############################################################################
 
 For build and configuration information see the following url.
 
-
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/lis331-triple-axis-accelerometer/
 
 */
 
 
 
-
+// If enabled, Loguino will attempt to query the LIS331 sensor using
+// the 2-wire interface.
 //#define ENABLE_LIS331_POLLER
+// If enabled, Loguino will write debug information for this module
 //#define DEBUG_LIS331_POLLER
-
+// The I2C address of the LIS331 device.
+#define LIS331_I2C_ADDR 25  //SA0 Pin held high
+//#define LIS331_I2C_ADDR 24  // SA0 Pin held low
 /*
 ###############################################################################
 ###############################################################################
@@ -161,6 +198,7 @@ Analog Input Pins
 
 Loguino can log the value of any of the connected analog pins.  Each enabled
 pin is polled each cycle and the value of the pin logged.
+
 ###############################################################################
 
 For build and configuration information see the following url.
@@ -171,7 +209,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-i
 
 
 // If enabled, Loguino will poll analog pins for their value each iteration.
-// #define ENABLE_ANALOG_POLLER
+//#define ENABLE_ANALOG_POLLER
 
 // If defined, debug messages shall be enabled for this poller
 //#define DEBUG_ANALOG_POLLER
@@ -375,339 +413,747 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-i
 ###############################################################################
 ###############################################################################
 
-Analog Input Pins
+Digital Input
 
 ###############################################################################
+
+Loguino can log the state of any of the digital input pins.  Each log cycle
+Loguino writes the output as a boolean value, either HIGH or LOW.  Pins can
+be pulled high or low.
 
 ###############################################################################
 
 For build and configuration information see the following url.
 
-https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/digital-input-pins/
 
 */
 
 
 
-
-#define ENABLE_DIGITAL_POLLER
+// If enabled, Loguino will log the state of configured digital pins
+//#define ENABLE_DIGITAL_POLLER
+// If enabled, Loguino will write debug information about this module
 #define DEBUG_DIGITAL_POLLER
 
-#define DP_SAMPLE_PIN_0
+// ----- PIN: 0 -----
+
+// If enabled, Digital Pin 0 will be polled.
+//#define DP_SAMPLE_PIN_0
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_0_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_0
+// The name to use when logging this pin
 #define DP_PIN_0_NAME "dp.pin0"
 
-#define DP_SAMPLE_PIN_1
+
+// ----- PIN: 1 -----
+
+// If enabled, Digital Pin 1 will be polled.
+//#define DP_SAMPLE_PIN_1
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_1_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_1
+// The name to use when logging this pin
 #define DP_PIN_1_NAME "dp.pin1"
 
-#define DP_SAMPLE_PIN_2
+
+// ----- PIN: 2 -----
+
+// If enabled, Digital Pin 2 will be polled.
+//#define DP_SAMPLE_PIN_2
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_2_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_2
+// The name to use when logging this pin
 #define DP_PIN_2_NAME "dp.pin2"
 
-#define DP_SAMPLE_PIN_3
+
+// ----- PIN: 3 -----
+
+// If enabled, Digital Pin 3 will be polled.
+//#define DP_SAMPLE_PIN_3
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_3_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_3
+// The name to use when logging this pin
 #define DP_PIN_3_NAME "dp.pin3"
 
-#define DP_SAMPLE_PIN_4
+
+// ----- PIN: 4 -----
+
+// If enabled, Digital Pin 4 will be polled.
+//#define DP_SAMPLE_PIN_4
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_4_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_4
+// The name to use when logging this pin
 #define DP_PIN_4_NAME "dp.pin4"
 
-#define DP_SAMPLE_PIN_5
+
+// ----- PIN: 5 -----
+
+// If enabled, Digital Pin 5 will be polled.
+//#define DP_SAMPLE_PIN_5
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_5_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_5
+// The name to use when logging this pin
 #define DP_PIN_5_NAME "dp.pin5"
 
-#define DP_SAMPLE_PIN_6
+
+// ----- PIN: 6 -----
+
+// If enabled, Digital Pin 6 will be polled.
+//#define DP_SAMPLE_PIN_6
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_6_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_6
+// The name to use when logging this pin
 #define DP_PIN_6_NAME "dp.pin6"
 
-#define DP_SAMPLE_PIN_7
+
+// ----- PIN: 7 -----
+
+// If enabled, Digital Pin 7 will be polled.
+//#define DP_SAMPLE_PIN_7
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_7_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_7
+// The name to use when logging this pin
 #define DP_PIN_7_NAME "dp.pin7"
 
-#define DP_SAMPLE_PIN_8
+
+// ----- PIN: 8 -----
+
+// If enabled, Digital Pin 8 will be polled.
+//#define DP_SAMPLE_PIN_8
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_8_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_8
+// The name to use when logging this pin
 #define DP_PIN_8_NAME "dp.pin8"
 
-#define DP_SAMPLE_PIN_9
+
+// ----- PIN: 9 -----
+
+// If enabled, Digital Pin 9 will be polled.
+//#define DP_SAMPLE_PIN_9
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_9_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_9
+// The name to use when logging this pin
 #define DP_PIN_9_NAME "dp.pin9"
 
-#define DP_SAMPLE_PIN_10
+
+// ----- PIN: 10 -----
+
+// If enabled, Digital Pin 10 will be polled.
+//#define DP_SAMPLE_PIN_10
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_10_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_10
+// The name to use when logging this pin
 #define DP_PIN_10_NAME "dp.pin10"
 
-#define DP_SAMPLE_PIN_11
+
+// ----- PIN: 11 -----
+
+// If enabled, Digital Pin 11 will be polled.
+//#define DP_SAMPLE_PIN_11
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_11_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_11
+// The name to use when logging this pin
 #define DP_PIN_11_NAME "dp.pin11"
 
-#define DP_SAMPLE_PIN_12
+
+// ----- PIN: 12 -----
+
+// If enabled, Digital Pin 12 will be polled.
+//#define DP_SAMPLE_PIN_12
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_12_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_12
+// The name to use when logging this pin
 #define DP_PIN_12_NAME "dp.pin12"
 
-#define DP_SAMPLE_PIN_13
+
+// ----- PIN: 13 -----
+
+// If enabled, Digital Pin 13 will be polled.
+//#define DP_SAMPLE_PIN_13
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_13_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_13
+// The name to use when logging this pin
 #define DP_PIN_13_NAME "dp.pin13"
 
-#define DP_SAMPLE_PIN_14
+
+// ----- PIN: 14 -----
+
+// If enabled, Digital Pin 14 will be polled.
+//#define DP_SAMPLE_PIN_14
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_14_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_14
+// The name to use when logging this pin
 #define DP_PIN_14_NAME "dp.pin14"
 
-#define DP_SAMPLE_PIN_15
+
+// ----- PIN: 15 -----
+
+// If enabled, Digital Pin 15 will be polled.
+//#define DP_SAMPLE_PIN_15
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_15_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_15
+// The name to use when logging this pin
 #define DP_PIN_15_NAME "dp.pin15"
 
-#define DP_SAMPLE_PIN_16
+
+// ----- PIN: 16 -----
+
+// If enabled, Digital Pin 16 will be polled.
+//#define DP_SAMPLE_PIN_16
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_16_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_16
+// The name to use when logging this pin
 #define DP_PIN_16_NAME "dp.pin16"
 
-#define DP_SAMPLE_PIN_17
+
+// ----- PIN: 17 -----
+
+// If enabled, Digital Pin 17 will be polled.
+//#define DP_SAMPLE_PIN_17
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_17_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_17
+// The name to use when logging this pin
 #define DP_PIN_17_NAME "dp.pin17"
 
-#define DP_SAMPLE_PIN_18
+
+// ----- PIN: 18 -----
+
+// If enabled, Digital Pin 18 will be polled.
+//#define DP_SAMPLE_PIN_18
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_18_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_18
+// The name to use when logging this pin
 #define DP_PIN_18_NAME "dp.pin18"
 
-#define DP_SAMPLE_PIN_19
+
+// ----- PIN: 19 -----
+
+// If enabled, Digital Pin 19 will be polled.
+//#define DP_SAMPLE_PIN_19
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_19_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_19
+// The name to use when logging this pin
 #define DP_PIN_19_NAME "dp.pin19"
 
-#define DP_SAMPLE_PIN_20
+
+// ----- PIN: 20 -----
+
+// If enabled, Digital Pin 20 will be polled.
+//#define DP_SAMPLE_PIN_20
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_20_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_20
+// The name to use when logging this pin
 #define DP_PIN_20_NAME "dp.pin20"
 
-#define DP_SAMPLE_PIN_21
+
+// ----- PIN: 21 -----
+
+// If enabled, Digital Pin 21 will be polled.
+//#define DP_SAMPLE_PIN_21
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_21_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_21
+// The name to use when logging this pin
 #define DP_PIN_21_NAME "dp.pin21"
 
-#define DP_SAMPLE_PIN_22
+
+// ----- PIN: 22 -----
+
+// If enabled, Digital Pin 22 will be polled.
+//#define DP_SAMPLE_PIN_22
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_22_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_22
+// The name to use when logging this pin
 #define DP_PIN_22_NAME "dp.pin22"
 
-#define DP_SAMPLE_PIN_23
+
+// ----- PIN: 23 -----
+
+// If enabled, Digital Pin 23 will be polled.
+//#define DP_SAMPLE_PIN_23
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_23_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_23
+// The name to use when logging this pin
 #define DP_PIN_23_NAME "dp.pin23"
 
-#define DP_SAMPLE_PIN_24
+
+// ----- PIN: 24 -----
+
+// If enabled, Digital Pin 24 will be polled.
+//#define DP_SAMPLE_PIN_24
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_24_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_24
+// The name to use when logging this pin
 #define DP_PIN_24_NAME "dp.pin24"
 
-#define DP_SAMPLE_PIN_25
+
+// ----- PIN: 25 -----
+
+// If enabled, Digital Pin 25 will be polled.
+//#define DP_SAMPLE_PIN_25
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_25_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_25
+// The name to use when logging this pin
 #define DP_PIN_25_NAME "dp.pin25"
 
-#define DP_SAMPLE_PIN_26
+
+// ----- PIN: 26 -----
+
+// If enabled, Digital Pin 26 will be polled.
+//#define DP_SAMPLE_PIN_26
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_26_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_26
+// The name to use when logging this pin
 #define DP_PIN_26_NAME "dp.pin26"
 
-#define DP_SAMPLE_PIN_27
+
+// ----- PIN: 27 -----
+
+// If enabled, Digital Pin 27 will be polled.
+//#define DP_SAMPLE_PIN_27
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_27_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_27
+// The name to use when logging this pin
 #define DP_PIN_27_NAME "dp.pin27"
 
-#define DP_SAMPLE_PIN_28
+
+// ----- PIN: 28 -----
+
+// If enabled, Digital Pin 28 will be polled.
+//#define DP_SAMPLE_PIN_28
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_28_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_28
+// The name to use when logging this pin
 #define DP_PIN_28_NAME "dp.pin28"
 
-#define DP_SAMPLE_PIN_29
+
+// ----- PIN: 29 -----
+
+// If enabled, Digital Pin 29 will be polled.
+//#define DP_SAMPLE_PIN_29
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_29_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_29
+// The name to use when logging this pin
 #define DP_PIN_29_NAME "dp.pin29"
 
-#define DP_SAMPLE_PIN_30
+
+// ----- PIN: 30 -----
+
+// If enabled, Digital Pin 30 will be polled.
+//#define DP_SAMPLE_PIN_30
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_30_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_30
+// The name to use when logging this pin
 #define DP_PIN_30_NAME "dp.pin30"
 
-#define DP_SAMPLE_PIN_31
+
+// ----- PIN: 31 -----
+
+// If enabled, Digital Pin 31 will be polled.
+//#define DP_SAMPLE_PIN_31
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_31_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_31
+// The name to use when logging this pin
 #define DP_PIN_31_NAME "dp.pin31"
 
-#define DP_SAMPLE_PIN_32
+
+// ----- PIN: 32 -----
+
+// If enabled, Digital Pin 32 will be polled.
+//#define DP_SAMPLE_PIN_32
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_32_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_32
+// The name to use when logging this pin
 #define DP_PIN_32_NAME "dp.pin32"
 
-#define DP_SAMPLE_PIN_33
+
+// ----- PIN: 33 -----
+
+// If enabled, Digital Pin 33 will be polled.
+//#define DP_SAMPLE_PIN_33
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_33_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_33
+// The name to use when logging this pin
 #define DP_PIN_33_NAME "dp.pin33"
 
-#define DP_SAMPLE_PIN_34
+
+// ----- PIN: 34 -----
+
+// If enabled, Digital Pin 34 will be polled.
+//#define DP_SAMPLE_PIN_34
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_34_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_34
+// The name to use when logging this pin
 #define DP_PIN_34_NAME "dp.pin34"
 
-#define DP_SAMPLE_PIN_35
+
+// ----- PIN: 35 -----
+
+// If enabled, Digital Pin 35 will be polled.
+//#define DP_SAMPLE_PIN_35
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_35_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_35
+// The name to use when logging this pin
 #define DP_PIN_35_NAME "dp.pin35"
 
-#define DP_SAMPLE_PIN_36
+
+// ----- PIN: 36 -----
+
+// If enabled, Digital Pin 36 will be polled.
+//#define DP_SAMPLE_PIN_36
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_36_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_36
+// The name to use when logging this pin
 #define DP_PIN_36_NAME "dp.pin36"
 
-#define DP_SAMPLE_PIN_37
+
+// ----- PIN: 37 -----
+
+// If enabled, Digital Pin 37 will be polled.
+//#define DP_SAMPLE_PIN_37
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_37_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_37
+// The name to use when logging this pin
 #define DP_PIN_37_NAME "dp.pin37"
 
-#define DP_SAMPLE_PIN_38
+
+// ----- PIN: 38 -----
+
+// If enabled, Digital Pin 38 will be polled.
+//#define DP_SAMPLE_PIN_38
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_38_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_38
+// The name to use when logging this pin
 #define DP_PIN_38_NAME "dp.pin38"
 
-#define DP_SAMPLE_PIN_39
+
+// ----- PIN: 39 -----
+
+// If enabled, Digital Pin 39 will be polled.
+//#define DP_SAMPLE_PIN_39
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_39_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_39
+// The name to use when logging this pin
 #define DP_PIN_39_NAME "dp.pin39"
 
-#define DP_SAMPLE_PIN_40
+
+// ----- PIN: 40 -----
+
+// If enabled, Digital Pin 40 will be polled.
+//#define DP_SAMPLE_PIN_40
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_40_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_40
+// The name to use when logging this pin
 #define DP_PIN_40_NAME "dp.pin40"
 
-#define DP_SAMPLE_PIN_41
+
+// ----- PIN: 41 -----
+
+// If enabled, Digital Pin 41 will be polled.
+//#define DP_SAMPLE_PIN_41
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_41_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_41
+// The name to use when logging this pin
 #define DP_PIN_41_NAME "dp.pin41"
 
-#define DP_SAMPLE_PIN_42
+
+// ----- PIN: 42 -----
+
+// If enabled, Digital Pin 42 will be polled.
+//#define DP_SAMPLE_PIN_42
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_42_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_42
+// The name to use when logging this pin
 #define DP_PIN_42_NAME "dp.pin42"
 
-#define DP_SAMPLE_PIN_43
+
+// ----- PIN: 43 -----
+
+// If enabled, Digital Pin 43 will be polled.
+//#define DP_SAMPLE_PIN_43
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_43_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_43
+// The name to use when logging this pin
 #define DP_PIN_43_NAME "dp.pin43"
 
-#define DP_SAMPLE_PIN_44
+
+// ----- PIN: 44 -----
+
+// If enabled, Digital Pin 44 will be polled.
+//#define DP_SAMPLE_PIN_44
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_44_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_44
+// The name to use when logging this pin
 #define DP_PIN_44_NAME "dp.pin44"
 
-#define DP_SAMPLE_PIN_45
+
+// ----- PIN: 45 -----
+
+// If enabled, Digital Pin 45 will be polled.
+//#define DP_SAMPLE_PIN_45
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_45_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_45
+// The name to use when logging this pin
 #define DP_PIN_45_NAME "dp.pin45"
 
-#define DP_SAMPLE_PIN_46
+
+// ----- PIN: 46 -----
+
+// If enabled, Digital Pin 46 will be polled.
+//#define DP_SAMPLE_PIN_46
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_46_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_46
+// The name to use when logging this pin
 #define DP_PIN_46_NAME "dp.pin46"
 
-#define DP_SAMPLE_PIN_47
+
+// ----- PIN: 47 -----
+
+// If enabled, Digital Pin 47 will be polled.
+//#define DP_SAMPLE_PIN_47
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_47_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_47
+// The name to use when logging this pin
 #define DP_PIN_47_NAME "dp.pin47"
 
-#define DP_SAMPLE_PIN_48
+
+// ----- PIN: 48 -----
+
+// If enabled, Digital Pin 48 will be polled.
+//#define DP_SAMPLE_PIN_48
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_48_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_48
+// The name to use when logging this pin
 #define DP_PIN_48_NAME "dp.pin48"
 
-#define DP_SAMPLE_PIN_49
+
+// ----- PIN: 49 -----
+
+// If enabled, Digital Pin 49 will be polled.
+//#define DP_SAMPLE_PIN_49
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_49_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_49
+// The name to use when logging this pin
 #define DP_PIN_49_NAME "dp.pin49"
 
-#define DP_SAMPLE_PIN_50
+
+// ----- PIN: 50 -----
+
+// If enabled, Digital Pin 50 will be polled.
+//#define DP_SAMPLE_PIN_50
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_50_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_50
+// The name to use when logging this pin
 #define DP_PIN_50_NAME "dp.pin50"
 
-#define DP_SAMPLE_PIN_51
+
+// ----- PIN: 51 -----
+
+// If enabled, Digital Pin 51 will be polled.
+//#define DP_SAMPLE_PIN_51
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_51_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_51
+// The name to use when logging this pin
 #define DP_PIN_51_NAME "dp.pin51"
 
-#define DP_SAMPLE_PIN_52
+
+// ----- PIN: 52 -----
+
+// If enabled, Digital Pin 52 will be polled.
+//#define DP_SAMPLE_PIN_52
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_52_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_52
+// The name to use when logging this pin
 #define DP_PIN_52_NAME "dp.pin52"
 
-#define DP_SAMPLE_PIN_53
+
+// ----- PIN: 53 -----
+
+// If enabled, Digital Pin 53 will be polled.
+//#define DP_SAMPLE_PIN_53
+// If enabled, this pullup resistor will be enabled on this pin.
 #define DP_HOLD_PIN_53_HIGH
+// If enabled, the state of this pin will be inverted, ie: High becomes Low, Low becomes High.
 #define DP_INVERT_PIN_53
+// The name to use when logging this pin
 #define DP_PIN_53_NAME "dp.pin53"
+
 /*
 ###############################################################################
 ###############################################################################
 
-Analog Input Pins
+GPS Devices
 
 ###############################################################################
+
+Usually, connection to a GPS device is straightforward, you can either use a
+shield, such as the one from Adafruit, which makes life very easy, or connect
+the GPS right up to the Arduino board itself.
+
+Make sure that your GPS outputs data at TTL levels, else you will need to make
+a TTL to Serial Adaptor using something like the MAX232 chip.
 
 ###############################################################################
 
 For build and configuration information see the following url.
 
-https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/nmea-compatible-gps-devices/
 
 */
 
 
 
-
+// If enabled, loguino will listen for NMEA position data
 //#define ENABLE_GPS_POLLER
+// If enabled, loguino will write debug information for this poller
 //#define DEBUG_GPS_POLLER
+// Pin to illuminate if the GPS has a valid fix.  Use this for visual
+// confirmation that the GPS is working correctly.
 #define GPS_LED_PIN 10
+// Serial device that the GPS is connected to.
 #define GPS_SERIAL_DEV Serial
+// BAUD rate of the GPS device.
 #define GPS_SERIAL_DEV_SPEED 4800
 
 /*
 ###############################################################################
 ###############################################################################
 
-Analog Input Pins
+TMP102 I2C Temperature Sensor
 
 ###############################################################################
 
+The TMP102 is a digital temperature sensor from Texas Instruments with an I2C
+interface.
+
+The temperature sensor in the TMP102 is the chip itself. Thermal paths run
+through the package leads, as well as the plastic package. The lower thermal
+resistance of metal causes the leads to provide the primary thermal path.
+
+To maintain accuracy in applications requiring air or surface temperature
+measurement, care should be taken to isolate the package and leads from
+ambient air temperature. A thermally-conductive adhesive is helpful in
+achieving accurate surface temperature measurement.
 ###############################################################################
 
 For build and configuration information see the following url.
 
-https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/analog-input-pins/
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/tmp102-i2c-temperature-sensor/
 
 */
 
 
 
-
+// If enabled, Loguino will query the TMP102 temperature sensor using I2C
 //#define ENABLE_TMP102_POLLER
+// IF enabled, Loguino will write debug information for this module
 //#define DEBUG_TMP102_POLLER
+// The I2C address of the TMP102 sensor
 #define TMP102_I2C_ADDRESS 72
 /*
 ###############################################################################
@@ -719,6 +1165,7 @@ Serial Output
 
 Loguino can send log output to any available serial interface.  When enabled,
 each time a message is logged, it is sent out the chosen serial interface.
+
 
 
 ###############################################################################

@@ -1,3 +1,4 @@
+#!/bin/sh
 # Copyright 2014 David Irvine
 #
 # This file is part of Loguino
@@ -22,3 +23,5 @@
 SAMPLE_FUNCTION=digital_pin_sample
 INIT_FUNCTION=digital_pin_init
 ENABLE_VARIABLE=ENABLE_DIGITAL_POLLER
+MODULE_NAME="Digital Input"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/digital-input-pins/"
