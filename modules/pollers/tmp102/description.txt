@@ -1,0 +1,11 @@
+The TMP102 is a digital temperature sensor from Texas Instruments with an I2C
+interface.
+
+The temperature sensor in the TMP102 is the chip itself. Thermal paths run
+through the package leads, as well as the plastic package. The lower thermal
+resistance of metal causes the leads to provide the primary thermal path.
+
+To maintain accuracy in applications requiring air or surface temperature
+measurement, care should be taken to isolate the package and leads from
+ambient air temperature. A thermally-conductive adhesive is helpful in
+achieving accurate surface temperature measurement.

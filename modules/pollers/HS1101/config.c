@@ -20,7 +20,9 @@
 
 
 
-
+// If enabled, loguino will log humidity data from the HS1101
 //#define ENABLE_HS1101_POLLER
+// If enabled, loguino will write debug information for this poller
 //#define DEBUG_HS1101_POLLER
+// Digital pin that the HS1101 is connected to
 #define HS1101_PIN 4

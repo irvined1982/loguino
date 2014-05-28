@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=gps_sample
 INIT_FUNCTION=gps_init
 ENABLE_VARIABLE=ENABLE_GPS_POLLER
+MODULE_NAME="GPS Devices"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/nmea-compatible-gps-devices/"

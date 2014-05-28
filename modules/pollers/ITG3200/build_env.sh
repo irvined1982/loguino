@@ -23,3 +23,5 @@
 SAMPLE_FUNCTION=ITG3200_sample
 INIT_FUNCTION=ITG3200_init
 ENABLE_VARIABLE=ENABLE_ITG3200_POLLER
+MODULE_NAME="ITG3200 Triple Axis Gyroscope"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/itg3200-triple-axis-gyroscope/"

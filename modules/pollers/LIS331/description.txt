@@ -1,0 +1,3 @@
+The LIS331 Triple Axis Linear Accelerometer is supported over the I2C
+interface. The device features ultra low-power operational modes that
+allow advanced power saving and smart sleep to wake-up functions.

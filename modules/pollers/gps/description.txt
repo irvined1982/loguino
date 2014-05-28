@@ -1,0 +1,6 @@
+Usually, connection to a GPS device is straightforward, you can either use a
+shield, such as the one from Adafruit, which makes life very easy, or connect
+the GPS right up to the Arduino board itself.
+
+Make sure that your GPS outputs data at TTL levels, else you will need to make
+a TTL to Serial Adaptor using something like the MAX232 chip.

@@ -1,0 +1,3 @@
+The Maxim DS18B20 digital thermometer provides 9-bit to 12-bit Celsius
+temperature measurements over a 1-Wire interface providing accurate and
+inexpensive temperature readings.

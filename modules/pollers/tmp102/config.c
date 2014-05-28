@@ -20,7 +20,9 @@
 
 
 
-
+// If enabled, Loguino will query the TMP102 temperature sensor using I2C
 //#define ENABLE_TMP102_POLLER
+// IF enabled, Loguino will write debug information for this module
 //#define DEBUG_TMP102_POLLER
+// The I2C address of the TMP102 sensor
 #define TMP102_I2C_ADDRESS 72

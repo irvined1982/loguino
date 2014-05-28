@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=tmp102_sample
 INIT_FUNCTION=tmp102_init
 ENABLE_VARIABLE=ENABLE_TMP102_POLLER
+MODULE_NAME="TMP102 I2C Temperature Sensor"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/tmp102-i2c-temperature-sensor/"

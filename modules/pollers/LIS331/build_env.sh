@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=LIS331_sample
 INIT_FUNCTION=LIS331_init
 ENABLE_VARIABLE=ENABLE_LIS331_POLLER
+MODULE_NAME="LIS331 Triple Axis Accelerometer"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/lis331-triple-axis-accelerometer/"

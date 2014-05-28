@@ -1,0 +1,4 @@
+The HS1101 humidity sensor is a cost-effective solution for measuring relative
+humidity within ±5% accuracy. The sensor’s design is based on a unique
+capacitive cell; therefore, by using simple RC circuit wiring it is easy to
+interface.

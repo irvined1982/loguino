@@ -1,0 +1,6 @@
+InvenSense’s ITG-3200 is a groundbreaking triple-axis, digital output
+gyroscope. The ITG-3200 features three 16-bit analog-to-digital converters
+(ADCs) for digitizing the gyro  outputs, a user-selectable internal low-pass
+filter bandwidth, and a Fast-Mode I2C (400kHz) interface.
+
+Communication with the ITG-3200 is achieved over a two-wire (I2C) interface.

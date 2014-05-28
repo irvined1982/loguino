@@ -20,9 +20,11 @@
 
 
 
-
+// If enabled, loguino will poll for DS18B20 sensors and log the temperature of each one connected.
 //#define ENABLE_DS18B20_POLLER
+// Enable debug information for this sensor
 //#define DEBUG_DS18B20_POLLER
+// The data pin used for the DS18B20 sensors.
 #define DS18B20_PIN 1
 
 

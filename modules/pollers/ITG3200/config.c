@@ -20,8 +20,9 @@
 
 
 
-
+// If enabled, loguino will query the ITG3200 gyro over the 2wire interface
 #define ENABLE_ITG3200_POLLER
+// If enabled, Loguino will write debug information for this module
 //#define DEBUG_ITG3200_POLLER
 
 

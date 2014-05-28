@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=HS1101_sample
 INIT_FUNCTION=HS1101_init
 ENABLE_VARIABLE=ENABLE_HS1101_POLLER
+MODULE_NAME="HS1101 Relative Humidity Sensor"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/hs1101-relative-humidity-sensor/"

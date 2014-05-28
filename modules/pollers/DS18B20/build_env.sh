@@ -22,3 +22,5 @@
 SAMPLE_FUNCTION=DS18B20_sample
 INIT_FUNCTION=DS18B20_init
 ENABLE_VARIABLE=ENABLE_DS18B20_POLLER
+MODULE_NAME="DS18B20 1-Wire Temperature Sensor"
+MODULE_URL="https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/ds18b20-one-wire-temperature-sensors/"

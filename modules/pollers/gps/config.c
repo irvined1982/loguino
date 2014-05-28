@@ -20,10 +20,15 @@
 
 
 
-
+// If enabled, loguino will listen for NMEA position data
 //#define ENABLE_GPS_POLLER
+// If enabled, loguino will write debug information for this poller
 //#define DEBUG_GPS_POLLER
+// Pin to illuminate if the GPS has a valid fix.  Use this for visual
+// confirmation that the GPS is working correctly.
 #define GPS_LED_PIN 10
+// Serial device that the GPS is connected to.
 #define GPS_SERIAL_DEV Serial
+// BAUD rate of the GPS device.
 #define GPS_SERIAL_DEV_SPEED 4800
 
