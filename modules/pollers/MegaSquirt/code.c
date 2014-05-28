@@ -38,7 +38,7 @@
         ms_active=true;
         ms_timeouts=0;
         pinMode(MS_STATUS_PIN, OUTPUT);
-        DigitalWrite(MS_STATUS_PIN, LOW);
+        digitalWrite(MS_STATUS_PIN, LOW);
         MegaSquirt::begin();
         #ifdef DEBUG_MEGASQUIRT_POLLER
             DEBUG_1("Finished");
@@ -54,8 +54,8 @@
         {
             // If timeouts > max time out time, then become active, and reset timeouts.
             if (ms_timeouts++ > MS_WAIT_TIME){
-                active=true;
-                timeouts=0;
+                ms_active=true;
+                ms_timeouts=0;
                 #ifdef DEBUG_MEGASQUIRT_POLLER
                     DEBUG_2("Megasquirt timeout reached, retrying");
                 #endif
@@ -86,17 +86,17 @@
             return;
         }
         digitalWrite(MS_STATUS_PIN, HIGH);
-        d.loadData(table);
+        ms_data.loadData(table);
 
-        log_message("Megasquirt.PulseWidth1", d.pulseWidth1(),"ms*1000");
-        log_message("Megasquirt.PulseWidth2", d.pulseWidth2(),"ms*1000");
-        log_message("Megasquirt.Advance", d.advance(),"Degrees*10");
-        log_message("RPM", d.rpm(),"RPM");
-        log_message("Megasquirt.BatteryVoltage", d.batteryVoltage(),"Voltsx10");
-        log_message("Megasquirt.ManifoldAirPressure", d.map(),"kPa");
-        log_message("Megasquirt.CoolantTemperature", d.coolant(),"F*10");
-        log_message("Megasquirt.ThrottlePosition", d.tps(),"%x10");
-        log_message("Megasquirt.ManifoldAirTemperature", d.mat(),"DegreesC");
+        logMessage("Megasquirt.PulseWidth1", ms_data.pulseWidth1(),"ms*1000");
+        logMessage("Megasquirt.PulseWidth2", ms_data.pulseWidth2(),"ms*1000");
+        logMessage("Megasquirt.Advance", ms_data.advance(),"Degrees*10");
+        logMessage("RPM", ms_data.rpm(),"RPM");
+        logMessage("Megasquirt.BatteryVoltage", ms_data.batteryVoltage(),"Voltsx10");
+        logMessage("Megasquirt.ManifoldAirPressure", ms_data.map(),"kPa");
+        logMessage("Megasquirt.CoolantTemperature", ms_data.coolant(),"F*10");
+        logMessage("Megasquirt.ThrottlePosition", ms_data.tps(),"%x10");
+        logMessage("Megasquirt.ManifoldAirTemperature", ms_data.mat(),"DegreesC");
 
         #ifdef DEBUG_MEGASQUIRT_POLLER
             DEBUG_1("Finished");

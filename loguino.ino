@@ -105,6 +105,43 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/ds18b20-
 ###############################################################################
 ###############################################################################
 
+ELM327 OBD2 Support
+
+###############################################################################
+
+The ELM327 is a programmed microcontroller produced by ELM Electronics for
+translating the on-board diagnostics (OBD) interface found in most modern cars.
+The ELM327 command protocol is one of the most popular PC-to-OBD interface
+standards and is also implemented by other vendors.
+
+Loguino can communicate with the ELM327 via a serial interface, and logs the
+standard OBDII metrics.
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/query-obdii-using-the-elm327-module/
+
+*/
+
+
+
+// If enabled, loguino will attempt to query the ELM327 device
+#define ENABLE_ELM327_POLLER
+// If enabled, loguino will write debug information for this poller
+//#define DEBUG_ELM327_POLLER
+// The number of times to skip before trying again.
+#define ELM_SKIP 100
+// The digital pni to set high when the ELM is responding, if undefined
+// no pin will be used.
+#define ELM_LED_PIN 6
+// The Serial port that the ELM327 is connected to
+#define ELM_PORT Serial
+/*
+###############################################################################
+###############################################################################
+
 HS1101 Relative Humidity Sensor
 
 ###############################################################################
@@ -188,6 +225,46 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/lis331-t
 // The I2C address of the LIS331 device.
 #define LIS331_I2C_ADDR 25  //SA0 Pin held high
 //#define LIS331_I2C_ADDR 24  // SA0 Pin held low
+/*
+###############################################################################
+###############################################################################
+
+Megasquirt Engine Management System
+
+###############################################################################
+
+A MegaSquirt is a complete standalone fuel injection controller with software
+and hardware, developed by Bruce Bowling and Al Grippo. The software for the
+platform is open for modification and provides for fuel, ignition and idle air
+control in most cases, keeping the cost low. Whilst lacking in features
+compared to some controllers, for the cost it provides an excellent solution.
+Loguino can poll MegaSquirt ECU’s over the Serial line at about 5-10Hz,
+providing in depth metrics on the Engine Management System.
+
+This poller reads the data table from the Megasquirt over the Serial interface
+and extracts the data into metrics.  The amount of data retrieved from the
+Megasquirt is not insignificant, it is possible to configure which metrics
+are logged in order to save space or improve logging performance.
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/megasquirt-engine-management-systems/
+
+*/
+
+
+
+// If enabled, loguino will poll the Megasquirt Engine Management System
+#define ENABLE_MEGASQUIRT_POLLER
+// If enabled, loguino will write debug information for this poller
+//#define DEBUG_MEGASQUIRT_POLLER
+// The number of cycles to wait before retrying communication with the
+// megasquirt ECU.
+#define MS_WAIT_TIME 10
+// The pin to illuminate when the ECU is online and functioning.
+#define MS_STATUS_PIN 5
+
 /*
 ###############################################################################
 ###############################################################################
@@ -1222,6 +1299,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 #include <DallasTemperature.h>
 
 
+#include "ELM327.h"
 
 
 
@@ -1232,6 +1310,8 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 
 #include <Wire.h>
 #include <LIS331.h>
+
+#include <MegaSquirt.h>
 
 #include <NMEA.h>
 
@@ -1330,8 +1410,7 @@ void debug(const char * fname, const char * func, const int lnum, const  char * 
 	String s;
 	char txt[20];
 	sprintf(txt, "%9d,", millis() );
-	s="";
-
+	s="#";
 	s+= txt;
 	s+= ", ";
 	s+= fname;
@@ -1349,7 +1428,7 @@ void setup(){
 	#ifdef ENABLE_DEBUG
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
-		        //DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
+		        DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
 			#endif
 		#endif
 	#endif
@@ -1373,12 +1452,40 @@ void loop(){
 	DEBUG_1("Finished");
 }
 
+void logMessage(const char* name, bool value, const char* unit){
+    DEBUG_1("Begin");
+    if (value){
+        logMessage(name, "True", unit);
+    }else{
+        logMessage(name, "False", unit);
+    }
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
 
+
+void logMessage(const char* name, float value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[33];
+    dtostrf(value, 1, 2, buf);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
 
 void logMessage(const char* name, int value, const char* unit){
     DEBUG_1("Begin");
     char buf[33];
     sprintf (buf, "%i", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
+void logMessage(const char* name, unsigned int value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[33];
+    sprintf (buf, "%u", value);
     logMessage(name, buf, unit);
     DEBUG_4("Logged");
     DEBUG_1("Finished");
@@ -1420,7 +1527,6 @@ void logMessage(const char * name, String value, const char * unit){
         #endif
         float h = dht.readHumidity();
         float t = dht.readTemperature();
-        char buf[32];
 
         if (isnan(t) ){
             // temperature is NaN
@@ -1432,8 +1538,8 @@ void logMessage(const char * name, String value, const char * unit){
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_3("Valid Temperature received, logging");
             #endif
-            dtostrf(t, 1, 2,  buf);
-            logMessage("DHT.Temp", buf, "C");
+
+            logMessage("DHT.Temp", t, "C");
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_2("Temperature Logged");
             #endif
@@ -1449,8 +1555,8 @@ void logMessage(const char * name, String value, const char * unit){
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_3("Valid Humidity received, logging");
             #endif
-            dtostrf(h, 1, 2, buf);
-            logMessage("DHT.Humidity", buf, "%");
+
+            logMessage("DHT.Humidity", h, "%");
             #ifdef DEBUG_DHT_POLLER
                 DEBUG_2("Humidity Logged");
             #endif
@@ -1508,6 +1614,307 @@ void logMessage(const char * name, String value, const char * unit){
             DEBUG_1("Finished");
         #endif
     }
+#endif
+#ifdef ENABLE_ELM327_POLLER
+    static Elm327 Elm;
+    static unsigned int elm_retries;
+    static bool elm_active;
+
+    void ELM327_init(){
+        #ifdef DEBUG_ELM327_POLLER
+            DEBUG_1("Starting");
+        #endif
+        #ifdef ELM_LED_PIN
+            pinMode(ELM_LED_PIN, OUTPUT);
+            digitalWrite(ELM_LED_PIN,LOW);
+        #endif
+        elm_retries=0;
+        elm_active=false;
+        byte status;
+        status=Elm.begin();
+        if (status == ELM_SUCCESS){
+            elm_active=true;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,HIGH);
+            #endif
+        }
+
+        #ifdef DEBUG_ELM327_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+
+    void ELM327_sample(){
+        #ifdef DEBUG_ELM327_POLLER
+            DEBUG_1("Starting");
+        #endif
+        bool b;
+        int i;
+        unsigned int ui;
+        byte by;
+        byte status;
+        if (!elm_active && ++elm_retries >= ELM_SKIP){
+            status=Elm.begin();
+            elm_retries=0;
+            if (status == ELM_SUCCESS)
+            {
+                elm_active=true;
+                #ifdef ELM_LED_PIN
+                    digitalWrite(ELM_LED_PIN,HIGH);
+                #endif
+            }
+        }
+
+        if (!elm_active){
+            return;
+        }
+
+        status=Elm.getIgnMon(b);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.Ignition", b, "Boolean");
+
+        status=Elm.engineLoad(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.EngineLoad", by, "Boolean");
+
+        status=Elm.coolantTemperature(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.CoolantTemp", i, "Degrees C");
+
+        status=Elm.fuelTrimBank1ShortTerm(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelTrimBank1ShortTerm", i, "%");
+
+        status=Elm.fuelTrimBank2ShortTerm(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelTrimBank2ShortTerm", i, "%");
+
+        status=Elm.fuelTrimBank1LongTerm(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelTrimBank1LongTerm", i, "%");
+
+        status=Elm.fuelTrimBank2LongTerm(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelTrimBank2LongTerm", i, "%");
+
+        status=Elm.fuelPressure(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelPressure", i, "kPa");
+
+        status=Elm.intakeManifoldAbsolutePressure(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.IntakeManifoldAbsolutePressure", b, "kPa");
+
+        status=Elm.engineRPM(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.EngineRPM", i, "RPM");
+
+        status=Elm.vehicleSpeed(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.VehicleSpeed", by, "km/h");
+
+        status=Elm.timingAdvance(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.TimingAdvance", i, "Degrees");
+
+        status=Elm.intakeAirTemperature(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.IntakeAirTemperature", i, "Degrees");
+
+        status=Elm.MAFAirFlowRate(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.MAFAirFlowRate", ui, "Grams/sec");
+
+        status=Elm.throttlePosition(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.ThrottlePosition", by, "%");
+
+        status=Elm.engineRunTime(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.EngineRunTime", ui, "seconds");
+
+        status=Elm.distanceMIL(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.DistanceSinceMILActive", ui, "km");
+
+        status=Elm.relativeFuelRailPressure(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.RelativeFuelRailPressure", ui, "kPa");
+
+        status=Elm.absoluteFuelRailPressure(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.AbsoluteFuelRailPressure", ui, "kPa");
+
+        status=Elm.fuelLevel(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.FuelLevel", by, "%");
+
+        status=Elm.distanceSinceLastCleared(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.DistanceSinceLastCleared", ui, "km");
+
+        status=Elm.barometricPressure(by);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.BarometricPressure", by, "kPa");
+
+        status=Elm.controlModuleVoltage(ui);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.ControlModuleVoltage", ui, "V");
+
+        status=Elm.ambientAirTemperature(i);
+        if (status!=ELM_SUCCESS){
+            elm_active=false;
+            #ifdef ELM_LED_PIN
+                digitalWrite(ELM_LED_PIN,LOW);
+            #endif
+            return;
+        }
+        logMessage("ELM327.OBD2.AmbientAirTemperature", i, "Degrees C");
+
+        #ifdef DEBUG_ELM327_POLLER
+            DEBUG_1("Finished");
+        #endif
+
+     }
 #endif
 #ifdef ENABLE_HS1101_POLLER
     #define HS1101_RH_CONSTANT 12169
@@ -1629,6 +2036,92 @@ LIS331 lis;
         logMessage("LIS331.Z", val, "mG");
 
         #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+#ifdef ENABLE_MEGASQUIRT_POLLER
+    #ifndef MS_WAIT_TIME
+        #error MS_WAIT_TIME not defined.
+    #endif
+    #ifndef MS_STATUS_PIN
+        #error MS_STATUS_PIN not defined.
+    #endif
+
+
+    bool ms_active;
+    byte ms_timeouts;
+    MegaSquirtData ms_data;
+
+
+    void MegaSquirt_init(){
+        #ifdef DEBUG_MEGASQUIRT_POLLER
+            DEBUG_1("Starting");
+        #endif
+        ms_active=true;
+        ms_timeouts=0;
+        pinMode(MS_STATUS_PIN, OUTPUT);
+        digitalWrite(MS_STATUS_PIN, LOW);
+        MegaSquirt::begin();
+        #ifdef DEBUG_MEGASQUIRT_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void MegaSquirt_sample(){
+        #ifdef DEBUG_MEGASQUIRT_POLLER
+            DEBUG_1("Starting");
+        #endif
+        // IF inactive, check if its time to try again.
+        if (!ms_active)
+        {
+            // If timeouts > max time out time, then become active, and reset timeouts.
+            if (ms_timeouts++ > MS_WAIT_TIME){
+                ms_active=true;
+                ms_timeouts=0;
+                #ifdef DEBUG_MEGASQUIRT_POLLER
+                    DEBUG_2("Megasquirt timeout reached, retrying");
+                #endif
+            }
+            // timeouts not reached, just return.
+            else
+            {
+                #ifdef DEBUG_MEGASQUIRT_POLLER
+                    DEBUG_2("Megasquirt Inactive");
+                #endif
+                return;
+            }
+        }
+
+        byte status;
+        byte table[MS_TABLE_LENGTH];
+        #ifdef DEBUG_MEGASQUIRT_POLLER
+            DEBUG_2("Querying Megasquirt");
+        #endif
+        status=MegaSquirt::getData(table);
+        if (status != MS_COMM_SUCCESS)
+        {
+            #ifdef DEBUG_MEGASQUIRT_POLLER
+                DEBUG_1("Megasquirt Error, setting timeout");
+            #endif
+            ms_active=false;
+            digitalWrite(MS_STATUS_PIN, LOW);
+            return;
+        }
+        digitalWrite(MS_STATUS_PIN, HIGH);
+        ms_data.loadData(table);
+
+        logMessage("Megasquirt.PulseWidth1", ms_data.pulseWidth1(),"ms*1000");
+        logMessage("Megasquirt.PulseWidth2", ms_data.pulseWidth2(),"ms*1000");
+        logMessage("Megasquirt.Advance", ms_data.advance(),"Degrees*10");
+        logMessage("RPM", ms_data.rpm(),"RPM");
+        logMessage("Megasquirt.BatteryVoltage", ms_data.batteryVoltage(),"Voltsx10");
+        logMessage("Megasquirt.ManifoldAirPressure", ms_data.map(),"kPa");
+        logMessage("Megasquirt.CoolantTemperature", ms_data.coolant(),"F*10");
+        logMessage("Megasquirt.ThrottlePosition", ms_data.tps(),"%x10");
+        logMessage("Megasquirt.ManifoldAirTemperature", ms_data.mat(),"DegreesC");
+
+        #ifdef DEBUG_MEGASQUIRT_POLLER
             DEBUG_1("Finished");
         #endif
     }
@@ -5476,13 +5969,12 @@ LIS331 lis;
         val |= (secondbyte >> 4);
 
         convertedtemp = val*0.0625;
-        char value[32];
-        dtostrf(convertedtemp, 1, 2, value);
+
 
         #ifdef DEBUG_TMP102_POLLER
             DEBUG_5("Logging Message");
         #endif
-        logMessage("TMP102.Temp", value, "C");
+        logMessage("TMP102.Temp", convertedtemp, "C");
         #ifdef DEBUG_TMP102_POLLER
             DEBUG_2("Successfully logged message");
         #endif
@@ -5499,7 +5991,9 @@ LIS331 lis;
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Starting");
         #endif
-            SERIAL_LOGGER_DEVICE.begin(SERIAL_LOGGER_BAUD);
+            #ifndef NO_SERIAL_INIT
+                SERIAL_LOGGER_DEVICE.begin(SERIAL_LOGGER_BAUD);
+            #endif
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Finishing");
         #endif
@@ -5536,6 +6030,9 @@ void readSensors(){
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_sample();
 #endif
+#ifdef ENABLE_ELM327_POLLER
+    ELM327_sample();
+#endif
 #ifdef ENABLE_HS1101_POLLER
     HS1101_sample();
 #endif
@@ -5544,6 +6041,9 @@ void readSensors(){
 #endif
 #ifdef ENABLE_LIS331_POLLER
     LIS331_sample();
+#endif
+#ifdef ENABLE_MEGASQUIRT_POLLER
+    MegaSquirt_sample();
 #endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_sample();
@@ -5566,6 +6066,9 @@ void setupPollers(){
 #ifdef ENABLE_DS18B20_POLLER
     DS18B20_init();
 #endif
+#ifdef ENABLE_ELM327_POLLER
+    ELM327_init();
+#endif
 #ifdef ENABLE_HS1101_POLLER
     HS1101_init();
 #endif
@@ -5574,6 +6077,9 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_LIS331_POLLER
     LIS331_init();
+#endif
+#ifdef ENABLE_MEGASQUIRT_POLLER
+    MegaSquirt_init();
 #endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_init();

@@ -20,13 +20,14 @@
 
 
 
-// If enabled, loguino will poll the Megasquirt Engine Management System
-#define ENABLE_MEGASQUIRT_POLLER
+// If enabled, loguino will attempt to query the ELM327 device
+#define ENABLE_ELM327_POLLER
 // If enabled, loguino will write debug information for this poller
-//#define DEBUG_MEGASQUIRT_POLLER
-// The number of cycles to wait before retrying communication with the
-// megasquirt ECU.
-#define MS_WAIT_TIME 10
-// The pin to illuminate when the ECU is online and functioning.
-#define MS_STATUS_PIN 5
-
+//#define DEBUG_ELM327_POLLER
+// The number of times to skip before trying again.
+#define ELM_SKIP 100
+// The digital pni to set high when the ELM is responding, if undefined
+// no pin will be used.
+#define ELM_LED_PIN 6
+// The Serial port that the ELM327 is connected to
+#define ELM_PORT Serial

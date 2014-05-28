@@ -151,12 +151,40 @@ void loop(){
 	DEBUG_1("Finished");
 }
 
+void logMessage(const char* name, bool value, const char* unit){
+    DEBUG_1("Begin");
+    if (value){
+        logMessage(name, "True", unit);
+    }else{
+        logMessage(name, "False", unit);
+    }
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
 
+
+void logMessage(const char* name, float value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[33];
+    dtostrf(value, 1, 2, buf);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
 
 void logMessage(const char* name, int value, const char* unit){
     DEBUG_1("Begin");
     char buf[33];
     sprintf (buf, "%i", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
+void logMessage(const char* name, unsigned int value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[33];
+    sprintf (buf, "%u", value);
     logMessage(name, buf, unit);
     DEBUG_4("Logged");
     DEBUG_1("Finished");

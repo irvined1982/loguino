@@ -68,13 +68,12 @@
         val |= (secondbyte >> 4);
 
         convertedtemp = val*0.0625;
-        char value[32];
-        dtostrf(convertedtemp, 1, 2, value);
+
 
         #ifdef DEBUG_TMP102_POLLER
             DEBUG_5("Logging Message");
         #endif
-        logMessage("TMP102.Temp", value, "C");
+        logMessage("TMP102.Temp", convertedtemp, "C");
         #ifdef DEBUG_TMP102_POLLER
             DEBUG_2("Successfully logged message");
         #endif

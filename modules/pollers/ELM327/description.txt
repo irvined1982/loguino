@@ -1,0 +1,7 @@
+The ELM327 is a programmed microcontroller produced by ELM Electronics for
+translating the on-board diagnostics (OBD) interface found in most modern cars.
+The ELM327 command protocol is one of the most popular PC-to-OBD interface
+standards and is also implemented by other vendors.
+
+Loguino can communicate with the ELM327 via a serial interface, and logs the
+standard OBDII metrics.
