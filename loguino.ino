@@ -39,6 +39,37 @@
 ###############################################################################
 ###############################################################################
 
+BMP085 Barometric Pressure Sensor
+
+###############################################################################
+
+The ELM327 is a programmed microcontroller produced by ELM Electronics for
+translating the on-board diagnostics (OBD) interface found in most modern cars.
+The ELM327 command protocol is one of the most popular PC-to-OBD interface
+standards and is also implemented by other vendors.
+
+Loguino can communicate with the ELM327 via a serial interface, and logs the
+standard OBDII metrics.
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/bmp085-barometric-pressure-sensor/
+
+*/
+
+
+
+// If enabled, loguino will query the BMP085 sensor for temperature
+// and pressure data
+#define ENABLE_BMP085_POLLER
+// If enabled, loguino will write debug information for this poller
+//#define DEBUG_BMP085_POLLER
+
+/*
+###############################################################################
+###############################################################################
+
 DHT Sensors
 
 ###############################################################################
@@ -1290,6 +1321,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 #else
 	#include <WProgram.h>
 #endif
+#include "Adafruit_BMP085.h"
 
 
 #include <DHT.h>
@@ -1473,6 +1505,15 @@ void logMessage(const char* name, float value, const char* unit){
     DEBUG_1("Finished");
 }
 
+void logMessage(const char* name, long value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[33];
+    sprintf (buf, "%l", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
 void logMessage(const char* name, int value, const char* unit){
     DEBUG_1("Begin");
     char buf[33];
@@ -1507,6 +1548,32 @@ void logMessage(const char * name, String value, const char * unit){
     DEBUG_5("Freed");
     DEBUG_1("Finished");
 }
+
+#ifdef ENABLE_BMP085_POLLER
+
+    Adafruit_BMP085 bmp;
+    void BMP085_init(){
+        #ifdef DEBUG_BMP085_POLLER
+            DEBUG_1("Starting");
+        #endif
+        bmp.begin();
+        #ifdef DEBUG_BMP085_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void BMP085_sample(){
+        #ifdef DEBUG_BMP085_POLLER
+            DEBUG_1("Starting");
+        #endif
+        logMessage("BMP085.Temp", bmp.readTemperature(), "Degrees C");
+        logMessage("BMP085.Pressure", bmp.readPressure(), "Pa");
+        #ifdef DEBUG_BMP085_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+
 
 #ifdef ENABLE_DHT_POLLER
     DHT dht(DHT_PIN, DHT_TYPE);
@@ -6024,6 +6091,9 @@ LIS331 lis;
 #endif
 
 void readSensors(){
+#ifdef ENABLE_BMP085_POLLER
+    BMP085_sample();
+#endif
 #ifdef ENABLE_DHT_POLLER
     DHT_sample();
 #endif
@@ -6060,6 +6130,9 @@ void readSensors(){
 }
 
 void setupPollers(){
+#ifdef ENABLE_BMP085_POLLER
+    BMP085_init();
+#endif
 #ifdef ENABLE_DHT_POLLER
     DHT_init();
 #endif
