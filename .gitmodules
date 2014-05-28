@@ -19,3 +19,6 @@
 [submodule "3rdParty/Adafruit_BMP085"]
 	path = 3rdParty/Adafruit_BMP085
 	url = https://github.com/irvined1982/Adafruit-BMP085-Library.git
+[submodule "3rdParty/PubSubClient"]
+	path = 3rdParty/PubSubClient
+	url = https://github.com/irvined1982/pubsubclient.git

@@ -1,0 +1,16 @@
+Loguino can function as a network server listening on a TCP port using the
+Loguino Ethernet, or the Ethernet shield.  The network logger supports the
+following modes of operation:
+
+Network Server
+
+When server mode is enabled, the logger listens for incoming connections on a
+configurable (Default is 23/Telnet) TCP port. Up to four clients can connect,
+each client receives the log messages each time they are sent from a poller.
+In this mode all data is sent in clear text and no authentication is possible.
+
+MQTT Client
+
+When the MQTT client is enabled, Loguino will publish to a preconfigured MQTT
+broker. The topic of each message is set to the Loguino logger name, and the
+value is logged as the data.
