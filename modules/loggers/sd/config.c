@@ -20,7 +20,7 @@
 
 
 // If enabled, Loguino will write log data to the SD card.
-#define ENABLE_SD_LOGGER
+//#define ENABLE_SD_LOGGER
 // If defined, debug messages shall be enabled for this module
 //#define DEBUG_SD_LOGGER
 // Pin used for Chip Select
