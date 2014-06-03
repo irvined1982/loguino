@@ -2986,7 +2986,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 0 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 0 pullup LOW");
                 #endif
@@ -3013,7 +3013,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 1 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 1 pullup LOW");
                 #endif
@@ -3040,7 +3040,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 2 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 2 pullup LOW");
                 #endif
@@ -3067,7 +3067,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 3 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 3 pullup LOW");
                 #endif
@@ -3094,7 +3094,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 4 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 4 pullup LOW");
                 #endif
@@ -3121,7 +3121,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 5 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 5 pullup LOW");
                 #endif
@@ -3148,7 +3148,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 6 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 6 pullup LOW");
                 #endif
@@ -3175,7 +3175,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 7 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 7 pullup LOW");
                 #endif
@@ -3202,7 +3202,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 8 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 8 pullup LOW");
                 #endif
@@ -3229,7 +3229,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 9 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 9 pullup LOW");
                 #endif
@@ -3256,7 +3256,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 10 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 10 pullup LOW");
                 #endif
@@ -3283,7 +3283,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 11 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 11 pullup LOW");
                 #endif
@@ -3310,7 +3310,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 12 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 12 pullup LOW");
                 #endif
@@ -3337,7 +3337,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 13 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 13 pullup LOW");
                 #endif
@@ -3365,7 +3365,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 14 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 14 pullup LOW");
                 #endif
@@ -3394,7 +3394,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 15 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 15 pullup LOW");
                 #endif
@@ -3423,7 +3423,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 16 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 16 pullup LOW");
                 #endif
@@ -3452,7 +3452,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 17 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 17 pullup LOW");
                 #endif
@@ -3481,7 +3481,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 18 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 18 pullup LOW");
                 #endif
@@ -3510,7 +3510,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 19 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 19 pullup LOW");
                 #endif
@@ -3539,7 +3539,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 20 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 20 pullup LOW");
                 #endif
@@ -3568,7 +3568,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 21 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 21 pullup LOW");
                 #endif
@@ -3597,7 +3597,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 22 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 22 pullup LOW");
                 #endif
@@ -3626,7 +3626,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 23 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 23 pullup LOW");
                 #endif
@@ -3655,7 +3655,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 24 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 24 pullup LOW");
                 #endif
@@ -3684,7 +3684,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 25 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 25 pullup LOW");
                 #endif
@@ -3713,7 +3713,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 26 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 26 pullup LOW");
                 #endif
@@ -3742,7 +3742,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 27 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 27 pullup LOW");
                 #endif
@@ -3771,7 +3771,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 28 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 28 pullup LOW");
                 #endif
@@ -3800,7 +3800,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 29 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 29 pullup LOW");
                 #endif
@@ -3829,7 +3829,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 30 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 30 pullup LOW");
                 #endif
@@ -3858,7 +3858,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 31 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 31 pullup LOW");
                 #endif
@@ -3887,7 +3887,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 32 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 32 pullup LOW");
                 #endif
@@ -3916,7 +3916,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 33 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 33 pullup LOW");
                 #endif
@@ -3945,7 +3945,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 34 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 34 pullup LOW");
                 #endif
@@ -3974,7 +3974,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 35 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 35 pullup LOW");
                 #endif
@@ -4003,7 +4003,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 36 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 36 pullup LOW");
                 #endif
@@ -4032,7 +4032,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 37 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 37 pullup LOW");
                 #endif
@@ -4061,7 +4061,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 38 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 38 pullup LOW");
                 #endif
@@ -4090,7 +4090,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 39 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 39 pullup LOW");
                 #endif
@@ -4119,7 +4119,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 40 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 40 pullup LOW");
                 #endif
@@ -4148,7 +4148,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 41 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 41 pullup LOW");
                 #endif
@@ -4177,7 +4177,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 42 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 42 pullup LOW");
                 #endif
@@ -4206,7 +4206,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 43 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 43 pullup LOW");
                 #endif
@@ -4235,7 +4235,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 44 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 44 pullup LOW");
                 #endif
@@ -4264,7 +4264,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 45 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 45 pullup LOW");
                 #endif
@@ -4293,7 +4293,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 46 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 46 pullup LOW");
                 #endif
@@ -4322,7 +4322,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 47 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 47 pullup LOW");
                 #endif
@@ -4351,7 +4351,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 48 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 48 pullup LOW");
                 #endif
@@ -4380,7 +4380,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 49 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 49 pullup LOW");
                 #endif
@@ -4409,7 +4409,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 50 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 50 pullup LOW");
                 #endif
@@ -4438,7 +4438,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 51 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 51 pullup LOW");
                 #endif
@@ -4467,7 +4467,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 52 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 52 pullup LOW");
                 #endif
@@ -4496,7 +4496,7 @@ LIS331 lis;
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin 53 pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin 53 pullup LOW");
                 #endif

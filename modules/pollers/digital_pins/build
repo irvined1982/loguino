@@ -42,7 +42,7 @@ for pin in range(54):
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_3("Successfully set pin %d pullup HIGH");
                 #endif
-            #elif
+            #else
                 #ifdef DEBUG_DIGITAL_POLLER
                     DEBUG_5("Setting pin %d pullup LOW");
                 #endif
