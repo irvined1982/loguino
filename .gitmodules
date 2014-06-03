@@ -22,3 +22,9 @@
 [submodule "3rdParty/PubSubClient"]
 	path = 3rdParty/PubSubClient
 	url = https://github.com/irvined1982/pubsubclient.git
+[submodule "3rdParty/TinyGPS"]
+	path = 3rdParty/TinyGPS
+	url = https://github.com/irvined1982/TinyGPS.git
+[submodule "3rdParty/SD"]
+	path = 3rdParty/SD
+	url = https://github.com/irvined1982/SD.git
