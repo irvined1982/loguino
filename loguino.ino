@@ -17,8 +17,8 @@
  *
 */
 
-//#define ENABLE_DEBUG
-#define DEBUG_LEVEL 2
+#define ENABLE_DEBUG
+#define DEBUG_LEVEL 5
 #define DEBUG_SERIAL_DEV Serial
 #define DEBUG_SERIAL_BAUD 115200
 
@@ -1217,14 +1217,21 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/nmea-com
 
 
 // If enabled, loguino will listen for NMEA position data
-//#define ENABLE_GPS_POLLER
+#define ENABLE_GPS_POLLER
 // If enabled, loguino will write debug information for this poller
-//#define DEBUG_GPS_POLLER
+#define DEBUG_GPS_POLLER
 // Pin to illuminate if the GPS has a valid fix.  Use this for visual
 // confirmation that the GPS is working correctly.
-#define GPS_LED_PIN 10
-// Serial device that the GPS is connected to.
-#define GPS_SERIAL_DEV Serial
+#define GPS_LED_PIN 7
+#define GPS_USE_SOFTSERIAL
+#ifdef GPS_USE_SOFTSERIAL
+    #define GPS_RX_PIN 8
+    #define GPS_TX_PIN 9
+    #define GPS_SERIAL_DEV GPS_SOFT_SERIAL
+#else
+    // Serial device that the GPS is connected to.
+    #define GPS_SERIAL_DEV Serial
+#endif
 // BAUD rate of the GPS device.
 #define GPS_SERIAL_DEV_SPEED 4800
 
@@ -1365,7 +1372,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-
 
 
 // If enabled, Loguino will write log data to the SD card.
-#define ENABLE_SD_LOGGER
+//#define ENABLE_SD_LOGGER
 // If defined, debug messages shall be enabled for this module
 //#define DEBUG_SD_LOGGER
 // Pin used for Chip Select
@@ -1457,7 +1464,9 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 
 #include <MegaSquirt.h>
 
-#include <NMEA.h>
+
+#include <SoftwareSerial.h>
+#include "TinyGPS.h"
 
 
 #include <Wire.h>
@@ -1558,7 +1567,7 @@ int freeMemory() {
 void debug(const char * fname, const char * func, const int lnum, const  char * message){
 	String s;
 	char txt[20];
-	sprintf(txt, "%9d,", millis() );
+	sprintf(txt, "%9u", millis() );
 	s="#";
 	s+= txt;
 	s+= ", ";
@@ -1621,6 +1630,16 @@ void logMessage(const char* name, float value, const char* unit){
     DEBUG_4("Logged");
     DEBUG_1("Finished");
 }
+
+void logMessage(const char* name, unsigned long value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[100];
+    sprintf (buf, "%lu", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
 
 void logMessage(const char* name, long value, const char* unit){
     DEBUG_1("Begin");
@@ -6014,10 +6033,16 @@ LIS331 lis;
  * editing HardwareSerial.h, the other is to poll this poller more
  * frequently.
  */
+    #ifdef GPS_USE_SOFTSERIAL
+        SoftwareSerial GPS_SERIAL_DEV =  SoftwareSerial(GPS_RX_PIN,GPS_TX_PIN);
+    #endif
+
+
     void gps_init(){
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
+
         #ifdef GPS_LED_PIN
                 DEBUG_5 ("Setting GPS_LED_PIN to OUTPUT, and LOW");
                 pinMode(GPS_LED_PIN, OUTPUT);
@@ -6058,34 +6083,48 @@ LIS331 lis;
  * to see if the fix is valid, if so it logs each metric.
  *
  */
-    NMEA gps;
+    TinyGPS gps;
+
     void gps_sample(){
+        float flat, flon;
+        unsigned long age;
+        unsigned long fix_age, time, date;
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
 
         while(GPS_SERIAL_DEV.available()){
-            if (gps.addChar(GPS_SERIAL_DEV.read())){
+            #ifdef DEBUG_GPS_POLLER
+                    DEBUG_2("Read Char");
+            #endif
+            if (gps.encode(GPS_SERIAL_DEV.read())){
                 #ifdef DEBUG_GPS_POLLER
                     DEBUG_2("Completed Sentence");
                 #endif
-                if (gps.validFix()){
+                gps.f_get_position(&flat, &flon, &age);
+                if (age < 1000){
+                    #ifdef GPS_LED_PIN
+                        digitalWrite(GPS_LED_PIN,HIGH);
+                    #endif
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Valid Fix");
-                    #endif
-                    #ifdef DEBUG_GPS_POLLER
                         DEBUG_5("Logging Messages");
                     #endif
-                    logMessage("GPS.Course", gps.getCourse(), "Degrees");
-                    logMessage("GPS.Speed", gps.getSpeed(), "Knots");
-                    logMessage("GPS.Latitude", gps.getLatitude(), "N/A");
-                    logMessage("GPS.Longitude", gps.getLongitude(), "N/A");
-                    logMessage("GPS.Date", gps.getDate(), "N/A");
-                    logMessage("GPS.Time", gps.getTime(), "UTC");
+                    logMessage("GPS.Course", gps.f_course(), "Degrees");
+                    logMessage("GPS.Speed", gps.f_speed_kmph(), "KM/H");
+                    //logMessage("GPS.Altitude", gps.f_altitude(), "M");
+                    logMessage("GPS.Latitude", flat, "N/A");
+                    logMessage("GPS.Longitude", flon, "N/A");
+                    gps.get_datetime(&date, &time, &fix_age);
+                    logMessage("GPS.Date", date, "N/A");
+                    logMessage("GPS.Time", time, "UTC");
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Successfully Logged Messages");
                     #endif
                 }else{
+                    #ifdef GPS_LED_PIN
+                        digitalWrite(GPS_LED_PIN,LOW);
+                    #endif
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("No valid fix available");
                     #endif
@@ -6397,6 +6436,7 @@ LIS331 lis;
         #endif
             #ifndef NO_SERIAL_INIT
                 SERIAL_LOGGER_DEVICE.begin(SERIAL_LOGGER_BAUD);
+
             #endif
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Finishing");

@@ -172,6 +172,16 @@ void logMessage(const char* name, float value, const char* unit){
     DEBUG_1("Finished");
 }
 
+void logMessage(const char* name, unsigned long value, const char* unit){
+    DEBUG_1("Begin");
+    char buf[100];
+    sprintf (buf, "%lu", value);
+    logMessage(name, buf, unit);
+    DEBUG_4("Logged");
+    DEBUG_1("Finished");
+}
+
+
 void logMessage(const char* name, long value, const char* unit){
     DEBUG_1("Begin");
     char buf[100];

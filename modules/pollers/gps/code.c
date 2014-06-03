@@ -29,10 +29,16 @@
  * editing HardwareSerial.h, the other is to poll this poller more
  * frequently.
  */
+    #ifdef GPS_USE_SOFTSERIAL
+        SoftwareSerial GPS_SERIAL_DEV =  SoftwareSerial(GPS_RX_PIN,GPS_TX_PIN);
+    #endif
+
+
     void gps_init(){
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
+
         #ifdef GPS_LED_PIN
                 DEBUG_5 ("Setting GPS_LED_PIN to OUTPUT, and LOW");
                 pinMode(GPS_LED_PIN, OUTPUT);
@@ -73,34 +79,48 @@
  * to see if the fix is valid, if so it logs each metric.
  *
  */
-    NMEA gps;
+    TinyGPS gps;
+
     void gps_sample(){
+        float flat, flon;
+        unsigned long age;
+        unsigned long fix_age, time, date;
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
 
         while(GPS_SERIAL_DEV.available()){
-            if (gps.addChar(GPS_SERIAL_DEV.read())){
+            #ifdef DEBUG_GPS_POLLER
+                    DEBUG_2("Read Char");
+            #endif
+            if (gps.encode(GPS_SERIAL_DEV.read())){
                 #ifdef DEBUG_GPS_POLLER
                     DEBUG_2("Completed Sentence");
                 #endif
-                if (gps.validFix()){
+                gps.f_get_position(&flat, &flon, &age);
+                if (age < 1000){
+                    #ifdef GPS_LED_PIN
+                        digitalWrite(GPS_LED_PIN,HIGH);
+                    #endif
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Valid Fix");
-                    #endif
-                    #ifdef DEBUG_GPS_POLLER
                         DEBUG_5("Logging Messages");
                     #endif
-                    logMessage("GPS.Course", gps.getCourse(), "Degrees");
-                    logMessage("GPS.Speed", gps.getSpeed(), "Knots");
-                    logMessage("GPS.Latitude", gps.getLatitude(), "N/A");
-                    logMessage("GPS.Longitude", gps.getLongitude(), "N/A");
-                    logMessage("GPS.Date", gps.getDate(), "N/A");
-                    logMessage("GPS.Time", gps.getTime(), "UTC");
+                    logMessage("GPS.Course", gps.f_course(), "Degrees");
+                    logMessage("GPS.Speed", gps.f_speed_kmph(), "KM/H");
+                    //logMessage("GPS.Altitude", gps.f_altitude(), "M");
+                    logMessage("GPS.Latitude", flat, "N/A");
+                    logMessage("GPS.Longitude", flon, "N/A");
+                    gps.get_datetime(&date, &time, &fix_age);
+                    logMessage("GPS.Date", date, "N/A");
+                    logMessage("GPS.Time", time, "UTC");
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Successfully Logged Messages");
                     #endif
                 }else{
+                    #ifdef GPS_LED_PIN
+                        digitalWrite(GPS_LED_PIN,LOW);
+                    #endif
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("No valid fix available");
                     #endif

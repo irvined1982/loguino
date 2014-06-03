@@ -17,4 +17,6 @@
  *
 */
 
-#include <NMEA.h>
+
+#include <SoftwareSerial.h>
+#include "TinyGPS.h"
