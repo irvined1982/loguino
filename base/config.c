@@ -17,8 +17,8 @@
  *
 */
 
-//#define ENABLE_DEBUG
-#define DEBUG_LEVEL 2
+#define ENABLE_DEBUG
+#define DEBUG_LEVEL 5
 #define DEBUG_SERIAL_DEV Serial
 #define DEBUG_SERIAL_BAUD 115200
 
