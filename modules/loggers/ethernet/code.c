@@ -66,6 +66,8 @@
             DEBUG_1("Starting");
         #endif
         #ifdef ETHERNET_ENABLE_SERVER
+            eth_server.print(millis(),DEC);
+            eth_server.write(",");
             eth_server.write(name);
             eth_server.write(",");
             eth_server.write(value);

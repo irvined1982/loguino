@@ -26,7 +26,7 @@
 // Pin used for Chip Select
 #define SD_CS_PIN 10
 // Pin LED is connected to, will illuminate when SD card is online
-#define SD_ACTIVE_PIN 11
+#define SD_ACTIVE_PIN 7
 
 
 

@@ -21,12 +21,12 @@
 
 
 // If enabled, loguino will listen for NMEA position data
-#define ENABLE_GPS_POLLER
+//#define ENABLE_GPS_POLLER
 // If enabled, loguino will write debug information for this poller
-#define DEBUG_GPS_POLLER
+// #define DEBUG_GPS_POLLER
 // Pin to illuminate if the GPS has a valid fix.  Use this for visual
 // confirmation that the GPS is working correctly.
-#define GPS_LED_PIN 7
+#define GPS_LED_PIN 6
 #define GPS_USE_SOFTSERIAL
 #ifdef GPS_USE_SOFTSERIAL
     #define GPS_RX_PIN 8

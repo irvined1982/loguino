@@ -63,7 +63,12 @@ do
     echo "*/" >> build/config.c
 
 	[ -e $i/config.c ] && tail -n +20 $i/config.c >> build/config.c
+
+	echo "#ifdef $ENABLE_VARIABLE" >> build/include.c
 	[ -e $i/include.c ] && tail -n +20 $i/include.c >> build/include.c
+	echo "" >> build/include.c
+	echo "#endif" >> build/include.c
+
 	[ -e $i/code.c ] && tail -n +20 $i/code.c >> build/code.c
 
 	echo "#ifdef $ENABLE_VARIABLE" >> build/readSensors.c
@@ -100,7 +105,12 @@ do
     echo "*/" >> build/config.c
 
 	[ -e $i/config.c ] && tail -n +20 $i/config.c >> build/config.c
+
+	echo "#ifdef $ENABLE_VARIABLE" >> build/include.c
 	[ -e $i/include.c ] && tail -n +20 $i/include.c >> build/include.c
+	echo "" >> build/include.c
+	echo "#endif" >> build/include.c
+
 	[ -e $i/code.c ] && tail -n +20 $i/code.c >> build/code.c
 
 

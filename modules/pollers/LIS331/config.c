@@ -24,7 +24,7 @@
 // the 2-wire interface.
 //#define ENABLE_LIS331_POLLER
 // If enabled, Loguino will write debug information for this module
-//#define DEBUG_LIS331_POLLER
+#define DEBUG_LIS331_POLLER
 // The I2C address of the LIS331 device.
 #define LIS331_I2C_ADDR 25  //SA0 Pin held high
 //#define LIS331_I2C_ADDR 24  // SA0 Pin held low

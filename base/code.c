@@ -128,6 +128,7 @@ void setup(){
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
 		        DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
+		        while(!DEBUG_SERIAL_DEV){delay(1);}
 			#endif
 		#endif
 	#endif

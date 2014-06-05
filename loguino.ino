@@ -17,7 +17,7 @@
  *
 */
 
-#define ENABLE_DEBUG
+//#define ENABLE_DEBUG
 #define DEBUG_LEVEL 5
 #define DEBUG_SERIAL_DEV Serial
 #define DEBUG_SERIAL_BAUD 115200
@@ -252,7 +252,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/lis331-t
 // the 2-wire interface.
 //#define ENABLE_LIS331_POLLER
 // If enabled, Loguino will write debug information for this module
-//#define DEBUG_LIS331_POLLER
+#define DEBUG_LIS331_POLLER
 // The I2C address of the LIS331 device.
 #define LIS331_I2C_ADDR 25  //SA0 Pin held high
 //#define LIS331_I2C_ADDR 24  // SA0 Pin held low
@@ -1217,12 +1217,12 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/nmea-com
 
 
 // If enabled, loguino will listen for NMEA position data
-#define ENABLE_GPS_POLLER
+//#define ENABLE_GPS_POLLER
 // If enabled, loguino will write debug information for this poller
-#define DEBUG_GPS_POLLER
+// #define DEBUG_GPS_POLLER
 // Pin to illuminate if the GPS has a valid fix.  Use this for visual
 // confirmation that the GPS is working correctly.
-#define GPS_LED_PIN 7
+#define GPS_LED_PIN 6
 #define GPS_USE_SOFTSERIAL
 #ifdef GPS_USE_SOFTSERIAL
     #define GPS_RX_PIN 8
@@ -1234,6 +1234,50 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/nmea-com
 #endif
 // BAUD rate of the GPS device.
 #define GPS_SERIAL_DEV_SPEED 4800
+
+/*
+###############################################################################
+###############################################################################
+
+Tachometer
+
+###############################################################################
+
+For cars that do not have OBD2, or Megasquirt, it is possible to determine
+engine RPM and Dwell Angle using an opto-isolator circuit, and the tachometer
+input module.  The module connects a digital interupt pin to the negative side of
+the coil using an opto-isolator circuit.
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/engine-rpm-input/
+
+*/
+
+
+
+// If enabled, loguino will calculate and log RPM and dwell.
+#define ENABLE_TACH_POLLER
+// If enabled, loguino will write debug information for this module
+// #define DEBUG_TACH_POLLER
+// The first interrupt the opto-isolator circuit is connected to.
+#define TACH_FEED_INT_1 0
+// The second interrupt the opto-isolator circuit is connected to.
+#define TACH_FEED_INT_2 1
+// The first pin the opto-isolator circuit is connected to.
+#define TACH_FEED_PIN_1 2
+// The second pin the opto-isolator circuit is connected to.
+#define TACH_FEED_PIN_2 3
+// The number of milliseconds to sample at a time
+#define TACH_READ_DELAY_MILLIS 5000
+// The number of ignition pulses per engine revolution
+#define TACH_PULSES_RPM 2
+// The number of cylinders (for dwell angle)
+#define TACH_NUM_CYLS 4
+
+
 
 /*
 ###############################################################################
@@ -1378,7 +1422,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-
 // Pin used for Chip Select
 #define SD_CS_PIN 10
 // Pin LED is connected to, will illuminate when SD card is online
-#define SD_ACTIVE_PIN 11
+#define SD_ACTIVE_PIN 7
 
 
 
@@ -1440,42 +1484,92 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 #else
 	#include <WProgram.h>
 #endif
+#ifdef ENABLE_BMP085_POLLER
 #include "Adafruit_BMP085.h"
+
+#endif
+#ifdef ENABLE_DHT_POLLER
 
 
 #include <DHT.h>
 #include <stdlib.h>
 
+#endif
+#ifdef ENABLE_DS18B20_POLLER
+
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
 
+
+#endif
+#ifdef ENABLE_ELM327_POLLER
 #include "ELM327.h"
+
+#endif
+#ifdef ENABLE_HS1101_POLLER
 
 
 
 #include <stdlib.h>
+
+#endif
+#ifdef ENABLE_ITG3200_POLLER
 #include <Wire.h>
 #include <ITG3200.h>
+
+#endif
+#ifdef ENABLE_LIS331_POLLER
 
 
 #include <Wire.h>
 #include <LIS331.h>
 
+
+#endif
+#ifdef ENABLE_MEGASQUIRT_POLLER
 #include <MegaSquirt.h>
 
+
+#endif
+#ifdef ENABLE_ANALOG_POLLER
+
+#endif
+#ifdef ENABLE_DIGITAL_POLLER
+
+#endif
+#ifdef ENABLE_GPS_POLLER
 
 #include <SoftwareSerial.h>
 #include "TinyGPS.h"
 
+#endif
+#ifdef ENABLE_TACH_POLLER
+
+
+#endif
+#ifdef ENABLE_TMP102_POLLER
+
 
 #include <Wire.h>
 #include <stdlib.h>
+
+#endif
+#ifdef ENABLE_ETHERNET_LOGGER
+
 #include "SPI.h"
 #include "Ethernet.h"
 #include "PubSubClient.h"
+#endif
+#ifdef ENABLE_SD_LOGGER
+
 #include "SPI.h"
 #include "SD.h"
+
+#endif
+#ifdef ENABLE_SERIAL_LOGGER
+
+#endif
 
 #ifdef ENABLE_DEBUG
   #ifndef DEBUG_LEVEL
@@ -1587,6 +1681,7 @@ void setup(){
 		#ifdef DEBUG_SERIAL_DEV
 			#ifdef DEBUG_SERIAL_BAUD
 		        DEBUG_SERIAL_DEV.begin(DEBUG_SERIAL_BAUD);
+		        while(!DEBUG_SERIAL_DEV){delay(1);}
 			#endif
 		#endif
 	#endif
@@ -2210,13 +2305,21 @@ void logMessage(const char * name, String value, const char * unit){
 #endif
 
 
-LIS331 lis;
+
 #ifdef ENABLE_LIS331_POLLER
+    LIS331 lis;
     void LIS331_init(){
         #ifdef DEBUG_LIS331_POLLER
             DEBUG_1("Starting");
         #endif
+        Wire.begin();
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Wire Begun");
+        #endif
         lis.setPowerStatus(LR_POWER_NORM);
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Set Power Status");
+        #endif
         lis.setXEnable(true);
         lis.setYEnable(true);
         lis.setZEnable(true);
@@ -6086,9 +6189,9 @@ LIS331 lis;
     TinyGPS gps;
 
     void gps_sample(){
-        float flat, flon;
+        long lat, lon;
         unsigned long age;
-        unsigned long fix_age, time, date;
+        //unsigned long fix_age, time, date;
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
@@ -6101,7 +6204,7 @@ LIS331 lis;
                 #ifdef DEBUG_GPS_POLLER
                     DEBUG_2("Completed Sentence");
                 #endif
-                gps.f_get_position(&flat, &flon, &age);
+                gps.get_position(&lat, &lon, &age);
                 if (age < 1000){
                     #ifdef GPS_LED_PIN
                         digitalWrite(GPS_LED_PIN,HIGH);
@@ -6110,14 +6213,14 @@ LIS331 lis;
                         DEBUG_2("Valid Fix");
                         DEBUG_5("Logging Messages");
                     #endif
-                    logMessage("GPS.Course", gps.f_course(), "Degrees");
-                    logMessage("GPS.Speed", gps.f_speed_kmph(), "KM/H");
-                    //logMessage("GPS.Altitude", gps.f_altitude(), "M");
-                    logMessage("GPS.Latitude", flat, "N/A");
-                    logMessage("GPS.Longitude", flon, "N/A");
-                    gps.get_datetime(&date, &time, &fix_age);
-                    logMessage("GPS.Date", date, "N/A");
-                    logMessage("GPS.Time", time, "UTC");
+                    logMessage("GPS.Course", gps.course(), "Degrees/100");
+                    logMessage("GPS.Speed", gps.speed(), "KNOT/100");
+                    logMessage("GPS.Altitude", gps.altitude(), "m/100");
+                    logMessage("GPS.Latitude", lat, "Degrees/1M");
+                    logMessage("GPS.Longitude", lon, "Degrees/1M");
+                    //gps.get_datetime(&date, &time, &fix_age);
+                    //logMessage("GPS.Date", date, "N/A");
+                    //logMessage("GPS.Time", time, "UTC");
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Successfully Logged Messages");
                     #endif
@@ -6137,6 +6240,82 @@ LIS331 lis;
         }
 
         #ifdef DEBUG_GPS_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+#ifdef ENABLE_TACH_POLLER
+    volatile unsigned long timePointsOpen, timePointsClosed, lastChange;
+    volatile unsigned int numBangs;
+
+    void pointsOpening(){
+        unsigned long t;
+        t = millis();
+        if (lastChange > 0){
+            timePointsClosed += (t - lastChange);
+        }
+        lastChange = t;
+        ++numBangs;
+    }
+
+    void pointsClosing(){
+        unsigned long t;
+        t = millis();
+        if (lastChange > 0){
+            timePointsOpen += (t - lastChange);
+        }
+        lastChange = t;
+    }
+
+
+    void tach_init(){
+        #ifdef DEBUG_TACH_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        pinMode(TACH_FEED_PIN_1, INPUT);
+        pinMode(TACH_FEED_PIN_2, INPUT);
+        digitalWrite(TACH_FEED_PIN_1, HIGH);
+        digitalWrite(TACH_FEED_PIN_2, HIGH);
+        timePointsOpen = 0;
+        timePointsClosed = 0;
+
+        #ifdef DEBUG_TACH_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+
+    void tach_sample(){
+        #ifdef DEBUG_TACH_POLLER
+            DEBUG_1("Starting");
+        #endif
+        // Reset all the counters
+        numBangs = 0;
+        lastChange = 0;
+        timePointsOpen=0;
+        timePointsClosed=0;
+        // Attach the interupts
+        attachInterrupt(TACH_FEED_INT_1, pointsOpening, RISING);
+        attachInterrupt(TACH_FEED_INT_2, pointsClosing, FALLING);
+        // Sample for a period of time
+        delay(TACH_READ_DELAY_MILLIS);
+        // Turn of interupts
+        detachInterrupt(TACH_FEED_INT_1);
+        detachInterrupt(TACH_FEED_INT_2);
+
+        // Calculate RPM
+        numBangs = ((60000/TACH_READ_DELAY_MILLIS)*numBangs)/TACH_PULSES_RPM;
+        logMessage("Engine.RPM", numBangs, "RPM");
+
+        // Calculate Dwell angle, but only if engine is running.
+        int dwellAngle = 0;
+        if (timePointsOpen != timePointsClosed){
+            dwellAngle = ((timePointsOpen * 36000)/(timePointsOpen + timePointsClosed))/TACH_NUM_CYLS;
+            logMessage("Engine.Dwell", dwellAngle, "Degrees*1000");
+        }
+
+        #ifdef DEBUG_TACH_POLLER
             DEBUG_1("Finished");
         #endif
     }
@@ -6256,6 +6435,8 @@ LIS331 lis;
             DEBUG_1("Starting");
         #endif
         #ifdef ETHERNET_ENABLE_SERVER
+            eth_server.print(millis(),DEC);
+            eth_server.write(",");
             eth_server.write(name);
             eth_server.write(",");
             eth_server.write(value);
@@ -6307,6 +6488,7 @@ LIS331 lis;
 #endif
 
 
+
 #ifdef ENABLE_SD_LOGGER
     bool sd_active;
     File sd_file;
@@ -6343,7 +6525,7 @@ LIS331 lis;
          * If the operation fails, the sd_active becomes false, and the SD card initialization
          * fails.
          */
-        sd_active=SD.begin(SD_CS_PIN);
+        sd_active=SD.begin(SD_CS_PIN, 11, 12, 13);
 
         /**
          * If the SD card was successfully initialized, then attempt to find a filename to use.
@@ -6357,9 +6539,9 @@ LIS331 lis;
             return;
         }
 
-        byte sd_i=0;
+        unsigned byte sd_i=0;
         sprintf(sd_fname, "%08d.log", sd_i);
-        while (sd_i++ <= 99999999 && SD.exists(sd_fname)){
+        while (++sd_i <= 255 && SD.exists(sd_fname)){
             sprintf(sd_fname, "%08d.log",sd_i);
         }
         if (SD.exists(sd_fname)){
@@ -6401,6 +6583,8 @@ LIS331 lis;
             DEBUG_1("Starting");
         #endif
         if (sd_active){
+        sd_file.print(millis(),DEC);
+            sd_file.write(",");
             sd_file.write(name);
             sd_file.write(",");
             sd_file.write(value);
@@ -6446,6 +6630,8 @@ LIS331 lis;
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Starting");
         #endif
+        SERIAL_LOGGER_DEVICE.print(millis(), DEC);
+        SERIAL_LOGGER_DEVICE.write(",");
         SERIAL_LOGGER_DEVICE.write(name);
         SERIAL_LOGGER_DEVICE.write(",");
         SERIAL_LOGGER_DEVICE.write(value);
@@ -6501,6 +6687,9 @@ void readSensors(){
 #ifdef ENABLE_GPS_POLLER
     gps_sample();
 #endif
+#ifdef ENABLE_TACH_POLLER
+    tach_sample();
+#endif
 #ifdef ENABLE_TMP102_POLLER
     tmp102_sample();
 #endif
@@ -6539,6 +6728,9 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_GPS_POLLER
     gps_init();
+#endif
+#ifdef ENABLE_TACH_POLLER
+    tach_init();
 #endif
 #ifdef ENABLE_TMP102_POLLER
     tmp102_init();

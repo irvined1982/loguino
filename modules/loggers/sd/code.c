@@ -19,6 +19,7 @@
 
 
 
+
 #ifdef ENABLE_SD_LOGGER
     bool sd_active;
     File sd_file;
@@ -55,7 +56,7 @@
          * If the operation fails, the sd_active becomes false, and the SD card initialization
          * fails.
          */
-        sd_active=SD.begin(SD_CS_PIN);
+        sd_active=SD.begin(SD_CS_PIN, 11, 12, 13);
 
         /**
          * If the SD card was successfully initialized, then attempt to find a filename to use.
@@ -69,9 +70,9 @@
             return;
         }
 
-        byte sd_i=0;
+        unsigned byte sd_i=0;
         sprintf(sd_fname, "%08d.log", sd_i);
-        while (sd_i++ <= 99999999 && SD.exists(sd_fname)){
+        while (++sd_i <= 255 && SD.exists(sd_fname)){
             sprintf(sd_fname, "%08d.log",sd_i);
         }
         if (SD.exists(sd_fname)){
@@ -113,6 +114,8 @@
             DEBUG_1("Starting");
         #endif
         if (sd_active){
+        sd_file.print(millis(),DEC);
+            sd_file.write(",");
             sd_file.write(name);
             sd_file.write(",");
             sd_file.write(value);

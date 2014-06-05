@@ -36,6 +36,8 @@
         #ifdef DEBUG_SERIAL_LOGGER
             DEBUG_1("Starting");
         #endif
+        SERIAL_LOGGER_DEVICE.print(millis(), DEC);
+        SERIAL_LOGGER_DEVICE.write(",");
         SERIAL_LOGGER_DEVICE.write(name);
         SERIAL_LOGGER_DEVICE.write(",");
         SERIAL_LOGGER_DEVICE.write(value);

@@ -82,9 +82,9 @@
     TinyGPS gps;
 
     void gps_sample(){
-        float flat, flon;
+        long lat, lon;
         unsigned long age;
-        unsigned long fix_age, time, date;
+        //unsigned long fix_age, time, date;
         #ifdef DEBUG_GPS_POLLER
             DEBUG_1("Starting");
         #endif
@@ -97,7 +97,7 @@
                 #ifdef DEBUG_GPS_POLLER
                     DEBUG_2("Completed Sentence");
                 #endif
-                gps.f_get_position(&flat, &flon, &age);
+                gps.get_position(&lat, &lon, &age);
                 if (age < 1000){
                     #ifdef GPS_LED_PIN
                         digitalWrite(GPS_LED_PIN,HIGH);
@@ -106,14 +106,14 @@
                         DEBUG_2("Valid Fix");
                         DEBUG_5("Logging Messages");
                     #endif
-                    logMessage("GPS.Course", gps.f_course(), "Degrees");
-                    logMessage("GPS.Speed", gps.f_speed_kmph(), "KM/H");
-                    //logMessage("GPS.Altitude", gps.f_altitude(), "M");
-                    logMessage("GPS.Latitude", flat, "N/A");
-                    logMessage("GPS.Longitude", flon, "N/A");
-                    gps.get_datetime(&date, &time, &fix_age);
-                    logMessage("GPS.Date", date, "N/A");
-                    logMessage("GPS.Time", time, "UTC");
+                    logMessage("GPS.Course", gps.course(), "Degrees/100");
+                    logMessage("GPS.Speed", gps.speed(), "KNOT/100");
+                    logMessage("GPS.Altitude", gps.altitude(), "m/100");
+                    logMessage("GPS.Latitude", lat, "Degrees/1M");
+                    logMessage("GPS.Longitude", lon, "Degrees/1M");
+                    //gps.get_datetime(&date, &time, &fix_age);
+                    //logMessage("GPS.Date", date, "N/A");
+                    //logMessage("GPS.Time", time, "UTC");
                     #ifdef DEBUG_GPS_POLLER
                         DEBUG_2("Successfully Logged Messages");
                     #endif

@@ -19,13 +19,21 @@
 
 
 
-LIS331 lis;
+
 #ifdef ENABLE_LIS331_POLLER
+    LIS331 lis;
     void LIS331_init(){
         #ifdef DEBUG_LIS331_POLLER
             DEBUG_1("Starting");
         #endif
+        Wire.begin();
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Wire Begun");
+        #endif
         lis.setPowerStatus(LR_POWER_NORM);
+        #ifdef DEBUG_LIS331_POLLER
+            DEBUG_1("Set Power Status");
+        #endif
         lis.setXEnable(true);
         lis.setYEnable(true);
         lis.setZEnable(true);
