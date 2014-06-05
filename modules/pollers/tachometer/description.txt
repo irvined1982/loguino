@@ -1,0 +1,4 @@
+For cars that do not have OBD2, or Megasquirt, it is possible to determine
+engine RPM and Dwell Angle using an opto-isolator circuit, and the tachometer
+input module.  The module connects a digital interupt pin to the negative side of
+the coil using an opto-isolator circuit.
