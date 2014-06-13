@@ -24,6 +24,7 @@
     #define DEBUG_LEVEL 5
     #define DEBUG_SERIAL_DEV Serial
     #define DEBUG_SERIAL_BAUD 115200
+    #define MIN_CYCLE_TIME 500 // 0.5Hz max sample rate
 #endif
 
 

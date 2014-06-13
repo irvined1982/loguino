@@ -141,7 +141,10 @@ void setup(){
 	DEBUG_1("Finished");
 }
 
+unsigned long loopTime;
+
 void loop(){
+    loopTime=millis()+MIN_CYCLE_TIME;
 	DEBUG_1("Begin");
 	DEBUG_5("Reading Sensors");
 	readSensors();
@@ -149,6 +152,7 @@ void loop(){
 	DEBUG_5("Flushing Loggers");
 	flushLoggers();
 	DEBUG_2("Successfully flushed loggers");
+	while(millis() <= loopTime){;}
 	DEBUG_1("Finished");
 }
 
