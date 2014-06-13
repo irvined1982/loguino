@@ -67,7 +67,7 @@
         val = ((firstbyte) << 4);
         val |= (secondbyte >> 4);
 
-        convertedtemp = val*0.0625;
+        convertedtemp = val*0.00625;
 
 
         #ifdef DEBUG_TMP102_POLLER
