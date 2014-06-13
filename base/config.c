@@ -16,10 +16,14 @@
  * along with Loguino.  If not, see "http://www.gnu.org/licenses/".
  *
 */
-
-//#define ENABLE_DEBUG
-#define DEBUG_LEVEL 5
-#define DEBUG_SERIAL_DEV Serial
-#define DEBUG_SERIAL_BAUD 115200
+#define USE_LOGUINO_CONFIG
+#ifdef USE_LOGUINO_CONFIG
+    #include "loguinoConfig.h"
+#else
+    //#define ENABLE_DEBUG
+    #define DEBUG_LEVEL 5
+    #define DEBUG_SERIAL_DEV Serial
+    #define DEBUG_SERIAL_BAUD 115200
+#endif
 
 

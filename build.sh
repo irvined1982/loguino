@@ -38,7 +38,10 @@ echo "
 ###############################################################################
 ###############################################################################
 
-*/" >> build/config.c
+*/
+
+#ifndef USE_LOGUINO_CONFIG
+" >> build/config.c
 
 for i in modules/pollers/*
 do
@@ -79,6 +82,10 @@ do
 	echo "    $INIT_FUNCTION();" >> build/setupPollers.c
 	echo "#endif" >> build/setupPollers.c
 done
+
+echo "
+#endif
+" >> build/config.c
 
 
 for i in modules/loggers/*

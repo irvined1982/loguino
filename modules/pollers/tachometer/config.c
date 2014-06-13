@@ -21,7 +21,7 @@
 
 
 // If enabled, loguino will calculate and log RPM and dwell.
-#define ENABLE_TACH_POLLER
+//#define ENABLE_TACH_POLLER
 // If enabled, loguino will write debug information for this module
 // #define DEBUG_TACH_POLLER
 // The first interrupt the opto-isolator circuit is connected to.
