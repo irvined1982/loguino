@@ -108,7 +108,7 @@ int freeMemory() {
 void debug(const char * fname, const char * func, const int lnum, const  char * message){
 	String s;
 	char txt[20];
-	sprintf(txt, "%9u", millis() );
+	sprintf(txt, "%9lu", millis() );
 	s="#";
 	s+= txt;
 	s+= ", ";

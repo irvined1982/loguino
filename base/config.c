@@ -16,15 +16,35 @@
  * along with Loguino.  If not, see "http://www.gnu.org/licenses/".
  *
 */
-#define USE_LOGUINO_CONFIG
+
+
+// When enabled, (default is disabled) loguino will be configured using the file
+// loguinoConfig.h which must exist inside the sketch folder.  This enables you
+// to easily switch between configurations, and to store configuration information
+// between versions.
+//#define USE_LOGUINO_CONFIG
+
 #ifdef USE_LOGUINO_CONFIG
     #include "loguinoConfig.h"
 #else
+    // When enabled, Loguino will write out debug information.
     //#define ENABLE_DEBUG
+
+    // Loguino can log at 5 different levels of verbosity, 1 is the lowest,
+    // and 5 is the highest.
     #define DEBUG_LEVEL 5
+
+    // The serial device to use for debugging, must be a real serial device,
+    // cannot be a software serial device.
     #define DEBUG_SERIAL_DEV Serial
+
+    // BAUD rate that the port will be set to.
     #define DEBUG_SERIAL_BAUD 115200
-    #define MIN_CYCLE_TIME 500 // 0.5Hz max sample rate
+
+    // The number of milliseconds that each cycle must last for at a minimum.
+    // If set to zero, Loguino will log as fast as it can, which depends a
+    // lot on the type of sensors connected.  The default is 500, which is 2Hz.
+    #define MIN_CYCLE_TIME 50
 #endif
 
 
