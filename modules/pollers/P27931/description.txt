@@ -1,0 +1,6 @@
+The Gas Sensor Board, fitted with a CO Gas Sensor,  allows for the electronic
+detection of carbon monoxide concentration present in the air. The board
+provides a simple LOW/HIGH alarm output, where HIGH indicates that the preset
+CO gas level has been reached or exceeded.  However, by connecting TP1 to an
+analog pin, it is also possible to obtain a CO reading.  At this stage I do not
+have calibration information.

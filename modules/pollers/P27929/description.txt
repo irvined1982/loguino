@@ -1,0 +1,11 @@
+The MG811 CO2 Sensor offers excellent performance for use in a wide range of
+applications, including air quality monitoring, smoke alarms, mine and tunnel
+warning systems, greenhouses, etc. The sensor is easy to use and can be easily
+incorporated in a small portable unit, or so goes the documentation.  Parallax
+offer a gas sensor board, (Part number 27929) which has a built in Op-Amp, and
+optional alarm.
+
+By connecting TP1 to an analog input on the arduino, it is possible to measure
+CO2 in parts per million. (PPM) The calculation from voltage to PPM is done
+based on code posted on the parallax forum, and uses the suggested values for
+estimating the slope from the datasheet.
