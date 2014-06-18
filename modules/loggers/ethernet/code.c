@@ -23,6 +23,7 @@
     #ifdef ETHERNET_ENABLE_SERVER
         EthernetServer eth_server = EthernetServer(ETHERNET_SERVER_PORT);
     #endif
+
     #ifdef ETHERNET_ENABLE_MQTT
         EthernetClient ethClient;
         byte mqtt_server[] = { ETHERNET_MQTT_SERVER };
@@ -33,6 +34,7 @@
         // handle message arrived, there wont be any however.
         return;
     }
+
 
     void init_ethernet_logger(){
         #ifdef DEBUG_ETHERNET_LOGGER
@@ -110,7 +112,6 @@
         #endif
 
         // Nothing needs to be done.
-        return;
 
         #ifdef DEBUG_ETHERNET_LOGGER
             DEBUG_1("Finishing");

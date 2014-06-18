@@ -16,15 +16,35 @@
  * along with Loguino.  If not, see "http://www.gnu.org/licenses/".
  *
 */
+
+
+// When enabled, (default is disabled) loguino will be configured using the file
+// loguinoConfig.h which must exist inside the sketch folder.  This enables you
+// to easily switch between configurations, and to store configuration information
+// between versions.
 #define USE_LOGUINO_CONFIG
+
 #ifdef USE_LOGUINO_CONFIG
     #include "loguinoConfig.h"
 #else
+    // When enabled, Loguino will write out debug information.
     //#define ENABLE_DEBUG
+
+    // Loguino can log at 5 different levels of verbosity, 1 is the lowest,
+    // and 5 is the highest.
     #define DEBUG_LEVEL 5
+
+    // The serial device to use for debugging, must be a real serial device,
+    // cannot be a software serial device.
     #define DEBUG_SERIAL_DEV Serial
+
+    // BAUD rate that the port will be set to.
     #define DEBUG_SERIAL_BAUD 115200
-    #define MIN_CYCLE_TIME 500 // 0.5Hz max sample rate
+
+    // The number of milliseconds that each cycle must last for at a minimum.
+    // If set to zero, Loguino will log as fast as it can, which depends a
+    // lot on the type of sensors connected.  The default is 500, which is 2Hz.
+    #define MIN_CYCLE_TIME 50
 #endif
 
 
@@ -303,6 +323,91 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/megasqui
 #define MS_WAIT_TIME 10
 // The pin to illuminate when the ECU is online and functioning.
 #define MS_STATUS_PIN 5
+
+/*
+###############################################################################
+###############################################################################
+
+27929 Co2 Sensor
+
+###############################################################################
+
+The MG811 CO2 Sensor offers excellent performance for use in a wide range of
+applications, including air quality monitoring, smoke alarms, mine and tunnel
+warning systems, greenhouses, etc. The sensor is easy to use and can be easily
+incorporated in a small portable unit, or so goes the documentation.  Parallax
+offer a gas sensor board, (Part number 27929) which has a built in Op-Amp, and
+optional alarm.
+
+By connecting TP1 to an analog input on the arduino, it is possible to measure
+CO2 in parts per million. (PPM) The calculation from voltage to PPM is done
+based on code posted on the parallax forum, and uses the suggested values for
+estimating the slope from the datasheet.
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/parallax-sensor-board-27929-with-mg811co2-sensor/
+
+*/
+
+
+
+// If enabled, loguino will log the value in ppm
+//#define ENABLE_P27929_POLLER
+
+// If enabled, loguino will write debug information for this poller
+// #define DEBUG_P27929_POLLER
+
+// The Analog pin that the TP1 of the 27979 board is connected auto
+#define P27929_PIN 0
+
+
+/*
+###############################################################################
+###############################################################################
+
+27931 CO Sensor
+
+###############################################################################
+
+The Gas Sensor Board, fitted with a CO Gas Sensor,  allows for the electronic
+detection of carbon monoxide concentration present in the air. The board
+provides a simple LOW/HIGH alarm output, where HIGH indicates that the preset
+CO gas level has been reached or exceeded.  However, by connecting TP1 to an
+analog pin, it is also possible to obtain a CO reading.  At this stage I do not
+have calibration information.
+
+###############################################################################
+
+For build and configuration information see the following url.
+
+https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/parallax-27931-gas-sensor-board-with-mq-7-co-gas-sensor/
+
+*/
+
+
+
+// If enabled, loguino will log the state of the alarm pin and voltage of the sensor
+#define ENABLE_P27931_POLLER
+
+// If enabled, loguino will write debug information for this poller
+// #define DEBUG_P27931_POLLER
+
+// The number of milliseconds the sensor needs to be purged for, no logging occurs when purging. Default: 60 Seconds
+#define P27931_PURGE_TIME 60000
+
+// The number of milliseconds the sensor will be sensed for. Default: 90 Seconds.
+#define P27931_SAMPLE_TIME 90000
+
+// The analog pin that is connected to TP1 on the board.
+#define P27931_SAMPLE_PIN 1
+
+// The digital pin that is connected to the alarm pin on the board.
+#define P27931_ALARM_PIN 2
+
+// The digital pin (Must support PWM) that is connected to the heater pin on the board.
+#define P27931_HEAT_PIN 2
 
 /*
 ###############################################################################
@@ -1322,9 +1427,6 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/tmp102-i
 //#define DEBUG_TMP102_POLLER
 // The I2C address of the TMP102 sensor
 #define TMP102_I2C_ADDRESS 72
-
-#endif
-
 /*
 ###############################################################################
 ###############################################################################
@@ -1371,6 +1473,7 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/logging-
 
 // IP address to use for the shield, if it is undefined, the shield will
 // use DHCP to obtain an address.
+// Note: Do not use DHCP with ETHERNET_SERVER enabled.
 //#define ETHERNET_IP_ADDRESS 0, 1, 2, 3
 
 // DNS Server to use, ignored if DHCP is being used.
@@ -1490,6 +1593,9 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 ###############################################################################
 
 */
+
+#endif
+
 #if (ARDUINO >= 100)
 	#include <Arduino.h>
 #else
@@ -1543,6 +1649,14 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 
 
 #endif
+#ifdef ENABLE_P27929_POLLER
+
+
+#endif
+#ifdef ENABLE_P27931_POLLER
+
+
+#endif
 #ifdef ENABLE_ANALOG_POLLER
 
 #endif
@@ -1570,7 +1684,10 @@ https://www.clusterfsck.io/loguino/loguinosupported-sensors-and-loggers/log-to-a
 
 #include "SPI.h"
 #include "Ethernet.h"
+#ifdef ETHERNET_ENABLE_MQTT
 #include "PubSubClient.h"
+#endif
+
 #endif
 #ifdef ENABLE_SD_LOGGER
 
@@ -1672,7 +1789,7 @@ int freeMemory() {
 void debug(const char * fname, const char * func, const int lnum, const  char * message){
 	String s;
 	char txt[20];
-	sprintf(txt, "%9u", millis() );
+	sprintf(txt, "%9lu", millis() );
 	s="#";
 	s+= txt;
 	s+= ", ";
@@ -2447,6 +2564,96 @@ void logMessage(const char * name, String value, const char * unit){
         #endif
     }
 #endif
+
+
+#ifdef ENABLE_P27929_POLLER
+#define Carbon_M -83.45 // was-87
+#define Carbon_C 768.62 //was 800
+
+
+
+    void P27929_init(){
+        #ifdef DEBUG_P27929_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        // Nothing to be done
+        ;
+
+        #ifdef DEBUG_P27929_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void P27929_sample(){
+        #ifdef DEBUG_P27929_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        float c_float = analogRead(P27929_PIN) - Carbon_C;
+        c_float = c_float / Carbon_M;
+        logMessage("CO2 Level", (int)pow(2.718, c_float), "PPM");
+
+        #ifdef DEBUG_P27929_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+#endif
+
+
+
+
+#ifdef ENABLE_P27931_POLLER
+
+    unsigned long p27931_toggleTime;
+    bool p27931_purging;
+
+
+    void P27931_init(){
+        #ifdef DEBUG_P27931_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        p27931_purging = true;
+        p27931_toggleTime = millis() + P27931_PURGE_TIME;
+
+        pinMode(P27931_HEAT_PIN, OUTPUT);
+        digitalWrite(P27931_HEAT_PIN, HIGH);
+
+        #ifdef DEBUG_P27931_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+    void P27931_sample(){
+        #ifdef DEBUG_P27931_POLLER
+            DEBUG_1("Starting");
+        #endif
+
+        if (p27931_toggleTime < millis()){
+            p27931_purging = !p27931_purging;
+            if (p27931_purging){
+                p27931_toggleTime = millis()+P27931_PURGE_TIME;
+                digitalWrite(P27931_HEAT_PIN, HIGH);
+            }else{
+                p27931_toggleTime = millis()+P27931_SAMPLE_TIME;
+                digitalWrite(P27931_HEAT_PIN, LOW);
+                analogWrite(P27931_HEAT_PIN, 71);
+            }
+        }
+
+        if (!p27931_purging){
+            logMessage("CO Voltage", (float) ((float)analogRead(P27931_SAMPLE_PIN)*5/1024), "V");
+            logMessage("CO Alarm", digitalRead(P27931_ALARM_PIN) ? "Active":"Inactive", "Alarm State");
+        }
+
+        #ifdef DEBUG_P27931_POLLER
+            DEBUG_1("Finished");
+        #endif
+    }
+
+#endif
+
 
 
 
@@ -6515,6 +6722,7 @@ void logMessage(const char * name, String value, const char * unit){
     #ifdef ETHERNET_ENABLE_SERVER
         EthernetServer eth_server = EthernetServer(ETHERNET_SERVER_PORT);
     #endif
+
     #ifdef ETHERNET_ENABLE_MQTT
         EthernetClient ethClient;
         byte mqtt_server[] = { ETHERNET_MQTT_SERVER };
@@ -6525,6 +6733,7 @@ void logMessage(const char * name, String value, const char * unit){
         // handle message arrived, there wont be any however.
         return;
     }
+
 
     void init_ethernet_logger(){
         #ifdef DEBUG_ETHERNET_LOGGER
@@ -6602,7 +6811,6 @@ void logMessage(const char * name, String value, const char * unit){
         #endif
 
         // Nothing needs to be done.
-        return;
 
         #ifdef DEBUG_ETHERNET_LOGGER
             DEBUG_1("Finishing");
@@ -6801,6 +7009,12 @@ void readSensors(){
 #ifdef ENABLE_MEGASQUIRT_POLLER
     MegaSquirt_sample();
 #endif
+#ifdef ENABLE_P27929_POLLER
+    P27929_sample();
+#endif
+#ifdef ENABLE_P27931_POLLER
+    P27931_sample();
+#endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_sample();
 #endif
@@ -6842,6 +7056,12 @@ void setupPollers(){
 #endif
 #ifdef ENABLE_MEGASQUIRT_POLLER
     MegaSquirt_init();
+#endif
+#ifdef ENABLE_P27929_POLLER
+    P27929_init();
+#endif
+#ifdef ENABLE_P27931_POLLER
+    P27931_init();
 #endif
 #ifdef ENABLE_ANALOG_POLLER
     analog_pin_init();

@@ -31,6 +31,7 @@
 
 // IP address to use for the shield, if it is undefined, the shield will
 // use DHCP to obtain an address.
+// Note: Do not use DHCP with ETHERNET_SERVER enabled.
 //#define ETHERNET_IP_ADDRESS 0, 1, 2, 3
 
 // DNS Server to use, ignored if DHCP is being used.

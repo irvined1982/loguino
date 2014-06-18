@@ -20,4 +20,6 @@
 
 #include "SPI.h"
 #include "Ethernet.h"
+#ifdef ETHERNET_ENABLE_MQTT
 #include "PubSubClient.h"
+#endif

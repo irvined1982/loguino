@@ -83,10 +83,6 @@ do
 	echo "#endif" >> build/setupPollers.c
 done
 
-echo "
-#endif
-" >> build/config.c
-
 
 for i in modules/loggers/*
 do
@@ -147,6 +143,10 @@ echo "
 ###############################################################################
 
 */" >> build/config.c
+
+echo "
+#endif
+" >> build/config.c
 
 
 # Sensors
